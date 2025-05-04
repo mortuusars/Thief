@@ -6,6 +6,7 @@
   "client": [
   ],
   "mixins": [
+    "fix_trade_reputation.VillagerMixin"
   ],
   "injectors": {
     "defaultRequire": 1

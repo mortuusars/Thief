@@ -20,5 +20,8 @@
   "gui.thief.gossips.minor_negative": " §8Minor Negative: %s",
   "gui.thief.gossips.minor_positive": " §8Minor Positive: %s",
   "gui.thief.gossips.major_positive": " §8Major Positive: %s",
-  "gui.thief.gossips.trading": " §8Trading: %s"
+  "gui.thief.gossips.trading": " §8Trading: %s",
+
+  "thief.configuration.misc": "Misc",
+  "thief.configuration.fix_shift_click_villager_trading_reputation": "Fix Shift+Click Villager Trading Reputation"
 }
