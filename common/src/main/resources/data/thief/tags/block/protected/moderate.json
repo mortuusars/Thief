@@ -1,0 +1,9 @@
+{
+  "values": [
+    "#c:chests",
+    "#c:barrels",
+    "#c:villager_job_sites",
+    "#minecraft:beds",
+    "minecraft:bell"
+  ]
+}

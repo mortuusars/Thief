@@ -7,6 +7,7 @@
   "client": [
   ],
   "mixins": [
+    "ServerPlayerGameModeMixin"
   ],
   "injectors": {
     "defaultRequire": 1

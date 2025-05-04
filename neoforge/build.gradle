@@ -50,12 +50,16 @@ dependencies {
     implementation(include("io.github.llamalad7:mixinextras-neoforge:0.4.1"))
 
     modRuntimeOnly("mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}") { transitive = false }
+    modRuntimeOnly("curse.maven:jade-324717:${jade_neoforge_id}") { transitive = false }
+    modRuntimeOnly("curse.maven:embeddium-908741:6118392")
 
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowBundle(project(path: ":common", configuration: "transformProductionNeoForge")) { transitive = false }
 }
 
 loom {
+    accessWidenerPath.set(project(":common").loom.accessWidenerPath)
+
     runs {
         create("client2") {
             inherit(getByName("client"))
@@ -75,6 +79,8 @@ shadowJar {
 }
 
 remapJar {
+    injectAccessWidener = true
+    atAccessWideners.add(loom.accessWidenerPath.get().asFile.name)
     input.set shadowJar.archiveFile
     dependsOn shadowJar
 }
