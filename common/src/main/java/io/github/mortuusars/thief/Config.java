@@ -9,11 +9,56 @@ public class Config {
     public static class Server {
         public static final ModConfigSpec SPEC;
 
+        public static final ModConfigSpec.IntValue WITNESS_MAX_DISTANCE;
+        public static final ModConfigSpec.IntValue WITNESS_ALWAYS_NOTICE_DISTANCE;
+
+        // Offence
+        public static final ModConfigSpec.IntValue OFFENCE_LIGHT_MAJOR_NEGATIVE;
+        public static final ModConfigSpec.IntValue OFFENCE_LIGHT_MINOR_NEGATIVE;
+        public static final ModConfigSpec.IntValue OFFENCE_MODERATE_MAJOR_NEGATIVE;
+        public static final ModConfigSpec.IntValue OFFENCE_MODERATE_MINOR_NEGATIVE;
+        public static final ModConfigSpec.IntValue OFFENCE_HEAVY_MAJOR_NEGATIVE;
+        public static final ModConfigSpec.IntValue OFFENCE_HEAVY_MINOR_NEGATIVE;
+
         // Misc
         public static final ModConfigSpec.BooleanValue FIX_SHIFT_CLICK_TRADE_REPUTATION;
 
         static {
             ModConfigSpec.Builder builder = new ModConfigSpec.Builder();
+
+            {
+                builder.push("Witness");
+                WITNESS_MAX_DISTANCE = builder
+                        .comment("Max distance (in blocks) at which witness can see a crime. Default: 48")
+                        .defineInRange("max_distance", 48, 1, 64);
+                WITNESS_ALWAYS_NOTICE_DISTANCE = builder
+                        .comment("Distance (in blocks) at which witness always notices a crime, even through blocks. When sleeping, this value is halved. Default: 6")
+                        .defineInRange("always_notice_distance", 6, 0, 64);
+                builder.pop();
+            }
+
+            {
+                builder.push("Offence");
+                OFFENCE_LIGHT_MAJOR_NEGATIVE = builder
+                    .comment("Value added to 'Major Negative' reputation gossip. Default: 0")
+                    .defineInRange("light_major_change", 0, 0, 100);
+                OFFENCE_LIGHT_MINOR_NEGATIVE = builder
+                        .comment("Value added to 'Minor Negative' reputation gossip. Default: 15")
+                        .defineInRange("light_minor_change", 15, 0, 200);
+                OFFENCE_MODERATE_MAJOR_NEGATIVE = builder
+                        .comment("Value added to 'Major Negative' reputation gossip. Default: 5")
+                        .defineInRange("moderate_major_change", 5, 0, 100);
+                OFFENCE_MODERATE_MINOR_NEGATIVE = builder
+                        .comment("Value added to 'Minor Negative' reputation gossip. Default: 25")
+                        .defineInRange("moderate_minor_change", 25, 0, 200);
+                OFFENCE_HEAVY_MAJOR_NEGATIVE = builder
+                        .comment("Value added to 'Major Negative' reputation gossip. Default: 20")
+                        .defineInRange("heavy_major_change", 20, 0, 100);
+                OFFENCE_HEAVY_MINOR_NEGATIVE = builder
+                        .comment("Value added to 'Minor Negative' reputation gossip. Default: 50")
+                        .defineInRange("heavy_minor_change", 50, 0, 200);
+                builder.pop();
+            }
 
             {
                 builder.push("Misc");

@@ -6,6 +6,8 @@ import net.minecraft.network.chat.Style;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.npc.Villager;
 
+import java.util.List;
+
 public enum Reputation {
     HATED("hated", 0xFFFF4949),
     UNWELCOME("unwelcome", 0xFFFF884E),
@@ -31,21 +33,6 @@ public enum Reputation {
         return color;
     }
 
-    public static Reputation fromValue(Villager villager, LivingEntity entity) {
-        int reputation = villager.getGossips().getReputation(entity.getUUID(), gossipType -> true);
-        return fromValue(reputation);
-    }
-
-    public static Reputation fromValue(int reputation) {
-        if (reputation <= -100) return HATED;
-        if (reputation <= -50) return UNWELCOME;
-        if (reputation < 0) return DISTRUSTED;
-        if (reputation < 6) return NEUTRAL;
-        if (reputation < 16) return ACCEPTED;
-        if (reputation < 36) return RESPECTED;
-        return HONORED;
-    }
-
     public MutableComponent getLocalizedName() {
         return Component.translatable("gui.thief.reputation." + name);
     }
@@ -64,5 +51,37 @@ public enum Reputation {
 
     public boolean isGreaterOrEqualTo(Reputation reputation) {
         return ordinal() >= reputation.ordinal();
+    }
+
+    public boolean ignores(Offence offence) {
+        return switch (offence) {
+            case LIGHT -> isGreaterOrEqualTo(ACCEPTED);
+            case MODERATE -> isGreaterOrEqualTo(RESPECTED);
+            case HEAVY -> isGreaterOrEqualTo(HONORED);
+        };
+    }
+
+    // --
+
+    public static Reputation fromValue(Villager villager, LivingEntity entity) {
+        int reputation = villager.getGossips().getReputation(entity.getUUID(), gossipType -> true);
+        return fromValue(reputation);
+    }
+
+    public static Reputation fromValue(int reputation) {
+        if (reputation <= -100) return HATED;
+        if (reputation <= -50) return UNWELCOME;
+        if (reputation < 0) return DISTRUSTED;
+        if (reputation < 6) return NEUTRAL;
+        if (reputation < 16) return ACCEPTED;
+        if (reputation < 36) return RESPECTED;
+        return HONORED;
+    }
+
+    public static Reputation averageFromCrowd(List<Villager> crowd, LivingEntity entity) {
+        double average = crowd.stream()
+                .mapToInt(villager -> villager.getGossips().getReputation(entity.getUUID(), gossipType -> true))
+                .average().orElse(0);
+        return fromValue((int)average);
     }
 }

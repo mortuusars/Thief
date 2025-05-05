@@ -2,6 +2,7 @@ package io.github.mortuusars.thief.mixin.fix_trade_reputation;
 
 import io.github.mortuusars.thief.Config;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.EntityEvent;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.village.ReputationEventType;
 import net.minecraft.world.entity.npc.AbstractVillager;
@@ -29,7 +30,7 @@ public abstract class VillagerMixin extends AbstractVillager {
         if (Config.Server.FIX_SHIFT_CLICK_TRADE_REPUTATION.get()
                 && lastTradedPlayer != null && level() instanceof ServerLevel serverLevel) {
             serverLevel.onReputationEvent(ReputationEventType.TRADE, this.lastTradedPlayer, (Villager)(Object)this);
-            level().broadcastEntityEvent(this, (byte)14);
+            level().broadcastEntityEvent(this, EntityEvent.VILLAGER_HAPPY);
             lastTradedPlayer = null;
         }
     }

@@ -3,12 +3,11 @@ package io.github.mortuusars.thief;
 import com.google.common.base.Preconditions;
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.stats.StatFormatter;
 import net.minecraft.tags.TagKey;
-import net.minecraft.world.entity.ai.village.ReputationEventType;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.levelgen.structure.Structure;
@@ -135,6 +134,11 @@ public class Thief {
                     TagKey.create(net.minecraft.core.registries.Registries.BLOCK, resource("protected/heavy"));
         }
 
+        public static class EntityTypes {
+            public static final TagKey<EntityType<?>> WITNESSES =
+                    TagKey.create(net.minecraft.core.registries.Registries.ENTITY_TYPE, resource("witnesses"));
+        }
+
         public static class Structures {
             public static final TagKey<Structure> PROTECTED =
                     TagKey.create(net.minecraft.core.registries.Registries.STRUCTURE, resource("protected"));
@@ -147,11 +151,5 @@ public class Thief {
     }
 
     public static class Registries {
-    }
-
-    public static class ReputationEvents {
-        public static final ReputationEventType THEFT_LIGHT = ReputationEventType.register("theft_light");
-        public static final ReputationEventType THEFT_MODERATE = ReputationEventType.register("theft_moderate");
-        public static final ReputationEventType THEFT_HEAVY = ReputationEventType.register("theft_heavy");
     }
 }

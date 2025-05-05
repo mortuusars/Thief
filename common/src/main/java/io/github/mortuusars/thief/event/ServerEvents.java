@@ -1,22 +1,26 @@
 package io.github.mortuusars.thief.event;
 
 import io.github.mortuusars.thief.Thief;
+import io.github.mortuusars.thief.world.Crime;
+import io.github.mortuusars.thief.world.Offence;
 import net.minecraft.core.BlockPos;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.EntityEvent;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.gossip.GossipType;
-import net.minecraft.world.entity.ai.targeting.TargetingConditions;
-import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.AABB;
-
-import java.util.List;
 
 public class ServerEvents {
     public static void onBlockDestroyedByPlayer(ServerPlayer player, BlockPos pos, BlockState state) {
-//        if (!state.is(Thief.Tags.Blocks.PROTECTED)) return;
+        Offence offence;
+        if (state.is(Thief.Tags.Blocks.PROTECTED_LIGHT)) {
+            offence = Offence.LIGHT;
+        } else if (state.is(Thief.Tags.Blocks.PROTECTED_MODERATE)) {
+            offence = Offence.MODERATE;
+        } else if (state.is(Thief.Tags.Blocks.PROTECTED_HEAVY)) {
+            offence = Offence.HEAVY;
+        } else {
+            return;
+        }
+
+        Crime.commit(player.serverLevel(), player, pos, offence);
 
 //        List<? extends LivingEntity> villagers = player.level().getNearbyEntities(Villager.class,
 //                TargetingConditions.DEFAULT, player, new AABB(player.blockPosition()).inflate(16));
@@ -31,12 +35,5 @@ public class ServerEvents {
 //        }
     }
 
-    private static boolean isInProtectedStructure(ServerLevel level, BlockPos pos) {
-        //TODO: config
-        return level.structureManager().getStructureWithPieceAt(pos, Thief.Tags.Structures.PROTECTED).isValid();
-    }
 
-    private static boolean isInVillage(ServerLevel level, BlockPos pos) {
-        return level.isVillage(pos);
-    }
 }

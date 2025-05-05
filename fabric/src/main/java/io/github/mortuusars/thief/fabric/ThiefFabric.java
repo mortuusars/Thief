@@ -7,6 +7,7 @@ import io.github.mortuusars.thief.event.CommonEvents;
 import io.github.mortuusars.thief.network.fabric.FabricC2SPackets;
 import io.github.mortuusars.thief.network.fabric.FabricS2CPackets;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.player.UseEntityCallback;
 import net.minecraft.server.MinecraftServer;
@@ -23,6 +24,8 @@ public class ThiefFabric implements ModInitializer {
 
         NeoForgeConfigRegistry.INSTANCE.register(Thief.ID, ModConfig.Type.SERVER, Config.Server.SPEC);
         NeoForgeConfigRegistry.INSTANCE.register(Thief.ID, ModConfig.Type.CLIENT, Config.Client.SPEC);
+
+        CommandRegistrationCallback.EVENT.register(CommonEvents::registerCommands);
 
         ServerLifecycleEvents.SERVER_STARTED.register(server -> {
             ThiefFabric.server = server;

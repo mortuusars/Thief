@@ -1,7 +1,12 @@
 package io.github.mortuusars.thief.event;
 
+import com.mojang.brigadier.CommandDispatcher;
 import io.github.mortuusars.thief.Thief;
+import io.github.mortuusars.thief.command.ThiefCommand;
 import io.github.mortuusars.thief.world.Reputation;
+import net.minecraft.commands.CommandBuildContext;
+import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.commands.Commands;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -57,5 +62,10 @@ public class CommonEvents {
         int minorPositiveRep = villager.getGossips().getReputation(player.getUUID(), gossipType -> gossipType == GossipType.MINOR_POSITIVE);
         int minorNegativeRep = villager.getGossips().getReputation(player.getUUID(), gossipType -> gossipType == GossipType.MINOR_NEGATIVE);
         return minorPositiveRep < GossipType.MINOR_POSITIVE.max || minorNegativeRep < 0;
+    }
+
+    public static void registerCommands(CommandDispatcher<CommandSourceStack> dispatcher,
+                                        CommandBuildContext context, Commands.CommandSelection environment) {
+        ThiefCommand.register(dispatcher);
     }
 }

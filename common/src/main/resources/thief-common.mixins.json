@@ -6,7 +6,9 @@
   "client": [
   ],
   "mixins": [
-    "fix_trade_reputation.VillagerMixin"
+    "fix_trade_reputation.VillagerMixin",
+    ,
+    "thief_reputation_events.VillagerMixin"
   ],
   "injectors": {
     "defaultRequire": 1
