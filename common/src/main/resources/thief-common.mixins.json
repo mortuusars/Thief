@@ -6,8 +6,9 @@
   "client": [
   ],
   "mixins": [
+    "bed.BedBlockMixin",
+    "bed.PlayerMixin",
     "fix_trade_reputation.VillagerMixin",
-    ,
     "thief_reputation_events.VillagerMixin"
   ],
   "injectors": {

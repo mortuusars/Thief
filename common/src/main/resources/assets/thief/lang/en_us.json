@@ -25,7 +25,7 @@
   "thief.configuration.misc": "Misc",
   "thief.configuration.fix_shift_click_villager_trading_reputation": "Fix Shift+Click Villager Trading Reputation",
 
-  "gui.thief.crime_commited.theft_light": "§cYou have been seen committing a light thievery",
-  "gui.thief.crime_commited.theft_moderate": "§cYou have been observed committing a moderate theft",
-  "gui.thief.crime_commited.theft_heavy": "§cYou have been caught committing a heavy theft"
+  "gui.thief.crime_commited.light": "§cYou have been seen committing a light crime",
+  "gui.thief.crime_commited.moderate": "§cYou have been observed committing a moderate crime",
+  "gui.thief.crime_commited.heavy": "§cYou have been caught committing a heavy crime"
 }

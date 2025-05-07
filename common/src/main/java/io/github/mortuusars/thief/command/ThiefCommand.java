@@ -4,7 +4,6 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import io.github.mortuusars.thief.world.Crime;
-import io.github.mortuusars.thief.world.Offence;
 import io.github.mortuusars.thief.world.Reputation;
 import io.github.mortuusars.thief.world.Witness;
 import net.minecraft.ChatFormatting;
@@ -33,11 +32,11 @@ public class ThiefCommand {
                         .then(Commands.literal("crime")
                                 .then(Commands.argument("player", EntityArgument.player())
                                         .then(Commands.literal("light")
-                                                .executes(context -> commitCrime(context, Offence.LIGHT)))
+                                                .executes(context -> commitCrime(context, Crime.LIGHT)))
                                         .then(Commands.literal("moderate")
-                                                .executes(context -> commitCrime(context, Offence.MODERATE)))
+                                                .executes(context -> commitCrime(context, Crime.MODERATE)))
                                         .then(Commands.literal("heavy")
-                                                .executes(context -> commitCrime(context, Offence.HEAVY)))))));
+                                                .executes(context -> commitCrime(context, Crime.HEAVY)))))));
     }
 
     // Debug --
@@ -89,18 +88,18 @@ public class ThiefCommand {
         return 0;
     }
 
-    private static int commitCrime(CommandContext<CommandSourceStack> context, Offence offence) throws CommandSyntaxException {
+    private static int commitCrime(CommandContext<CommandSourceStack> context, Crime crime) throws CommandSyntaxException {
         ServerPlayer player = context.getSource().getPlayerOrException();
 
-        Crime.Outcome outcome = Crime.commit(player.serverLevel(), player, player.blockPosition(), offence);
+        Crime.Outcome outcome = crime.commit(player.serverLevel(), player, player.blockPosition());
         if (outcome.punished()) {
             context.getSource().sendSuccess(() -> Component.literal(
-                            player.getScoreboardName() + " has commited " + offence.getName() + " crime with "
+                            player.getScoreboardName() + " has commited " + crime.getName() + " crime with "
                                     + outcome.witnesses().size() + " witnesses.")
                     .withStyle(ChatFormatting.RED), true);
         } else {
             context.getSource().sendSuccess(() -> Component.literal(
-                            player.getScoreboardName() + " has commited " + offence.getName() + " crime, but no one saw that.")
+                            player.getScoreboardName() + " has commited " + crime.getName() + " crime, but no one saw that.")
                     .withStyle(ChatFormatting.RED), true);
         }
 

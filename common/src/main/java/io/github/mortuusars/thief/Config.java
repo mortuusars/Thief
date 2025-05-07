@@ -1,5 +1,6 @@
 package io.github.mortuusars.thief;
 
+import io.github.mortuusars.thief.world.PotentialCrime;
 import net.neoforged.neoforge.common.ModConfigSpec;
 
 /**
@@ -9,6 +10,12 @@ public class Config {
     public static class Server {
         public static final ModConfigSpec SPEC;
 
+        // Crimes
+        public static final ModConfigSpec.BooleanValue CRIME_FOR_BREAKING_PROTECTED_BLOCKS;
+        public static final ModConfigSpec.EnumValue<PotentialCrime> CRIME_FOR_KICKING_VILLAGER_OUT_OF_BED;
+        public static final ModConfigSpec.EnumValue<PotentialCrime> CRIME_FOR_SLEEPING_IN_VILLAGERS_BED;
+
+        // Witness
         public static final ModConfigSpec.IntValue WITNESS_MAX_DISTANCE;
         public static final ModConfigSpec.IntValue WITNESS_ALWAYS_NOTICE_DISTANCE;
 
@@ -25,6 +32,20 @@ public class Config {
 
         static {
             ModConfigSpec.Builder builder = new ModConfigSpec.Builder();
+
+            {
+                builder.push("Crimes");
+                CRIME_FOR_BREAKING_PROTECTED_BLOCKS = builder
+                        .comment("Breaking protected blocks (#thief:protected/light, #thief:protected/moderate or #thief:protected/heavy) in protected structure (#thief:protected) is considered a crime. Default: true")
+                        .define("breaking_protected_blocks", true);
+                CRIME_FOR_KICKING_VILLAGER_OUT_OF_BED = builder
+                        .comment("Crime severity for kicking a villager out of bed. Default: LIGHT")
+                        .defineEnum("kicking_villager_out_of_bed", PotentialCrime.LIGHT);
+                CRIME_FOR_SLEEPING_IN_VILLAGERS_BED = builder
+                        .comment("Crime severity for sleeping in a bed that belongs to a villager. Default: MODERATE")
+                        .defineEnum("sleeping_in_villagers_bed", PotentialCrime.MODERATE);
+                builder.pop();
+            }
 
             {
                 builder.push("Witness");

@@ -27,6 +27,22 @@ public class Witness {
                 .toList();
     }
 
+    public static <T extends LivingEntity> List<T> getWitnesses(LivingEntity criminal, Class<T> entityClass) {
+        if (criminal instanceof Player player && (player.isCreative() || player.isSpectator())) {
+            return Collections.emptyList();
+        }
+
+        double visibility = Stealth.getVisibility(criminal);
+
+        int radius = Config.Server.WITNESS_MAX_DISTANCE.get();
+        AABB crimeScene = new AABB(criminal.blockPosition()).inflate(radius, radius * 0.5f, radius);
+
+        return criminal.level().getEntitiesOfClass(entityClass, crimeScene)
+                .stream()
+                .filter(e -> isWitness(criminal, e, visibility))
+                .toList();
+    }
+
     public static boolean isWitness(LivingEntity criminal, LivingEntity entity, double visibility) {
         if (!entity.getType().is(Thief.Tags.EntityTypes.WITNESSES)) return false;
         float distance = entity.distanceTo(criminal);

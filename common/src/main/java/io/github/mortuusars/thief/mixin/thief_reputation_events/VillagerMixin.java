@@ -1,6 +1,6 @@
 package io.github.mortuusars.thief.mixin.thief_reputation_events;
 
-import io.github.mortuusars.thief.world.Offence;
+import io.github.mortuusars.thief.world.Crime;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.gossip.GossipContainer;
@@ -26,13 +26,13 @@ public abstract class VillagerMixin extends AbstractVillager {
 
     @Inject(method = "onReputationEventFrom", at = @At("HEAD"))
     private void onReputationEvent(ReputationEventType type, Entity target, CallbackInfo ci) {
-        if (type instanceof Offence offence) {
-            int major = offence.getMajorNegativeChange();
+        if (type instanceof Crime crime) {
+            int major = crime.getMajorNegativeChange();
             if (major > 0) {
                 gossips.add(target.getUUID(), GossipType.MAJOR_NEGATIVE, major);
             }
 
-            int minor = offence.getMinorNegativeChange();
+            int minor = crime.getMinorNegativeChange();
             if (minor > 0) {
                 gossips.add(target.getUUID(), GossipType.MINOR_NEGATIVE, minor);
             }

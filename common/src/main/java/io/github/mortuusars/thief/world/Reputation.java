@@ -53,8 +53,8 @@ public enum Reputation {
         return ordinal() >= reputation.ordinal();
     }
 
-    public boolean ignores(Offence offence) {
-        return switch (offence) {
+    public boolean ignores(Crime crime) {
+        return switch (crime) {
             case LIGHT -> isGreaterOrEqualTo(ACCEPTED);
             case MODERATE -> isGreaterOrEqualTo(RESPECTED);
             case HEAVY -> isGreaterOrEqualTo(HONORED);
@@ -72,9 +72,9 @@ public enum Reputation {
         if (reputation <= -100) return HATED;
         if (reputation <= -50) return UNWELCOME;
         if (reputation < 0) return DISTRUSTED;
-        if (reputation < 6) return NEUTRAL;
-        if (reputation < 16) return ACCEPTED;
-        if (reputation < 36) return RESPECTED;
+        if (reputation < 10) return NEUTRAL;
+        if (reputation < 20) return ACCEPTED;
+        if (reputation < 30) return RESPECTED;
         return HONORED;
     }
 
