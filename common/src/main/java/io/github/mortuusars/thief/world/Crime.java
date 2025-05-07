@@ -6,7 +6,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.EntityEvent;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.village.ReputationEventType;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.player.Player;
 
@@ -36,6 +35,7 @@ public class Crime {
 
         for (LivingEntity witness : witnesses) {
             if (witness instanceof Villager villager) {
+                villager.setUnhappy();
                 level.onReputationEvent(offence, criminal, villager);
                 level.broadcastEntityEvent(villager, EntityEvent.VILLAGER_ANGRY);
             }

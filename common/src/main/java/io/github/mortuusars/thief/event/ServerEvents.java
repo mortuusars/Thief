@@ -21,19 +21,5 @@ public class ServerEvents {
         }
 
         Crime.commit(player.serverLevel(), player, pos, offence);
-
-//        List<? extends LivingEntity> villagers = player.level().getNearbyEntities(Villager.class,
-//                TargetingConditions.DEFAULT, player, new AABB(player.blockPosition()).inflate(16));
-//
-//        for (LivingEntity entity : villagers) {
-//            if (!entity.hasLineOfSight(player) && entity.distanceTo(player) > 5) return;
-//            Villager villager = ((Villager) entity);
-//
-//            villager.setLastHurtByPlayer(player);
-//            villager.getGossips().add(player.getUUID(), GossipType.MAJOR_NEGATIVE, 100);
-//            player.level().broadcastEntityEvent(villager, EntityEvent.VILLAGER_ANGRY);
-//        }
     }
-
-
 }
