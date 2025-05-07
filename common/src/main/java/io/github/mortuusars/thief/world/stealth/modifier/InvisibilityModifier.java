@@ -8,7 +8,7 @@ public class InvisibilityModifier implements Stealth.VisibilityModifier {
     @Override
     public double modify(LivingEntity entity, double value) {
         return entity.getEffect(MobEffects.INVISIBILITY) != null
-                ? value * 0.2f
+                ? value * 0.25f
                 : value;
     }
 }

@@ -13,25 +13,43 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 
 public class ThiefCommand {
+    public static boolean showNoticeDistance = false;
+
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
         dispatcher.register(Commands.literal("thief")
                 .requires((stack) -> stack.hasPermission(2))
-                .then(Commands.literal("is_in_protected_structure")
-                        .executes(ThiefCommand::isInProtectedStructure))
-                .then(Commands.literal("crime")
-                        .then(Commands.argument("player", EntityArgument.player())
-                                .then(Commands.literal("light")
-                                        .executes(context -> commitCrime(context, Offence.LIGHT)))
-                                .then(Commands.literal("moderate")
-                                        .executes(context -> commitCrime(context, Offence.MODERATE)))
-                                .then(Commands.literal("heavy")
-                                        .executes(context -> commitCrime(context, Offence.HEAVY))))));
+                .then(Commands.literal("debug")
+                        .then(Commands.literal("is_in_protected_structure")
+                                .executes(ThiefCommand::isInProtectedStructure))
+                        .then(Commands.literal("show_notice_distance")
+                                .executes(ThiefCommand::showNoticeDistance))
+                        .then(Commands.literal("crime")
+                                .then(Commands.argument("player", EntityArgument.player())
+                                        .then(Commands.literal("light")
+                                                .executes(context -> commitCrime(context, Offence.LIGHT)))
+                                        .then(Commands.literal("moderate")
+                                                .executes(context -> commitCrime(context, Offence.MODERATE)))
+                                        .then(Commands.literal("heavy")
+                                                .executes(context -> commitCrime(context, Offence.HEAVY)))))));
     }
+
+    // Debug --
 
     private static int isInProtectedStructure(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
         ServerPlayer player = context.getSource().getPlayerOrException();
         context.getSource().sendSuccess(() -> Component.literal("Is in '#thief:protected' structure: " +
                 Crime.isInProtectedStructure(context.getSource().getLevel(), player.blockPosition())), true);
+        return 0;
+    }
+
+    private static int showNoticeDistance(CommandContext<CommandSourceStack> context) {
+        if (showNoticeDistance) {
+            showNoticeDistance = false;
+            context.getSource().sendSuccess(() -> Component.literal("Turned off thief notice distance showing."), true);
+        } else {
+            showNoticeDistance = true;
+            context.getSource().sendSuccess(() -> Component.literal("Showing thief notice distance."), true);
+        }
         return 0;
     }
 
@@ -41,12 +59,12 @@ public class ThiefCommand {
         Crime.Outcome outcome = Crime.commit(player.serverLevel(), player, player.blockPosition(), offence);
         if (outcome.punished()) {
             context.getSource().sendSuccess(() -> Component.literal(
-                    player.getScoreboardName() + " has commited " + offence.getName() + " crime with "
-                            + outcome.witnesses().size() + " witnesses.")
+                            player.getScoreboardName() + " has commited " + offence.getName() + " crime with "
+                                    + outcome.witnesses().size() + " witnesses.")
                     .withStyle(ChatFormatting.RED), true);
         } else {
             context.getSource().sendSuccess(() -> Component.literal(
-                    player.getScoreboardName() + " has commited " + offence.getName() + " crime, but no one saw that.")
+                            player.getScoreboardName() + " has commited " + offence.getName() + " crime, but no one saw that.")
                     .withStyle(ChatFormatting.RED), true);
         }
 

@@ -4,7 +4,6 @@ import io.github.mortuusars.thief.world.stealth.modifier.DarknessModifier;
 import io.github.mortuusars.thief.world.stealth.modifier.InvisibilityModifier;
 import io.github.mortuusars.thief.world.stealth.modifier.SneakingModifier;
 import net.minecraft.util.Mth;
-import net.minecraft.util.Tuple;
 import net.minecraft.world.entity.LivingEntity;
 
 import java.util.ArrayList;

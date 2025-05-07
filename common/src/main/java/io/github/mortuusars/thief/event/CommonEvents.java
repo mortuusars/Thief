@@ -1,12 +1,15 @@
 package io.github.mortuusars.thief.event;
 
 import com.mojang.brigadier.CommandDispatcher;
+import io.github.mortuusars.thief.Config;
 import io.github.mortuusars.thief.Thief;
 import io.github.mortuusars.thief.command.ThiefCommand;
 import io.github.mortuusars.thief.world.Reputation;
+import io.github.mortuusars.thief.world.stealth.Stealth;
 import net.minecraft.commands.CommandBuildContext;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -62,6 +65,22 @@ public class CommonEvents {
         int minorPositiveRep = villager.getGossips().getReputation(player.getUUID(), gossipType -> gossipType == GossipType.MINOR_POSITIVE);
         int minorNegativeRep = villager.getGossips().getReputation(player.getUUID(), gossipType -> gossipType == GossipType.MINOR_NEGATIVE);
         return minorPositiveRep < GossipType.MINOR_POSITIVE.max || minorNegativeRep < 0;
+    }
+
+    public static void onPlayerTick(Player player) {
+        if (player instanceof ServerPlayer serverPlayer && ThiefCommand.showNoticeDistance && player.level().getGameTime() % 3 == 0) {
+            double radius = Config.Server.WITNESS_MAX_DISTANCE.get() * Stealth.getVisibility(serverPlayer);
+            int particles = 64; // number of particles in the ring
+
+            for (int i = 0; i < particles; i++) {
+                double angle = 2 * Math.PI * i / particles;
+                double x = player.getX() + radius * Math.cos(angle);
+                double z = player.getZ() + radius * Math.sin(angle);
+                double y = player.getY() + 1;
+
+                serverPlayer.serverLevel().sendParticles(serverPlayer, ParticleTypes.EXPLOSION, true, x, y, z, 1, 0, 0, 0, 0);
+            }
+        }
     }
 
     public static void registerCommands(CommandDispatcher<CommandSourceStack> dispatcher,

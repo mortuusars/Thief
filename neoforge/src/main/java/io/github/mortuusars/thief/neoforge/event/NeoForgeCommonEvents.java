@@ -11,22 +11,17 @@ import io.github.mortuusars.thief.network.packet.S2CPackets;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.entity.npc.Villager;
-import net.minecraft.world.entity.player.Player;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.neoforge.event.level.BlockEvent;
+import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
-
-import javax.annotation.Nullable;
 
 public class NeoForgeCommonEvents {
     @EventBusSubscriber(modid = Thief.ID, bus = EventBusSubscriber.Bus.MOD)
@@ -68,10 +63,15 @@ public class NeoForgeCommonEvents {
         }
 
         @SubscribeEvent
-        public static void onEntityInteractEvent(PlayerInteractEvent.EntityInteract event) {
+        public static void onEntityInteract(PlayerInteractEvent.EntityInteract event) {
             if (CommonEvents.onEntityInteracted(event.getEntity(), event.getHand(), event.getTarget()) != InteractionResult.PASS) {
                 event.setCanceled(true);
             }
+        }
+
+        @SubscribeEvent
+        public static void onPlayerTick(PlayerTickEvent.Post event) {
+            CommonEvents.onPlayerTick(event.getEntity());
         }
 
         @SubscribeEvent
