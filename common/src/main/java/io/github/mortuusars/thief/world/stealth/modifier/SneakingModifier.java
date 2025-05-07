@@ -8,7 +8,7 @@ public class SneakingModifier implements Stealth.VisibilityModifier {
     @Override
     public double modify(LivingEntity entity, double value) {
         return entity instanceof Player player && player.isSecondaryUseActive()
-                ? value * 0.6f
+                ? value * 0.5f
                 : value;
     }
 }

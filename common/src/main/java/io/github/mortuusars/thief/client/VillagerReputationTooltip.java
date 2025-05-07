@@ -4,18 +4,16 @@ import io.github.mortuusars.thief.Thief;
 import io.github.mortuusars.thief.network.Packets;
 import io.github.mortuusars.thief.network.packet.serverbound.QueryVillagerReputationC2SP;
 import io.github.mortuusars.thief.world.Reputation;
-import net.minecraft.ChatFormatting;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.phys.EntityHitResult;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 public class VillagerReputationTooltip {
     private static int lastVillagerId = -1;
@@ -56,25 +54,23 @@ public class VillagerReputationTooltip {
         if (Minecraft.getInstance().options.advancedItemTooltips) {
             name.append(" (" + lastReputation + ")");
         }
-        List<Component> list = List.of(
-                Component.translatable("gui.thief.reputation", name),
-                reputation.getLocalizedDescription().withStyle(ChatFormatting.GRAY)
-        );
+
+        ArrayList<FormattedCharSequence> lines = new ArrayList<>();
+        lines.add(Component.translatable("gui.thief.reputation", name).getVisualOrderText());
+        lines.addAll(Minecraft.getInstance().font.split(reputation.getLocalizedDescription(), 170));
 
         if (Minecraft.getInstance().options.advancedItemTooltips && lastGossipsVillagerId == villager.getId()) {
-            ArrayList<Component> list1 = new ArrayList<>(list);
-            list1.add(Component.translatable("gui.thief.gossips"));
-            list1.add(Component.translatable("gui.thief.gossips.major_negative", "§8" + lastMajorNegative));
-            list1.add(Component.translatable("gui.thief.gossips.minor_negative", "§8" + lastMinorNegative));
-            list1.add(Component.translatable("gui.thief.gossips.minor_positive", "§8" + lastMinorPositive));
-            list1.add(Component.translatable("gui.thief.gossips.major_positive", "§8" + lastMajorPositive));
-            list1.add(Component.translatable("gui.thief.gossips.trading", "§8" + lastTrading));
-            list = list1;
+            lines.add(Component.translatable("gui.thief.gossips").getVisualOrderText());
+            lines.add(Component.translatable("gui.thief.gossips.major_negative", "§8" + lastMajorNegative).getVisualOrderText());
+            lines.add(Component.translatable("gui.thief.gossips.minor_negative", "§8" + lastMinorNegative).getVisualOrderText());
+            lines.add(Component.translatable("gui.thief.gossips.minor_positive", "§8" + lastMinorPositive).getVisualOrderText());
+            lines.add(Component.translatable("gui.thief.gossips.major_positive", "§8" + lastMajorPositive).getVisualOrderText());
+            lines.add(Component.translatable("gui.thief.gossips.trading", "§8" + lastTrading).getVisualOrderText());
         }
 
         int x = minecraft.getWindow().getGuiScaledWidth() / 2 + 8;
-        int y = minecraft.getWindow().getGuiScaledHeight() / 2 - (int)(list.size() / 2f * 9f);
-        guiGraphics.renderTooltip(minecraft.font, list, Optional.empty(), x, y + 10);
+        int y = minecraft.getWindow().getGuiScaledHeight() / 2 - (int)(lines.size() / 2f * 9f);
+        guiGraphics.renderTooltip(minecraft.font, lines, x, y + 10);
     }
 
     public static void updateReputation(int villagerId, int reputation) {

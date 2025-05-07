@@ -5,6 +5,7 @@ import io.github.mortuusars.thief.Config;
 import io.github.mortuusars.thief.Thief;
 import io.github.mortuusars.thief.command.ThiefCommand;
 import io.github.mortuusars.thief.world.Reputation;
+import io.github.mortuusars.thief.world.Witness;
 import io.github.mortuusars.thief.world.stealth.Stealth;
 import net.minecraft.commands.CommandBuildContext;
 import net.minecraft.commands.CommandSourceStack;
@@ -15,13 +16,18 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityEvent;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.gossip.GossipType;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.schedule.Activity;
 import net.minecraft.world.item.ItemStack;
+
+import java.util.List;
 
 public class CommonEvents {
     private static long lastGiftSoundPlayedAt = -1;
@@ -44,8 +50,8 @@ public class CommonEvents {
 
             player.level().broadcastEntityEvent(villager, EntityEvent.VILLAGER_HAPPY);
             if (player.level().getGameTime() - lastGiftSoundPlayedAt > 10) { // Prevent sound spam
-                lastGiftSoundPlayedAt = player.level().getGameTime();
                 player.level().playSound(null, villager, SoundEvents.VILLAGER_CELEBRATE, SoundSource.NEUTRAL, 1, 1);
+                lastGiftSoundPlayedAt = player.level().getGameTime();
             }
             return InteractionResult.SUCCESS;
         }
@@ -68,7 +74,15 @@ public class CommonEvents {
     }
 
     public static void onPlayerTick(Player player) {
-        if (player instanceof ServerPlayer serverPlayer && ThiefCommand.showNoticeDistance && player.level().getGameTime() % 3 == 0) {
+        if (ThiefCommand.showNoticeDistanceAndWitnesses
+                && player instanceof ServerPlayer serverPlayer
+                && player.level().getGameTime() % 3 == 0) {
+
+            List<LivingEntity> witnesses = Witness.getWitnesses(player);
+            for (LivingEntity witness : witnesses) {
+                witness.addEffect(new MobEffectInstance(MobEffects.GLOWING, 4));
+            }
+
             double radius = Config.Server.WITNESS_MAX_DISTANCE.get() * Stealth.getVisibility(serverPlayer);
             int particles = 64; // number of particles in the ring
 

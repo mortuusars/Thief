@@ -78,10 +78,13 @@ public enum Reputation {
         return HONORED;
     }
 
-    public static Reputation averageFromCrowd(List<Villager> crowd, LivingEntity entity) {
-        double average = crowd.stream()
+    public static int averageValueFromCrowd(List<Villager> crowd, LivingEntity entity) {
+        return (int)crowd.stream()
                 .mapToInt(villager -> villager.getGossips().getReputation(entity.getUUID(), gossipType -> true))
                 .average().orElse(0);
-        return fromValue((int)average);
+    }
+
+    public static Reputation averageFromCrowd(List<Villager> crowd, LivingEntity entity) {
+        return fromValue(averageValueFromCrowd(crowd, entity));
     }
 }

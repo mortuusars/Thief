@@ -4,6 +4,8 @@ import io.github.mortuusars.thief.Thief;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityEvent;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.npc.Villager;
@@ -14,7 +16,11 @@ import java.util.List;
 
 public class Crime {
     public static Outcome commit(ServerLevel level, LivingEntity criminal, BlockPos crimeTargetPosition, Offence offence) {
-        if (!isInProtectedStructure(level, crimeTargetPosition)) {
+        if (!isInProtectedStructure(level, crimeTargetPosition)) { //TODO: config
+            return Outcome.NONE;
+        }
+
+        if (criminal.hasEffect(MobEffects.HERO_OF_THE_VILLAGE)) { //TODO: config
             return Outcome.NONE;
         }
 
