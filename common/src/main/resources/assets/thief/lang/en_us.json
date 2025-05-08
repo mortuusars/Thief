@@ -11,7 +11,7 @@
   "gui.thief.reputation.accepted": "Accepted",
   "gui.thief.reputation.accepted.description": "§7Light offenses are tolerated.",
   "gui.thief.reputation.respected": "Respected",
-  "gui.thief.reputation.respected.description": "§7Moderate offenses are ignored.",
+  "gui.thief.reputation.respected.description": "§7Medium offenses are ignored.",
   "gui.thief.reputation.honored": "Honored",
   "gui.thief.reputation.honored.description": "§7Heavy offences are forgiven.",
 
@@ -26,6 +26,6 @@
   "thief.configuration.fix_shift_click_villager_trading_reputation": "Fix Shift+Click Villager Trading Reputation",
 
   "gui.thief.crime_commited.light": "§cYou have been seen committing a light crime",
-  "gui.thief.crime_commited.moderate": "§cYou have been observed committing a moderate crime",
+  "gui.thief.crime_commited.medium": "§cYou have been observed committing a medium crime",
   "gui.thief.crime_commited.heavy": "§cYou have been caught committing a heavy crime"
 }

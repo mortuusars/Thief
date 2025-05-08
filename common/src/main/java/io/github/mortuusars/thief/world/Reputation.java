@@ -56,7 +56,7 @@ public enum Reputation {
     public boolean ignores(Crime crime) {
         return switch (crime) {
             case LIGHT -> isGreaterOrEqualTo(ACCEPTED);
-            case MODERATE -> isGreaterOrEqualTo(RESPECTED);
+            case MEDIUM -> isGreaterOrEqualTo(RESPECTED);
             case HEAVY -> isGreaterOrEqualTo(HONORED);
         };
     }
@@ -78,13 +78,30 @@ public enum Reputation {
         return HONORED;
     }
 
-    public static int averageValueFromCrowd(List<Villager> crowd, LivingEntity entity) {
-        return (int)crowd.stream()
-                .mapToInt(villager -> villager.getGossips().getReputation(entity.getUUID(), gossipType -> true))
+    public static int averageValueFromVillagers(LivingEntity subject, List<Villager> villagers) {
+        return (int) villagers.stream()
+                .mapToInt(villager -> villager.getGossips().getReputation(subject.getUUID(), gossipType -> true))
                 .average().orElse(0);
     }
 
-    public static Reputation averageFromCrowd(List<Villager> crowd, LivingEntity entity) {
-        return fromValue(averageValueFromCrowd(crowd, entity));
+    public static Reputation averageFromVillagers(LivingEntity subject, List<Villager> villagers) {
+        return fromValue(averageValueFromVillagers(subject, villagers));
+    }
+
+    public static int averageValueFromCrowd(LivingEntity entity, List<LivingEntity> crowd) {
+        return (int) crowd.stream()
+                .mapToInt(e -> valueOf(entity, e))
+                .average().orElse(0);
+    }
+
+    public static Reputation averageFromCrowd(LivingEntity subject, List<LivingEntity> crowd) {
+        return fromValue(averageValueFromCrowd(subject, crowd));
+    }
+
+    public static int valueOf(LivingEntity subject, LivingEntity entityWithReputation) {
+        if (entityWithReputation instanceof Villager villager) {
+            return villager.getGossips().getReputation(subject.getUUID(), gossipType -> true);
+        }
+        return 0;
     }
 }

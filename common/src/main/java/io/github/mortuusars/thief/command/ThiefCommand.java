@@ -28,15 +28,15 @@ public class ThiefCommand {
                         .then(Commands.literal("show_notice_distance_and_witnesses")
                                 .executes(ThiefCommand::showNoticeDistance))
                         .then(Commands.literal("show_witness_reputation")
-                                .executes(ThiefCommand::showWitnessReputation))
-                        .then(Commands.literal("crime")
-                                .then(Commands.argument("player", EntityArgument.player())
-                                        .then(Commands.literal("light")
-                                                .executes(context -> commitCrime(context, Crime.LIGHT)))
-                                        .then(Commands.literal("moderate")
-                                                .executes(context -> commitCrime(context, Crime.MODERATE)))
-                                        .then(Commands.literal("heavy")
-                                                .executes(context -> commitCrime(context, Crime.HEAVY)))))));
+                                .executes(ThiefCommand::showWitnessReputation)))
+                .then(Commands.literal("commit_crime")
+                        .then(Commands.argument("player", EntityArgument.player())
+                                .then(Commands.literal("light")
+                                        .executes(context -> commitCrime(context, Crime.LIGHT)))
+                                .then(Commands.literal("medium")
+                                        .executes(context -> commitCrime(context, Crime.MEDIUM)))
+                                .then(Commands.literal("heavy")
+                                        .executes(context -> commitCrime(context, Crime.HEAVY))))));
     }
 
     // Debug --
@@ -78,7 +78,7 @@ public class ThiefCommand {
             return 0;
         }
 
-        int averageValue = Reputation.averageValueFromCrowd(villagers, player);
+        int averageValue = Reputation.averageValueFromVillagers(player, villagers);
         Reputation reputation = Reputation.fromValue(averageValue);
 
         context.getSource().sendSuccess(() -> Component.literal("Average reputation of " + villagers.size() + " witnesses is: ")

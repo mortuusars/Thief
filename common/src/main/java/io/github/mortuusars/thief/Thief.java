@@ -2,12 +2,17 @@ package io.github.mortuusars.thief;
 
 import com.google.common.base.Preconditions;
 import com.mojang.logging.LogUtils;
+import io.github.mortuusars.thief.api.witness.WitnessReaction;
+import io.github.mortuusars.thief.api.witness.WitnessReactionHandler;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.stats.StatFormatter;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.entity.EntityEvent;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.levelgen.structure.Structure;
@@ -126,17 +131,26 @@ public class Thief {
         }
 
         public static class Blocks {
-            public static final TagKey<Block> PROTECTED_LIGHT =
-                    TagKey.create(net.minecraft.core.registries.Registries.BLOCK, resource("protected/light"));
-            public static final TagKey<Block> PROTECTED_MODERATE =
-                    TagKey.create(net.minecraft.core.registries.Registries.BLOCK, resource("protected/moderate"));
-            public static final TagKey<Block> PROTECTED_HEAVY =
-                    TagKey.create(net.minecraft.core.registries.Registries.BLOCK, resource("protected/heavy"));
+            public static final TagKey<Block> BREAK_PROTECTED_LIGHT =
+                    TagKey.create(net.minecraft.core.registries.Registries.BLOCK, resource("break_protected/light"));
+            public static final TagKey<Block> BREAK_PROTECTED_MEDIUM =
+                    TagKey.create(net.minecraft.core.registries.Registries.BLOCK, resource("break_protected/medium"));
+            public static final TagKey<Block> BREAK_PROTECTED_HEAVY =
+                    TagKey.create(net.minecraft.core.registries.Registries.BLOCK, resource("break_protected/heavy"));
+
+            public static final TagKey<Block> INTERACT_PROTECTED_LIGHT =
+                    TagKey.create(net.minecraft.core.registries.Registries.BLOCK, resource("interact_protected/light"));
+            public static final TagKey<Block> INTERACT_PROTECTED_MEDIUM =
+                    TagKey.create(net.minecraft.core.registries.Registries.BLOCK, resource("interact_protected/medium"));
+            public static final TagKey<Block> INTERACT_PROTECTED_HEAVY =
+                    TagKey.create(net.minecraft.core.registries.Registries.BLOCK, resource("interact_protected/heavy"));
         }
 
         public static class EntityTypes {
             public static final TagKey<EntityType<?>> WITNESSES =
                     TagKey.create(net.minecraft.core.registries.Registries.ENTITY_TYPE, resource("witnesses"));
+            public static final TagKey<EntityType<?>> GUARDS =
+                    TagKey.create(net.minecraft.core.registries.Registries.ENTITY_TYPE, resource("guards"));
         }
 
         public static class Structures {

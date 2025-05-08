@@ -1,6 +1,6 @@
 {
   "values": [
-    "minecraft:villager",
-    "minecraft:iron_golem"
+    "#thief:guards",
+    "minecraft:villager"
   ]
 }

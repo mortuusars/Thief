@@ -35,12 +35,7 @@ repositories {
         name 'tterrag maven'
         url 'https://maven.tterrag.com'
     }
-    maven {
-        url 'https://www.cursemaven.com'
-        content {
-            includeGroup "curse.maven"
-        }
-    }
+
 }
 
 dependencies {
@@ -48,6 +43,8 @@ dependencies {
 
     compileOnly(annotationProcessor("io.github.llamalad7:mixinextras-common:0.4.1"))
     implementation(include("io.github.llamalad7:mixinextras-neoforge:0.4.1"))
+
+    modRuntimeOnly("maven.modrinth:guard-villagers:cXW6pA2s")
 
     modRuntimeOnly("mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}") { transitive = false }
     modRuntimeOnly("curse.maven:jade-324717:${jade_neoforge_id}") { transitive = false }

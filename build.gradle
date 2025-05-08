@@ -49,7 +49,6 @@ subprojects {
             name = "ModMaven"
             url = "https://modmaven.dev"
         }
-        maven { url = "https://cursemaven.com" }
         maven { // saps.dev Maven (KubeJS and Rhino)
             url = "https://maven.saps.dev/releases"
             content {
@@ -64,8 +63,19 @@ subprojects {
             name = "Fuzs Mod Resources"
             url = "https://raw.githubusercontent.com/Fuzss/modresources/main/maven/"
         }
-        maven { url = "https://maven.createmod.net" } // Create, Ponder, Flywheel
-        maven { url = "https://mvn.devos.one/snapshots" } // Registrate
+        maven {
+            url 'https://www.cursemaven.com'
+            content {
+                includeGroup "curse.maven"
+            }
+        }
+        maven {
+            name = "Modrinth"
+            url = "https://api.modrinth.com/maven"
+            content {
+                includeGroup "maven.modrinth"
+            }
+        }
     }
 
     loom {

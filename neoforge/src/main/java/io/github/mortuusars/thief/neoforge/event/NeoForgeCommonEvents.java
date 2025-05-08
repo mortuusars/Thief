@@ -63,6 +63,13 @@ public class NeoForgeCommonEvents {
         }
 
         @SubscribeEvent
+        public static void onRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
+            if (event.getEntity() instanceof ServerPlayer serverPlayer) {
+                ServerEvents.onBlockInteract(serverPlayer, event.getPos(), event.getHand());
+            }
+        }
+
+        @SubscribeEvent
         public static void onEntityInteract(PlayerInteractEvent.EntityInteract event) {
             if (CommonEvents.onEntityInteracted(event.getEntity(), event.getHand(), event.getTarget()) != InteractionResult.PASS) {
                 event.setCanceled(true);

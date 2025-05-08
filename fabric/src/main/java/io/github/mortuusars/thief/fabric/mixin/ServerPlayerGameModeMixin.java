@@ -5,7 +5,12 @@ import io.github.mortuusars.thief.event.ServerEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.level.ServerPlayerGameMode;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -23,5 +28,12 @@ public class ServerPlayerGameModeMixin {
                     shift = At.Shift.AFTER))
     private void onBlockDestroyed(BlockPos pos, CallbackInfoReturnable<Boolean> cir, @Local BlockState state) {
         ServerEvents.onBlockDestroyedByPlayer(player, pos, state);
+    }
+
+    @Inject(method = "useItemOn",
+            at = @At(value = "INVOKE",
+                    target = "Lnet/minecraft/server/level/ServerPlayer;getMainHandItem()Lnet/minecraft/world/item/ItemStack;"))
+    private void onUseItemOn(ServerPlayer player, Level level, ItemStack stack, InteractionHand hand, BlockHitResult hitResult, CallbackInfoReturnable<InteractionResult> cir, @Local BlockState state) {
+        ServerEvents.onBlockInteract(player, hitResult.getBlockPos(), hand);
     }
 }
