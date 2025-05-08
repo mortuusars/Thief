@@ -1,5 +1,6 @@
 package io.github.mortuusars.thief.world;
 
+import io.github.mortuusars.thief.Config;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
@@ -59,6 +60,10 @@ public enum Reputation {
             case MEDIUM -> isGreaterOrEqualTo(RESPECTED);
             case HEAVY -> isGreaterOrEqualTo(HONORED);
         };
+    }
+
+    public boolean canTrade() {
+        return isGreaterOrEqualTo(Config.Server.REPUTATION_NEEDED_TO_TRADE.get());
     }
 
     // --

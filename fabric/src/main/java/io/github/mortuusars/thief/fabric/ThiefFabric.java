@@ -39,8 +39,6 @@ public class ThiefFabric implements ModInitializer {
         UseEntityCallback.EVENT.register((player, world, hand, entity, hitResult) ->
                 CommonEvents.onEntityInteracted(player, hand, entity));
 
-        Thief.Stats.register();
-
         FabricC2SPackets.register();
         FabricS2CPackets.register();
     }

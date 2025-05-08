@@ -1,6 +1,8 @@
 package io.github.mortuusars.thief;
 
 import io.github.mortuusars.thief.world.PotentialCrime;
+import io.github.mortuusars.thief.world.Reputation;
+import net.minecraft.world.entity.ai.gossip.GossipType;
 import net.neoforged.neoforge.common.ModConfigSpec;
 
 /**
@@ -15,18 +17,27 @@ public class Config {
         public static final ModConfigSpec.BooleanValue CRIME_FOR_INTERACTING_WITH_PROTECTED_BLOCKS;
         public static final ModConfigSpec.EnumValue<PotentialCrime> CRIME_FOR_KICKING_VILLAGER_OUT_OF_BED;
         public static final ModConfigSpec.EnumValue<PotentialCrime> CRIME_FOR_SLEEPING_IN_VILLAGERS_BED;
+        public static final ModConfigSpec.BooleanValue HERO_OF_THE_VILLAGE_CAN_STEAL;
+        public static final ModConfigSpec.BooleanValue CRIME_ONLY_IN_PROTECTED_STRUCTURE;
 
         // Witness
         public static final ModConfigSpec.IntValue WITNESS_MAX_DISTANCE;
         public static final ModConfigSpec.IntValue WITNESS_ALWAYS_NOTICE_DISTANCE;
 
-        // Offence
-        public static final ModConfigSpec.IntValue OFFENCE_LIGHT_MAJOR_NEGATIVE;
-        public static final ModConfigSpec.IntValue OFFENCE_LIGHT_MINOR_NEGATIVE;
-        public static final ModConfigSpec.IntValue OFFENCE_MEDIUM_MAJOR_NEGATIVE;
-        public static final ModConfigSpec.IntValue OFFENCE_MEDIUM_MINOR_NEGATIVE;
-        public static final ModConfigSpec.IntValue OFFENCE_HEAVY_MAJOR_NEGATIVE;
-        public static final ModConfigSpec.IntValue OFFENCE_HEAVY_MINOR_NEGATIVE;
+        // Punishment
+        public static final ModConfigSpec.EnumValue<Reputation> REPUTATION_NEEDED_TO_TRADE;
+        // Reputation
+        public static final ModConfigSpec.IntValue PUNISHMENT_LIGHT_MAJOR_NEGATIVE;
+        public static final ModConfigSpec.IntValue PUNISHMENT_LIGHT_MINOR_NEGATIVE;
+        public static final ModConfigSpec.IntValue PUNISHMENT_MEDIUM_MAJOR_NEGATIVE;
+        public static final ModConfigSpec.IntValue PUNISHMENT_MEDIUM_MINOR_NEGATIVE;
+        public static final ModConfigSpec.IntValue PUNISHMENT_HEAVY_MAJOR_NEGATIVE;
+        public static final ModConfigSpec.IntValue PUNISHMENT_HEAVY_MINOR_NEGATIVE;
+
+        // Gifts
+        public static final ModConfigSpec.BooleanValue GIFTS_ENABLED;
+        public static final ModConfigSpec.IntValue GIFTS_MINOR_POSITIVE_INCREASE;
+        public static final ModConfigSpec.IntValue GIFTS_MINOR_NEGATIVE_REDUCTION;
 
         // Misc
         public static final ModConfigSpec.BooleanValue FIX_SHIFT_CLICK_TRADE_REPUTATION;
@@ -35,7 +46,7 @@ public class Config {
             ModConfigSpec.Builder builder = new ModConfigSpec.Builder();
 
             {
-                builder.push("Crimes");
+                builder.push("crime");
                 CRIME_FOR_BREAKING_PROTECTED_BLOCKS = builder
                         .comment("Breaking protected blocks (#thief:break_protected/<level>) in protected structure (#thief:protected) is considered a crime.", "Default: true")
                         .define("breaking_protected_blocks", true);
@@ -48,11 +59,17 @@ public class Config {
                 CRIME_FOR_SLEEPING_IN_VILLAGERS_BED = builder
                         .comment("Crime severity for sleeping in a bed that belongs to a villager. Default: MEDIUM")
                         .defineEnum("sleeping_in_villagers_bed", PotentialCrime.MEDIUM);
+                CRIME_ONLY_IN_PROTECTED_STRUCTURE = builder
+                        .comment("Check for crimes only in #thief:protected structures. If disabled, whole world is 'protected'. Default: true.")
+                        .define("crime_only_in_protected_structures", true);
+                HERO_OF_THE_VILLAGE_CAN_STEAL = builder
+                        .comment("Players with 'Hero of the Village' buff can steal without consequences. Default: true")
+                        .define("hero_of_the_village_can_steal", true);
                 builder.pop();
             }
 
             {
-                builder.push("Witness");
+                builder.push("witness");
                 WITNESS_MAX_DISTANCE = builder
                         .comment("Max distance (in blocks) at which an entity can notice a crime.")
                         .defineInRange("max_notice_distance", 32, 1, 64);
@@ -63,30 +80,53 @@ public class Config {
             }
 
             {
-                builder.push("Offence");
-                OFFENCE_LIGHT_MAJOR_NEGATIVE = builder
-                    .comment("[LIGHT] Value added to 'Major Negative' reputation gossip.")
-                    .defineInRange("light_major_change", 0, 0, 100);
-                OFFENCE_LIGHT_MINOR_NEGATIVE = builder
-                        .comment("[LIGHT] Value added to 'Minor Negative' reputation gossip.")
-                        .defineInRange("light_minor_change", 15, 0, 200);
-                OFFENCE_MEDIUM_MAJOR_NEGATIVE = builder
-                        .comment("[MEDIUM] Value added to 'Major Negative' reputation gossip.")
-                        .defineInRange("medium_major_change", 5, 0, 100);
-                OFFENCE_MEDIUM_MINOR_NEGATIVE = builder
-                        .comment("[MEDIUM] Value added to 'Minor Negative' reputation gossip.")
-                        .defineInRange("medium_minor_change", 25, 0, 200);
-                OFFENCE_HEAVY_MAJOR_NEGATIVE = builder
-                        .comment("[HEAVY] Value added to 'Major Negative' reputation gossip.")
-                        .defineInRange("heavy_major_change", 20, 0, 100);
-                OFFENCE_HEAVY_MINOR_NEGATIVE = builder
-                        .comment("[HEAVY] Value added to 'Minor Negative' reputation gossip.")
-                        .defineInRange("heavy_minor_change", 50, 0, 200);
+                builder.push("punishment");
+                REPUTATION_NEEDED_TO_TRADE = builder
+                        .comment("Minimum reputation level needed for a villager to trade with the player. Anything lower will prevent the trade. Default: DISTRUSTED")
+                        .defineEnum("reputation_needed_to_trade", Reputation.DISTRUSTED);
+
+                {
+                    builder.push("reputation");
+                    PUNISHMENT_LIGHT_MAJOR_NEGATIVE = builder
+                            .comment("[LIGHT] Value added to 'Major Negative' reputation gossip.")
+                            .defineInRange("light_major_change", 0, 0, GossipType.MAJOR_NEGATIVE.max);
+                    PUNISHMENT_LIGHT_MINOR_NEGATIVE = builder
+                            .comment("[LIGHT] Value added to 'Minor Negative' reputation gossip.")
+                            .defineInRange("light_minor_change", 15, 0, GossipType.MINOR_NEGATIVE.max);
+                    PUNISHMENT_MEDIUM_MAJOR_NEGATIVE = builder
+                            .comment("[MEDIUM] Value added to 'Major Negative' reputation gossip.")
+                            .defineInRange("medium_major_change", 5, 0, GossipType.MAJOR_NEGATIVE.max);
+                    PUNISHMENT_MEDIUM_MINOR_NEGATIVE = builder
+                            .comment("[MEDIUM] Value added to 'Minor Negative' reputation gossip.")
+                            .defineInRange("medium_minor_change", 25, 0, GossipType.MINOR_NEGATIVE.max);
+                    PUNISHMENT_HEAVY_MAJOR_NEGATIVE = builder
+                            .comment("[HEAVY] Value added to 'Major Negative' reputation gossip.")
+                            .defineInRange("heavy_major_change", 20, 0, GossipType.MAJOR_NEGATIVE.max);
+                    PUNISHMENT_HEAVY_MINOR_NEGATIVE = builder
+                            .comment("[HEAVY] Value added to 'Minor Negative' reputation gossip.")
+                            .defineInRange("heavy_minor_change", 50, 0, GossipType.MINOR_NEGATIVE.max);
+                    builder.pop();
+                }
+
                 builder.pop();
             }
 
             {
-                builder.push("Misc");
+                builder.push("gifts");
+                GIFTS_ENABLED = builder
+                        .comment("Villagers accept gifts (#thief:villager_gifts) that will improve player's reputation with them. Default: true")
+                        .define("enabled", true);
+                GIFTS_MINOR_POSITIVE_INCREASE = builder
+                        .comment("'Minor Positive' increase per gift. Default: 2")
+                        .defineInRange("minor_positive_increase", 2, 0, GossipType.MINOR_POSITIVE.max);
+                GIFTS_MINOR_NEGATIVE_REDUCTION = builder
+                        .comment("'Minor Negative' reduction per gift. Default: 5")
+                        .defineInRange("minor_negative_reduction", 5, 0, GossipType.MINOR_NEGATIVE.max);
+                builder.pop();
+            }
+
+            {
+                builder.push("misc");
                 FIX_SHIFT_CLICK_TRADE_REPUTATION = builder
                         .comment("Fix villager trade reputation (gossip) not applying properly when using shift+click to trade (shift+clicking is considered one trade operation, instead of many). Default: true.")
                         .define("fix_shift_click_villager_trading_reputation", true);

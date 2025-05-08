@@ -16,7 +16,9 @@ import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.stats.StatFormatter;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
@@ -137,5 +139,11 @@ public class RegisterImpl {
     public static <T extends ParticleType<? extends ParticleOptions>> Supplier<T> particleType(String name, Supplier<T> supplier) {
         T particleType = Registry.register(BuiltInRegistries.PARTICLE_TYPE, name, supplier.get());
         return () -> particleType;
+    }
+
+    public static Supplier<ResourceLocation> stat(ResourceLocation location, StatFormatter formatter) {
+        net.minecraft.core.Registry.register(BuiltInRegistries.CUSTOM_STAT, location, location);
+        net.minecraft.stats.Stats.CUSTOM.get(location, formatter);
+        return () -> location;
     }
 }

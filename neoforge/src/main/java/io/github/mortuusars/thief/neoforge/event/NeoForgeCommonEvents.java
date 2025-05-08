@@ -3,6 +3,7 @@ package io.github.mortuusars.thief.neoforge.event;
 import io.github.mortuusars.thief.Thief;
 import io.github.mortuusars.thief.event.CommonEvents;
 import io.github.mortuusars.thief.event.ServerEvents;
+import io.github.mortuusars.thief.neoforge.RegisterImpl;
 import io.github.mortuusars.thief.network.neoforge.PacketsImpl;
 import io.github.mortuusars.thief.network.packet.C2SPackets;
 import io.github.mortuusars.thief.network.packet.CommonPackets;
@@ -11,7 +12,10 @@ import io.github.mortuusars.thief.network.packet.S2CPackets;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.stats.StatFormatter;
+import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionResult;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -23,12 +27,18 @@ import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 
+import java.util.Map;
+
 public class NeoForgeCommonEvents {
     @EventBusSubscriber(modid = Thief.ID, bus = EventBusSubscriber.Bus.MOD)
     public static class ModBus {
         @SubscribeEvent
         public static void commonSetup(FMLCommonSetupEvent event) {
-            event.enqueueWork(Thief.Stats::register);
+            event.enqueueWork(() -> {
+                for (Map.Entry<ResourceLocation, StatFormatter> entry : RegisterImpl.STATS.entrySet()) {
+                    Stats.CUSTOM.get(entry.getKey(), entry.getValue());
+                }
+            });
         }
 
         @SuppressWarnings("unchecked")

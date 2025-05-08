@@ -6,6 +6,7 @@
   "client": [
   ],
   "mixins": [
+    "ShowTradesToPlayerMixin",
     "bed.BedBlockMixin",
     "bed.PlayerMixin",
     "fix_trade_reputation.VillagerMixin",

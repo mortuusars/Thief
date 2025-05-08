@@ -6,13 +6,12 @@ import io.github.mortuusars.thief.Thief;
 import io.github.mortuusars.thief.api.witness.WitnessReaction;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.EntityEvent;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.village.ReputationEventType;
-import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.state.BlockState;
 import org.slf4j.Logger;
@@ -43,17 +42,25 @@ public enum Crime implements ReputationEventType {
 
     public int getMajorNegativeChange() {
         return switch (this) {
-            case LIGHT -> Config.Server.OFFENCE_LIGHT_MAJOR_NEGATIVE.get();
-            case MEDIUM -> Config.Server.OFFENCE_MEDIUM_MAJOR_NEGATIVE.get();
-            case HEAVY -> Config.Server.OFFENCE_HEAVY_MAJOR_NEGATIVE.get();
+            case LIGHT -> Config.Server.PUNISHMENT_LIGHT_MAJOR_NEGATIVE.get();
+            case MEDIUM -> Config.Server.PUNISHMENT_MEDIUM_MAJOR_NEGATIVE.get();
+            case HEAVY -> Config.Server.PUNISHMENT_HEAVY_MAJOR_NEGATIVE.get();
         };
     }
 
     public int getMinorNegativeChange() {
         return switch (this) {
-            case LIGHT -> Config.Server.OFFENCE_LIGHT_MINOR_NEGATIVE.get();
-            case MEDIUM -> Config.Server.OFFENCE_MEDIUM_MINOR_NEGATIVE.get();
-            case HEAVY -> Config.Server.OFFENCE_HEAVY_MINOR_NEGATIVE.get();
+            case LIGHT -> Config.Server.PUNISHMENT_LIGHT_MINOR_NEGATIVE.get();
+            case MEDIUM -> Config.Server.PUNISHMENT_MEDIUM_MINOR_NEGATIVE.get();
+            case HEAVY -> Config.Server.PUNISHMENT_HEAVY_MINOR_NEGATIVE.get();
+        };
+    }
+
+    public ResourceLocation getStat() {
+        return switch (this) {
+            case LIGHT -> Thief.Stats.VILLAGE_LIGHT_THEFTS_COMMITED.get();
+            case MEDIUM -> Thief.Stats.VILLAGE_MEDIUM_THEFTS_COMMITED.get();
+            case HEAVY -> Thief.Stats.VILLAGE_HEAVY_THEFTS_COMMITED.get();
         };
     }
 
@@ -65,11 +72,11 @@ public enum Crime implements ReputationEventType {
     // --
 
     public Outcome commit(ServerLevel level, LivingEntity criminal, BlockPos crimeTargetPosition) {
-        if (criminal.hasEffect(MobEffects.HERO_OF_THE_VILLAGE)) { //TODO: config
+        if (Config.Server.HERO_OF_THE_VILLAGE_CAN_STEAL.get() && criminal.hasEffect(MobEffects.HERO_OF_THE_VILLAGE)) {
             return Outcome.NONE;
         }
 
-        if (!isInProtectedStructure(level, crimeTargetPosition)) { //TODO: config
+        if (Config.Server.CRIME_ONLY_IN_PROTECTED_STRUCTURE.get() && !isInProtectedStructure(level, crimeTargetPosition)) {
             return Outcome.NONE;
         }
 
@@ -90,6 +97,7 @@ public enum Crime implements ReputationEventType {
 
         if (criminal instanceof Player player) {
             player.displayClientMessage(Component.translatable("gui.thief.crime_commited." + getName()), true);
+            player.awardStat(getStat());
         }
 
         LOGGER.debug("{} with average reputation '{}', has commited a {} crime and was seen by {} witnesses.",

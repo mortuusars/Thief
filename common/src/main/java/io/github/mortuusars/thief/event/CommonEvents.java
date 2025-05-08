@@ -40,8 +40,11 @@ public class CommonEvents {
         ItemStack item = player.getItemInHand(hand);
         if (canGift(serverPlayer, villager, item)) {
             item.shrink(1);
-            villager.getGossips().add(player.getUUID(), GossipType.MINOR_POSITIVE, 2);
-            villager.getGossips().remove(player.getUUID(), GossipType.MINOR_NEGATIVE, 5);
+
+            villager.getGossips().add(player.getUUID(), GossipType.MINOR_POSITIVE,
+                    Config.Server.GIFTS_MINOR_POSITIVE_INCREASE.get());
+            villager.getGossips().remove(player.getUUID(), GossipType.MINOR_NEGATIVE,
+                    Config.Server.GIFTS_MINOR_NEGATIVE_REDUCTION.get());
 
             // Calm down panicking villager
             if (villager.getBrain().isActive(Activity.PANIC) && villager.getPlayerReputation(player) > -60) {
@@ -56,7 +59,7 @@ public class CommonEvents {
             return InteractionResult.SUCCESS;
         }
 
-        if (Reputation.fromValue(villager.getPlayerReputation(player)).isLowerOrEqualTo(Reputation.UNWELCOME)) {
+        if (!Reputation.fromValue(villager, player).canTrade()) {
             // Prevent trading
             villager.setUnhappy();
             return InteractionResult.SUCCESS_NO_ITEM_USED;
@@ -65,9 +68,8 @@ public class CommonEvents {
     }
 
     public static boolean canGift(ServerPlayer player, Villager villager, ItemStack item) {
-        if (!item.is(Thief.Tags.Items.VILLAGER_GIFTS)) {
-            return false;
-        }
+        if (!Config.Server.GIFTS_ENABLED.get()) return false;
+        if (!item.is(Thief.Tags.Items.VILLAGER_GIFTS)) return false;
         int minorPositiveRep = villager.getGossips().getReputation(player.getUUID(), gossipType -> gossipType == GossipType.MINOR_POSITIVE);
         int minorNegativeRep = villager.getGossips().getReputation(player.getUUID(), gossipType -> gossipType == GossipType.MINOR_NEGATIVE);
         return minorPositiveRep < GossipType.MINOR_POSITIVE.max || minorNegativeRep < 0;

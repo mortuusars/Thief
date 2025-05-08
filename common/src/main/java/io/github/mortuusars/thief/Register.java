@@ -10,7 +10,9 @@ import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.stats.StatFormatter;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
@@ -126,6 +128,11 @@ public class Register {
 
     @ExpectPlatform
     public static <T extends ParticleType<? extends ParticleOptions>> Supplier<T> particleType(String name, Supplier<T> supplier) {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    public static Supplier<ResourceLocation> stat(ResourceLocation location, StatFormatter formatter) {
         throw new AssertionError();
     }
 }
