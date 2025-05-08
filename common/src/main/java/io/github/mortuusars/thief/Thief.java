@@ -2,17 +2,11 @@ package io.github.mortuusars.thief;
 
 import com.google.common.base.Preconditions;
 import com.mojang.logging.LogUtils;
-import io.github.mortuusars.thief.api.witness.WitnessReaction;
-import io.github.mortuusars.thief.api.witness.WitnessReactionHandler;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.stats.StatFormatter;
 import net.minecraft.tags.TagKey;
-import net.minecraft.world.entity.EntityEvent;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.levelgen.structure.Structure;
@@ -117,12 +111,12 @@ public class Thief {
 //        }
 //    }
 public static class Stats {
-    public static final Supplier<ResourceLocation> VILLAGE_LIGHT_THEFTS_COMMITED =
-            Register.stat(resource("village_light_thefts_commited"), StatFormatter.DEFAULT);
-    public static final Supplier<ResourceLocation> VILLAGE_MEDIUM_THEFTS_COMMITED =
-            Register.stat(resource("village_medium_thefts_commited"), StatFormatter.DEFAULT);
-    public static final Supplier<ResourceLocation> VILLAGE_HEAVY_THEFTS_COMMITED =
-            Register.stat(resource("village_heavy_thefts_commited"), StatFormatter.DEFAULT);
+    public static final Supplier<ResourceLocation> CAUGHT_ON_VILLAGE_LIGHT_THEFTS =
+            Register.stat(resource("caught_at_light_thefts_in_village"), StatFormatter.DEFAULT);
+    public static final Supplier<ResourceLocation> CAUGHT_ON_VILLAGE_MEDIUM_THEFTS =
+            Register.stat(resource("caught_at_medium_thefts_in_village"), StatFormatter.DEFAULT);
+    public static final Supplier<ResourceLocation> CAUGHT_ON_VILLAGE_HEAVY_THEFTS =
+            Register.stat(resource("caught_at_heavy_thefts_in_village"), StatFormatter.DEFAULT);
     public static void init() {
     }
 }

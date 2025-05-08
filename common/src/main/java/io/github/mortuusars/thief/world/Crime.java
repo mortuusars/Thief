@@ -58,9 +58,9 @@ public enum Crime implements ReputationEventType {
 
     public ResourceLocation getStat() {
         return switch (this) {
-            case LIGHT -> Thief.Stats.VILLAGE_LIGHT_THEFTS_COMMITED.get();
-            case MEDIUM -> Thief.Stats.VILLAGE_MEDIUM_THEFTS_COMMITED.get();
-            case HEAVY -> Thief.Stats.VILLAGE_HEAVY_THEFTS_COMMITED.get();
+            case LIGHT -> Thief.Stats.CAUGHT_ON_VILLAGE_LIGHT_THEFTS.get();
+            case MEDIUM -> Thief.Stats.CAUGHT_ON_VILLAGE_MEDIUM_THEFTS.get();
+            case HEAVY -> Thief.Stats.CAUGHT_ON_VILLAGE_HEAVY_THEFTS.get();
         };
     }
 

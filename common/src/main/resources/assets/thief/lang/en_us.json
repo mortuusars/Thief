@@ -29,7 +29,7 @@
   "gui.thief.crime_commited.medium": "§cYou have been observed committing a medium crime",
   "gui.thief.crime_commited.heavy": "§cYou have been caught committing a heavy crime",
 
-  "stat.thief.village_light_thefts_commited": "Village Light Thefts Commited",
-  "stat.thief.village_medium_thefts_commited": "Village Medium Thefts Commited",
-  "stat.thief.village_heavy_thefts_commited": "Village Heavy Thefts Commited"
+  "stat.thief.caught_at_light_thefts_in_village": "Times Caught Committing Light Thefts in a Village",
+  "stat.thief.caught_at_medium_thefts_in_village": "Times Caught Committing Medium Thefts in a Village",
+  "stat.thief.caught_at_heavy_thefts_in_village": "Times Caught Committing Heavy Thefts in a Village"
 }
