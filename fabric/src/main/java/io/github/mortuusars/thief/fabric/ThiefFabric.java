@@ -8,11 +8,10 @@ import io.github.mortuusars.thief.network.fabric.FabricC2SPackets;
 import io.github.mortuusars.thief.network.fabric.FabricS2CPackets;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
-import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
-import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.event.player.UseEntityCallback;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.world.InteractionResult;
 import net.neoforged.fml.config.ModConfig;
 import org.jetbrains.annotations.Nullable;
 
@@ -36,8 +35,10 @@ public class ThiefFabric implements ModInitializer {
             ThiefFabric.server = null;
         });
 
-        UseEntityCallback.EVENT.register((player, world, hand, entity, hitResult) ->
-                CommonEvents.onEntityInteracted(player, hand, entity));
+        UseEntityCallback.EVENT.register((player, world, hand, entity, hitResult) -> {
+            if (hitResult != null) return InteractionResult.PASS;
+            return CommonEvents.onEntityInteracted(player, hand, entity);
+        });
 
         FabricC2SPackets.register();
         FabricS2CPackets.register();

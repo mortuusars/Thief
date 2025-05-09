@@ -33,7 +33,7 @@ public class CommonEvents {
     private static long lastGiftSoundPlayedAt = -1;
 
     public static InteractionResult onEntityInteracted(Player player, InteractionHand hand, Entity target) {
-        if (!(player instanceof ServerPlayer serverPlayer) || !(target instanceof Villager villager)) {
+        if (hand != InteractionHand.MAIN_HAND || !(player instanceof ServerPlayer serverPlayer) || !(target instanceof Villager villager)) {
             return InteractionResult.PASS;
         }
 
@@ -67,6 +67,7 @@ public class CommonEvents {
             villager.setUnhappy();
             return InteractionResult.SUCCESS_NO_ITEM_USED;
         }
+
         return InteractionResult.PASS;
     }
 
