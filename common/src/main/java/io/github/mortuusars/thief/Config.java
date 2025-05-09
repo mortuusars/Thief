@@ -140,8 +140,8 @@ public class Config {
                         .defineInRange("minor_negative_reduction", 5, 0, GossipType.MINOR_NEGATIVE.max);
                 REQUIRES_SNEAK = builder
                         .comment(" Giving gifts requires 'sneak' to be held.",
-                                " Default: false")
-                        .define("requires_sneak", false);
+                                " Default: true")
+                        .define("requires_sneak", true);
                 builder.pop();
             }
 

@@ -66,7 +66,7 @@ public enum Crime implements ReputationEventType {
 
     public boolean shouldGuardsAttack() {
         return Config.Server.GUARD_ATTACK_THRESHOLD.get().getCrime()
-                .map(crime -> crime.ordinal() >= this.ordinal())
+                .map(crime -> this.ordinal() >= crime.ordinal())
                 .orElse(false);
     }
 
