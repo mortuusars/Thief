@@ -38,8 +38,8 @@ public class CommonEvents {
         }
 
         ItemStack item = player.getItemInHand(hand);
-        if (canGift(serverPlayer, villager, item)) {
-            item.shrink(1);
+        if ((!Config.Server.REQUIRES_SNEAK.get() || player.isSecondaryUseActive()) && canGift(serverPlayer, villager, item)) {
+            ItemStack gift = item.split(1);
 
             villager.getGossips().add(player.getUUID(), GossipType.MINOR_POSITIVE,
                     Config.Server.GIFTS_MINOR_POSITIVE_INCREASE.get());
@@ -56,6 +56,9 @@ public class CommonEvents {
                 player.level().playSound(null, villager, SoundEvents.VILLAGER_CELEBRATE, SoundSource.NEUTRAL, 1, 1);
                 lastGiftSoundPlayedAt = player.level().getGameTime();
             }
+
+            Thief.CriteriaTriggers.VILLAGER_GIFT.get().trigger(serverPlayer, villager, gift);
+
             return InteractionResult.SUCCESS;
         }
 

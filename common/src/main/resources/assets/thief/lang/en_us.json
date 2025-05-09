@@ -31,5 +31,8 @@
 
   "stat.thief.caught_at_light_thefts_in_village": "Times Caught Committing Light Thefts in a Village",
   "stat.thief.caught_at_medium_thefts_in_village": "Times Caught Committing Medium Thefts in a Village",
-  "stat.thief.caught_at_heavy_thefts_in_village": "Times Caught Committing Heavy Thefts in a Village"
+  "stat.thief.caught_at_heavy_thefts_in_village": "Times Caught Committing Heavy Thefts in a Village",
+
+  "advancement.thief.kind_gesture.title": "A Kind Gesture",
+  "advancement.thief.kind_gesture.description": "Make a Villager like you more by giving them a gift"
 }

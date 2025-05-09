@@ -1,4 +1,4 @@
-package io.github.mortuusars.thief.mixin.fix_trade_reputation;
+package io.github.mortuusars.thief.mixin.fix_bulk_trade_reputation;
 
 import io.github.mortuusars.thief.Config;
 import net.minecraft.server.level.ServerLevel;

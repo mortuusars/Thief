@@ -1,4 +1,4 @@
-package io.github.mortuusars.thief.mixin.bed;
+package io.github.mortuusars.thief.mixin.bed_crimes;
 
 import io.github.mortuusars.thief.Config;
 import net.minecraft.core.BlockPos;

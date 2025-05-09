@@ -1,0 +1,29 @@
+{
+  "parent": "minecraft:adventure/trade",
+  "criteria": {
+    "gift": {
+      "conditions": {},
+      "trigger": "thief:villager_gift"
+    }
+  },
+  "display": {
+    "frame": "task",
+    "hidden": false,
+    "show_toast": true,
+    "announce_to_chat": true,
+    "icon": {
+      "id": "minecraft:emerald"
+    },
+    "title": {
+      "translate": "advancement.thief.kind_gesture.title"
+    },
+    "description": {
+      "translate": "advancement.thief.kind_gesture.description"
+    }
+  },
+  "requirements": [
+    [
+      "gift"
+    ]
+  ]
+}

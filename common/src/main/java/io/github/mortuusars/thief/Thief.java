@@ -2,6 +2,7 @@ package io.github.mortuusars.thief;
 
 import com.google.common.base.Preconditions;
 import com.mojang.logging.LogUtils;
+import io.github.mortuusars.thief.advancement.trigger.VillagerGiftTrigger;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.stats.StatFormatter;
@@ -122,6 +123,8 @@ public static class Stats {
 }
 
     public static class CriteriaTriggers {
+        public static Supplier<VillagerGiftTrigger> VILLAGER_GIFT = Register.criterionTrigger("villager_gift", VillagerGiftTrigger::new);
+
         public static void init() {
         }
     }

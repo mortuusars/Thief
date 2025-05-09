@@ -1,4 +1,4 @@
-package io.github.mortuusars.thief.mixin;
+package io.github.mortuusars.thief.mixin.dont_show_traders_to_criminals;
 
 import io.github.mortuusars.thief.world.Reputation;
 import net.minecraft.server.level.ServerLevel;

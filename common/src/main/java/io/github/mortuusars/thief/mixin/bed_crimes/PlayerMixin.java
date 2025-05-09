@@ -1,4 +1,4 @@
-package io.github.mortuusars.thief.mixin.bed;
+package io.github.mortuusars.thief.mixin.bed_crimes;
 
 import com.mojang.datafixers.util.Either;
 import io.github.mortuusars.thief.Config;

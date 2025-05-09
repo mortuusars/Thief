@@ -1,5 +1,6 @@
 package io.github.mortuusars.thief.client;
 
+import io.github.mortuusars.thief.Config;
 import io.github.mortuusars.thief.Thief;
 import io.github.mortuusars.thief.network.Packets;
 import io.github.mortuusars.thief.network.packet.serverbound.QueryVillagerReputationC2SP;
@@ -29,8 +30,9 @@ public class VillagerReputationTooltip {
     private static int lastTrading;
 
     public static void render(GuiGraphics guiGraphics, DeltaTracker deltaTracker) {
-        Minecraft minecraft = Minecraft.getInstance();
+        if (!Config.Client.SHOW_VILLAGER_REPUTATION_TOOLTIP.get()) return;
 
+        Minecraft minecraft = Minecraft.getInstance();
         if (minecraft.level == null || minecraft.player == null || minecraft.player.isSpectator() || minecraft.screen != null
                 || !minecraft.player.getMainHandItem().is(Thief.Tags.Items.VILLAGER_GIFTS)
                 || !(minecraft.hitResult instanceof EntityHitResult entityHitResult)
