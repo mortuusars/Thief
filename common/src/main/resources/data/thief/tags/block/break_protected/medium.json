@@ -3,7 +3,6 @@
     "#c:chests",
     "#c:barrels",
     "#c:villager_job_sites",
-    "#minecraft:beds",
-    "minecraft:bell"
+    "#minecraft:beds"
   ]
 }
