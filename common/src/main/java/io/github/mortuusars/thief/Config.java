@@ -24,7 +24,8 @@ public class Config {
         public static final ModConfigSpec.IntValue WITNESS_ALWAYS_NOTICE_DISTANCE;
 
         // Punishment
-        public static final ModConfigSpec.EnumValue<Reputation> REPUTATION_NEEDED_TO_TRADE;
+        public static final ModConfigSpec.EnumValue<Reputation> TRADE_REPUTATION_THRESHOLD;
+        public static final ModConfigSpec.EnumValue<PotentialCrime> GUARD_ATTACK_THRESHOLD;
         // Reputation
         public static final ModConfigSpec.IntValue PUNISHMENT_LIGHT_MAJOR_NEGATIVE;
         public static final ModConfigSpec.IntValue PUNISHMENT_LIGHT_MINOR_NEGATIVE;
@@ -88,10 +89,14 @@ public class Config {
 
             {
                 builder.push("punishment");
-                REPUTATION_NEEDED_TO_TRADE = builder
+                TRADE_REPUTATION_THRESHOLD = builder
                         .comment(" Minimum reputation level needed for a villager to trade with the player. Anything lower will prevent the trade.",
                                 " Default: DISTRUSTED")
-                        .defineEnum("reputation_needed_to_trade", Reputation.DISTRUSTED);
+                        .defineEnum("trade_reputation_threshold", Reputation.DISTRUSTED);
+                GUARD_ATTACK_THRESHOLD = builder
+                        .comment(" Minimum crime severity at which guards (#thief:guards) will attack the player, if not already attacking something else. Set to NONE to disable.",
+                                " Default: MEDIUM")
+                        .defineEnum("guard_attack_threshold", PotentialCrime.MEDIUM);
 
                 {
                     builder.push("reputation");

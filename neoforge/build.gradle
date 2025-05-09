@@ -45,6 +45,7 @@ dependencies {
     implementation(include("io.github.llamalad7:mixinextras-neoforge:0.4.1"))
 
     modRuntimeOnly("maven.modrinth:guard-villagers:cXW6pA2s")
+    modRuntimeOnly("maven.modrinth:carry-on:79dpvD0M")
 
     modRuntimeOnly("mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}") { transitive = false }
     modRuntimeOnly("curse.maven:jade-324717:${jade_neoforge_id}") { transitive = false }
