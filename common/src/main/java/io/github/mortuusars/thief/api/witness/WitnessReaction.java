@@ -33,7 +33,7 @@ public class WitnessReaction {
         register((level, crime, witness, criminal) -> {
             if (witness.getType().is(Thief.Tags.EntityTypes.GUARDS)
                     && witness instanceof NeutralMob neutralMob
-                    && crime.shouldGuardsAttack()
+                    && crime.shouldGuardsAttack(level, witness, criminal)
                     && witness.canAttack(criminal)
                     && neutralMob.getTarget() == null) { // Only if not already attacking something
                 neutralMob.setTarget(criminal); // Attack

@@ -14,6 +14,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.village.ReputationEventType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 
 import java.util.Collections;
@@ -64,10 +65,15 @@ public enum Crime implements ReputationEventType {
         };
     }
 
-    public boolean shouldGuardsAttack() {
+    public boolean isOverGuardAttackThreshold() {
         return Config.Server.GUARD_ATTACK_THRESHOLD.get().getCrime()
                 .map(crime -> this.ordinal() >= crime.ordinal())
                 .orElse(false);
+    }
+
+    public boolean shouldGuardsAttack(ServerLevel level, LivingEntity witness, LivingEntity criminal) {
+        return isOverGuardAttackThreshold()
+                && !Reputation.averageFromCrowd(criminal, Witness.getWitnesses(criminal)).ignores(this);
     }
 
     @Override
