@@ -219,7 +219,6 @@ publishMods {
         file project(":neoforge")
         modLoaders.add("neoforge")
         displayName = "${mod_name} - NeoForge ${minecraft_version} - ${mod_version}"
-        requires("exposure")
     }
 
     curseforge("curseforgeFabric") {
@@ -228,7 +227,6 @@ publishMods {
         modLoaders.add("fabric")
         displayName = "${mod_name} - Fabric ${minecraft_version} - ${mod_version}"
         requires("fabric-api")
-        requires("exposure")
     }
 
     modrinth("modrinthNeoForge") {
@@ -236,7 +234,6 @@ publishMods {
         file project(":neoforge")
         modLoaders.add("neoforge")
         displayName = "${mod_name} - ${mod_version}"
-        requires("exposure")
     }
 
     modrinth("modrinthFabric") {
@@ -245,6 +242,5 @@ publishMods {
         modLoaders.add("fabric")
         displayName = "${mod_name} - ${mod_version}"
         requires("fabric-api")
-        requires("exposure")
     }
 }
