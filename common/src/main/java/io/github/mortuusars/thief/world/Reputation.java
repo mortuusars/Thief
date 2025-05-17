@@ -63,7 +63,7 @@ public enum Reputation {
     }
 
     public boolean canTrade() {
-        return isGreaterOrEqualTo(Config.Server.TRADE_REPUTATION_THRESHOLD.get());
+        return isGreaterOrEqualTo(Config.Common.TRADE_REPUTATION_THRESHOLD.get());
     }
 
     // --

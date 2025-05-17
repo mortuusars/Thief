@@ -26,12 +26,12 @@ public abstract class RaidMixin {
     private void onTick(CallbackInfo ci, @Local LivingEntity entity) {
         List<Villager> villagers = getLevel().getEntitiesOfClass(Villager.class, new AABB(getCenter()).inflate(128));
         for (Villager villager : villagers) {
-            int major = Config.Server.HERO_MAJOR_POSITIVE_INCREASE.get();
+            int major = Config.Common.HERO_MAJOR_POSITIVE_INCREASE.get();
             if (major > 0) {
                 villager.getGossips().add(entity.getUUID(), GossipType.MAJOR_POSITIVE, major);
             }
 
-            int minor = Config.Server.HERO_MINOR_POSITIVE_INCREASE.get();
+            int minor = Config.Common.HERO_MINOR_POSITIVE_INCREASE.get();
             if (minor > 0) {
                 villager.getGossips().add(entity.getUUID(), GossipType.MINOR_POSITIVE, minor);
             }

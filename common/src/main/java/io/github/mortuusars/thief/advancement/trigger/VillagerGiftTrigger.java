@@ -1,40 +1,53 @@
 package io.github.mortuusars.thief.advancement.trigger;
 
-import com.mojang.serialization.Codec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.google.gson.JsonObject;
+import io.github.mortuusars.thief.Thief;
 import net.minecraft.advancements.critereon.*;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Optional;
-
 public class VillagerGiftTrigger extends SimpleCriterionTrigger<VillagerGiftTrigger.TriggerInstance> {
+    public static final ResourceLocation ID = Thief.resource("villager_gift");
+
+    public @NotNull ResourceLocation getId() {
+        return ID;
+    }
+
     @Override
-    public @NotNull Codec<TriggerInstance> codec() {
-        return TriggerInstance.CODEC;
+    protected @NotNull TriggerInstance createInstance(JsonObject json, @NotNull ContextAwarePredicate predicate,
+                                                      @NotNull DeserializationContext deserializationContext) {
+        EntityPredicate entityPredicate = EntityPredicate.fromJson(json.get("entity"));
+        ItemPredicate itemPredicate = ItemPredicate.fromJson(json.get("gift"));
+        return new TriggerInstance(predicate, entityPredicate, itemPredicate);
     }
 
-    public void trigger(ServerPlayer player, LivingEntity entity, ItemStack giftStack) {
-        this.trigger(player, triggerInstance ->
-                triggerInstance.matches(player, entity, giftStack));
+    public void trigger(ServerPlayer player, LivingEntity entity, ItemStack gift) {
+        this.trigger(player, triggerInstance -> triggerInstance.matches(player, entity, gift));
     }
 
-    public record TriggerInstance(Optional<ContextAwarePredicate> player,
-                                  Optional<ContextAwarePredicate> entity,
-                                  Optional<ItemPredicate> gift) implements SimpleCriterionTrigger.SimpleInstance {
-        public static final Codec<TriggerInstance> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-                        EntityPredicate.ADVANCEMENT_CODEC.optionalFieldOf("player").forGetter(TriggerInstance::player),
-                        EntityPredicate.ADVANCEMENT_CODEC.optionalFieldOf("entity").forGetter(TriggerInstance::entity),
-                        ItemPredicate.CODEC.optionalFieldOf("gift").forGetter(TriggerInstance::gift))
-                .apply(instance, TriggerInstance::new));
+    public static class TriggerInstance extends AbstractCriterionTriggerInstance {
+        private final EntityPredicate entityPredicate;
+        private final ItemPredicate itemPredicate;
 
-        public boolean matches(ServerPlayer player,
-                               LivingEntity entity,
-                               ItemStack gift) {
-            return (this.entity.isEmpty() || this.entity.get().matches(EntityPredicate.createContext(player, entity)))
-                    && (this.gift.isEmpty() || this.gift.get().test(gift));
+        public TriggerInstance(ContextAwarePredicate predicate, EntityPredicate entityPredicate, ItemPredicate itemPredicate) {
+            super(ID, predicate);
+            this.entityPredicate = entityPredicate;
+            this.itemPredicate = itemPredicate;
+        }
+
+        public boolean matches(ServerPlayer player, LivingEntity entity, ItemStack gift) {
+            return (this.entityPredicate.equals(EntityPredicate.ANY) || this.entityPredicate.matches(player, entity))
+                    && (this.itemPredicate.equals(ItemPredicate.ANY) || this.itemPredicate.matches(gift));
+        }
+
+        public @NotNull JsonObject serializeToJson(@NotNull SerializationContext conditions) {
+            JsonObject jsonobject = super.serializeToJson(conditions);
+            jsonobject.add("entity", this.entityPredicate.serializeToJson());
+            jsonobject.add("gift", this.itemPredicate.serializeToJson());
+            return jsonobject;
         }
     }
 }

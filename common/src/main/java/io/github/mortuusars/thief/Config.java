@@ -3,53 +3,53 @@ package io.github.mortuusars.thief;
 import io.github.mortuusars.thief.world.PotentialCrime;
 import io.github.mortuusars.thief.world.Reputation;
 import net.minecraft.world.entity.ai.gossip.GossipType;
-import net.neoforged.neoforge.common.ModConfigSpec;
+import net.minecraftforge.common.ForgeConfigSpec;
 
 /**
  * Using ForgeConfigApiPort on fabric allows using forge config in both environments and without extra dependencies on forge.
  */
 public class Config {
-    public static class Server {
-        public static final ModConfigSpec SPEC;
+    public static class Common {
+        public static final ForgeConfigSpec SPEC;
 
         // Crimes
-        public static final ModConfigSpec.BooleanValue CRIME_FOR_BREAKING_PROTECTED_BLOCKS;
-        public static final ModConfigSpec.BooleanValue CRIME_FOR_INTERACTING_WITH_PROTECTED_BLOCKS;
-        public static final ModConfigSpec.EnumValue<PotentialCrime> CRIME_FOR_KICKING_VILLAGER_OUT_OF_BED;
-        public static final ModConfigSpec.EnumValue<PotentialCrime> CRIME_FOR_SLEEPING_IN_VILLAGERS_BED;
-        public static final ModConfigSpec.BooleanValue CRIME_ONLY_IN_PROTECTED_STRUCTURE;
+        public static final ForgeConfigSpec.BooleanValue CRIME_FOR_BREAKING_PROTECTED_BLOCKS;
+        public static final ForgeConfigSpec.BooleanValue CRIME_FOR_INTERACTING_WITH_PROTECTED_BLOCKS;
+        public static final ForgeConfigSpec.EnumValue<PotentialCrime> CRIME_FOR_KICKING_VILLAGER_OUT_OF_BED;
+        public static final ForgeConfigSpec.EnumValue<PotentialCrime> CRIME_FOR_SLEEPING_IN_VILLAGERS_BED;
+        public static final ForgeConfigSpec.BooleanValue CRIME_ONLY_IN_PROTECTED_STRUCTURE;
 
         // Witness
-        public static final ModConfigSpec.IntValue WITNESS_MAX_DISTANCE;
-        public static final ModConfigSpec.IntValue WITNESS_ALWAYS_NOTICE_DISTANCE;
+        public static final ForgeConfigSpec.IntValue WITNESS_MAX_DISTANCE;
+        public static final ForgeConfigSpec.IntValue WITNESS_ALWAYS_NOTICE_DISTANCE;
 
         // Punishment
-        public static final ModConfigSpec.EnumValue<Reputation> TRADE_REPUTATION_THRESHOLD;
-        public static final ModConfigSpec.EnumValue<PotentialCrime> GUARD_ATTACK_THRESHOLD;
+        public static final ForgeConfigSpec.EnumValue<Reputation> TRADE_REPUTATION_THRESHOLD;
+        public static final ForgeConfigSpec.EnumValue<PotentialCrime> GUARD_ATTACK_THRESHOLD;
         // Reputation
-        public static final ModConfigSpec.IntValue PUNISHMENT_LIGHT_MAJOR_NEGATIVE;
-        public static final ModConfigSpec.IntValue PUNISHMENT_LIGHT_MINOR_NEGATIVE;
-        public static final ModConfigSpec.IntValue PUNISHMENT_MEDIUM_MAJOR_NEGATIVE;
-        public static final ModConfigSpec.IntValue PUNISHMENT_MEDIUM_MINOR_NEGATIVE;
-        public static final ModConfigSpec.IntValue PUNISHMENT_HEAVY_MAJOR_NEGATIVE;
-        public static final ModConfigSpec.IntValue PUNISHMENT_HEAVY_MINOR_NEGATIVE;
+        public static final ForgeConfigSpec.IntValue PUNISHMENT_LIGHT_MAJOR_NEGATIVE;
+        public static final ForgeConfigSpec.IntValue PUNISHMENT_LIGHT_MINOR_NEGATIVE;
+        public static final ForgeConfigSpec.IntValue PUNISHMENT_MEDIUM_MAJOR_NEGATIVE;
+        public static final ForgeConfigSpec.IntValue PUNISHMENT_MEDIUM_MINOR_NEGATIVE;
+        public static final ForgeConfigSpec.IntValue PUNISHMENT_HEAVY_MAJOR_NEGATIVE;
+        public static final ForgeConfigSpec.IntValue PUNISHMENT_HEAVY_MINOR_NEGATIVE;
 
         // Gifts
-        public static final ModConfigSpec.BooleanValue GIFTS_ENABLED;
-        public static final ModConfigSpec.IntValue GIFTS_MINOR_POSITIVE_INCREASE;
-        public static final ModConfigSpec.IntValue GIFTS_MINOR_NEGATIVE_REDUCTION;
-        public static final ModConfigSpec.BooleanValue REQUIRES_SNEAK;
+        public static final ForgeConfigSpec.BooleanValue GIFTS_ENABLED;
+        public static final ForgeConfigSpec.IntValue GIFTS_MINOR_POSITIVE_INCREASE;
+        public static final ForgeConfigSpec.IntValue GIFTS_MINOR_NEGATIVE_REDUCTION;
+        public static final ForgeConfigSpec.BooleanValue REQUIRES_SNEAK;
 
         // Hero of the Village
-        public static final ModConfigSpec.BooleanValue HERO_OF_THE_VILLAGE_CAN_STEAL;
-        public static final ModConfigSpec.IntValue HERO_MAJOR_POSITIVE_INCREASE;
-        public static final ModConfigSpec.IntValue HERO_MINOR_POSITIVE_INCREASE;
+        public static final ForgeConfigSpec.BooleanValue HERO_OF_THE_VILLAGE_CAN_STEAL;
+        public static final ForgeConfigSpec.IntValue HERO_MAJOR_POSITIVE_INCREASE;
+        public static final ForgeConfigSpec.IntValue HERO_MINOR_POSITIVE_INCREASE;
 
         // Misc
-        public static final ModConfigSpec.BooleanValue FIX_SHIFT_CLICK_TRADE_REPUTATION;
+        public static final ForgeConfigSpec.BooleanValue FIX_SHIFT_CLICK_TRADE_REPUTATION;
 
         static {
-            ModConfigSpec.Builder builder = new ModConfigSpec.Builder();
+            ForgeConfigSpec.Builder builder = new ForgeConfigSpec.Builder();
 
             {
                 builder.push("crime");
@@ -176,12 +176,12 @@ public class Config {
     }
 
     public static class Client {
-        public static final ModConfigSpec SPEC;
+        public static final ForgeConfigSpec SPEC;
 
-        public static final ModConfigSpec.BooleanValue SHOW_VILLAGER_REPUTATION_TOOLTIP;
+        public static final ForgeConfigSpec.BooleanValue SHOW_VILLAGER_REPUTATION_TOOLTIP;
 
         static {
-            ModConfigSpec.Builder builder = new ModConfigSpec.Builder();
+            ForgeConfigSpec.Builder builder = new ForgeConfigSpec.Builder();
 
             SHOW_VILLAGER_REPUTATION_TOOLTIP = builder
                     .comment(" Tooltip with reputation info will be shown when looking at a Villager while holding an item tagged as '#thief:villager_gifts'.",

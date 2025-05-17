@@ -11,6 +11,7 @@ import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Style;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.npc.Villager;
 
@@ -83,7 +84,8 @@ public class ThiefCommand {
 
         context.getSource().sendSuccess(() -> Component.literal("Average reputation of " + villagers.size() + " witnesses is: ")
                 .append(reputation.getLocalizedNameWithColor())
-                .append(Component.literal(" (" + averageValue + ")").withColor(reputation.getColor())), true);
+                .append(Component.literal(" (" + averageValue + ")").withStyle(
+                        Style.EMPTY.withColor(reputation.getColor()))), true);
 
         return 0;
     }
@@ -105,12 +107,4 @@ public class ThiefCommand {
 
         return 0;
     }
-
-    /*private static List<ServerPlayer> getTargetPlayers(CommandContext<CommandSourceStack> context) {
-        try {
-            return new ArrayList<>(EntityArgument.getPlayers(context, "targets"));
-        } catch (CommandSyntaxException e) {
-            return Collections.emptyList();
-        }
-    }*/
 }

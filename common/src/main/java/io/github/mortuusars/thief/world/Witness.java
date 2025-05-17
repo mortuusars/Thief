@@ -18,7 +18,7 @@ public class Witness {
 
         double visibility = Stealth.getVisibility(criminal);
 
-        int radius = Config.Server.WITNESS_MAX_DISTANCE.get();
+        int radius = Config.Common.WITNESS_MAX_DISTANCE.get();
         AABB crimeScene = new AABB(criminal.blockPosition()).inflate(radius, radius * 0.5f, radius);
 
         return criminal.level().getEntitiesOfClass(LivingEntity.class, crimeScene)
@@ -34,7 +34,7 @@ public class Witness {
 
         double visibility = Stealth.getVisibility(criminal);
 
-        int radius = Config.Server.WITNESS_MAX_DISTANCE.get();
+        int radius = Config.Common.WITNESS_MAX_DISTANCE.get();
         AABB crimeScene = new AABB(criminal.blockPosition()).inflate(radius, radius * 0.5f, radius);
 
         return criminal.level().getEntitiesOfClass(entityClass, crimeScene)
@@ -46,10 +46,10 @@ public class Witness {
     public static boolean isWitness(LivingEntity criminal, LivingEntity entity, double visibility) {
         if (!entity.getType().is(Thief.Tags.EntityTypes.WITNESSES)) return false;
         float distance = entity.distanceTo(criminal);
-        if (distance <= Config.Server.WITNESS_ALWAYS_NOTICE_DISTANCE.get() / 2.0) return true; // Too close. Always hears or sees the crime.
+        if (distance <= Config.Common.WITNESS_ALWAYS_NOTICE_DISTANCE.get() / 2.0) return true; // Too close. Always hears or sees the crime.
         if (entity.isSleeping()) return false; // Cannot hear the crime.
-        if (distance <= Config.Server.WITNESS_ALWAYS_NOTICE_DISTANCE.get()) return true; // Hears or sees if not sleeping.
-        if (distance > Config.Server.WITNESS_MAX_DISTANCE.get() * visibility) return false;
+        if (distance <= Config.Common.WITNESS_ALWAYS_NOTICE_DISTANCE.get()) return true; // Hears or sees if not sleeping.
+        if (distance > Config.Common.WITNESS_MAX_DISTANCE.get() * visibility) return false;
         return entity.hasLineOfSight(criminal);
     }
 }

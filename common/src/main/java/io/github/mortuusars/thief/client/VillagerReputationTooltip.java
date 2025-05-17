@@ -5,7 +5,6 @@ import io.github.mortuusars.thief.Thief;
 import io.github.mortuusars.thief.network.Packets;
 import io.github.mortuusars.thief.network.packet.serverbound.QueryVillagerReputationC2SP;
 import io.github.mortuusars.thief.world.Reputation;
-import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
@@ -29,7 +28,7 @@ public class VillagerReputationTooltip {
     private static int lastMajorPositive;
     private static int lastTrading;
 
-    public static void render(GuiGraphics guiGraphics, DeltaTracker deltaTracker) {
+    public static void render(GuiGraphics guiGraphics, float partialTicks) {
         if (!Config.Client.SHOW_VILLAGER_REPUTATION_TOOLTIP.get()) return;
 
         Minecraft minecraft = Minecraft.getInstance();

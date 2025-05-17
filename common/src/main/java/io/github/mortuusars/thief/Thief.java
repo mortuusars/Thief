@@ -3,6 +3,8 @@ package io.github.mortuusars.thief;
 import com.google.common.base.Preconditions;
 import com.mojang.logging.LogUtils;
 import io.github.mortuusars.thief.advancement.trigger.VillagerGiftTrigger;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.stats.StatFormatter;
@@ -13,6 +15,8 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import org.slf4j.Logger;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Supplier;
 
 public class Thief {
@@ -25,8 +29,6 @@ public class Thief {
         EntityTypes.init();
         Items.init();
         DataComponents.init();
-        Stats.init();
-        CriteriaTriggers.init();
         ItemSubPredicates.init();
         MenuTypes.init();
         RecipeSerializers.init();
@@ -38,7 +40,7 @@ public class Thief {
      * Creates resource location in the mod namespace with the given path.
      */
     public static ResourceLocation resource(String path) {
-        return ResourceLocation.fromNamespaceAndPath(ID, path);
+        return new ResourceLocation(ID, path);
     }
 
     public static class Blocks {
@@ -88,44 +90,35 @@ public class Thief {
         }
     }
 
-//    public static class Stats {
-//        public static final Map<ResourceLocation, StatFormatter> STATS = new HashMap<>();
-//
-//        public static final ResourceLocation VILLAGE_LIGHT_THEFTS_COMMITED =
-//                register(resource("village_light_thefts_commited"), StatFormatter.DEFAULT);
-//        public static final ResourceLocation VILLAGE_MEDIUM_THEFTS_COMMITED =
-//                register(resource("village_medium_thefts_commited"), StatFormatter.DEFAULT);
-//        public static final ResourceLocation VILLAGE_HEAVY_THEFTS_COMMITED =
-//                register(resource("village_heavy_thefts_commited"), StatFormatter.DEFAULT);
-//
-//        @SuppressWarnings("SameParameterValue")
-//        private static ResourceLocation register(ResourceLocation location, StatFormatter formatter) {
-//            STATS.put(location, formatter);
-//            return location;
-//        }
-//
-//        public static void register() {
-//            STATS.forEach((location, formatter) -> {
-//                net.minecraft.core.Registry.register(BuiltInRegistries.CUSTOM_STAT, location, location);
-//                net.minecraft.stats.Stats.CUSTOM.get(location, formatter);
-//            });
-//        }
-//    }
-public static class Stats {
-    public static final Supplier<ResourceLocation> CAUGHT_ON_VILLAGE_LIGHT_THEFTS =
-            Register.stat(resource("caught_at_light_thefts_in_village"), StatFormatter.DEFAULT);
-    public static final Supplier<ResourceLocation> CAUGHT_ON_VILLAGE_MEDIUM_THEFTS =
-            Register.stat(resource("caught_at_medium_thefts_in_village"), StatFormatter.DEFAULT);
-    public static final Supplier<ResourceLocation> CAUGHT_ON_VILLAGE_HEAVY_THEFTS =
-            Register.stat(resource("caught_at_heavy_thefts_in_village"), StatFormatter.DEFAULT);
-    public static void init() {
+    public static class Stats {
+        private static final Map<ResourceLocation, StatFormatter> STATS = new HashMap<>();
+
+        public static final ResourceLocation CAUGHT_ON_VILLAGE_LIGHT_THEFTS =
+                register(Thief.resource("caught_at_light_thefts_in_village"), StatFormatter.DEFAULT);
+        public static final ResourceLocation CAUGHT_ON_VILLAGE_MEDIUM_THEFTS =
+                register(Thief.resource("caught_at_medium_thefts_in_village"), StatFormatter.DEFAULT);
+        public static final ResourceLocation CAUGHT_ON_VILLAGE_HEAVY_THEFTS =
+                register(Thief.resource("caught_at_heavy_thefts_in_village"), StatFormatter.DEFAULT);
+
+        @SuppressWarnings("SameParameterValue")
+        private static ResourceLocation register(ResourceLocation location, StatFormatter formatter) {
+            STATS.put(location, formatter);
+            return location;
+        }
+
+        public static void register() {
+            STATS.forEach((location, formatter) -> {
+                Registry.register(BuiltInRegistries.CUSTOM_STAT, location, location);
+                net.minecraft.stats.Stats.CUSTOM.get(location, formatter);
+            });
+        }
     }
-}
 
     public static class CriteriaTriggers {
-        public static Supplier<VillagerGiftTrigger> VILLAGER_GIFT = Register.criterionTrigger("villager_gift", VillagerGiftTrigger::new);
+        public static VillagerGiftTrigger VILLAGER_GIFT = new VillagerGiftTrigger();
 
-        public static void init() {
+        public static void register() {
+            net.minecraft.advancements.CriteriaTriggers.register(VILLAGER_GIFT);
         }
     }
 

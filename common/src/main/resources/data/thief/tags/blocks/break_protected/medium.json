@@ -1,0 +1,33 @@
+{
+  "values": [
+    {
+      "id": "#c:chests",
+      "required": false
+    },
+    {
+      "id": "#c:barrels",
+      "required": false
+    },
+    {
+      "id": "#forge:chests",
+      "required": false
+    },
+    {
+      "id": "#forge:barrels",
+      "required": false
+    },
+    "minecraft:blast_furnace",
+    "minecraft:brewing_stand",
+    "minecraft:cartography_table",
+    "minecraft:cauldron",
+    "minecraft:composter",
+    "minecraft:fletching_table",
+    "minecraft:grindstone",
+    "minecraft:lectern",
+    "minecraft:loom",
+    "minecraft:smithing_table",
+    "minecraft:smoker",
+    "minecraft:stonecutter",
+    "#minecraft:beds"
+  ]
+}

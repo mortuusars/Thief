@@ -29,7 +29,7 @@ public abstract class PlayerMixin extends LivingEntity {
     private void onStartSleepInBed(BlockPos bedPos, CallbackInfoReturnable<Either<Player.BedSleepingProblem, Unit>> cir) {
         if (!(level() instanceof ServerLevel level)) return;
 
-        Config.Server.CRIME_FOR_SLEEPING_IN_VILLAGERS_BED.get().getCrime().ifPresent(crime -> {
+        Config.Common.CRIME_FOR_SLEEPING_IN_VILLAGERS_BED.get().getCrime().ifPresent(crime -> {
             List<Villager> witnesses = Witness.getWitnesses((Player) (Object) this, Villager.class);
             for (Villager witness : witnesses) {
                 if (witness.getBrain().getMemory(MemoryModuleType.HOME).map(p -> p.pos().equals(bedPos)).orElse(false)) {

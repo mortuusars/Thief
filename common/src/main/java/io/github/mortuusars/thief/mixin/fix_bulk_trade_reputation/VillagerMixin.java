@@ -27,7 +27,7 @@ public abstract class VillagerMixin extends AbstractVillager {
 
     @Inject(method = "rewardTradeXp", at = @At("HEAD"))
     private void onRewardTradeXp(MerchantOffer offer, CallbackInfo ci) {
-        if (Config.Server.FIX_SHIFT_CLICK_TRADE_REPUTATION.get()
+        if (Config.Common.FIX_SHIFT_CLICK_TRADE_REPUTATION.get()
                 && lastTradedPlayer != null && level() instanceof ServerLevel serverLevel) {
             serverLevel.onReputationEvent(ReputationEventType.TRADE, this.lastTradedPlayer, (Villager)(Object)this);
             level().broadcastEntityEvent(this, EntityEvent.VILLAGER_HAPPY);

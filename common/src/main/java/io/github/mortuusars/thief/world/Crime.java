@@ -14,7 +14,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.village.ReputationEventType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.state.BlockState;
-import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 
 import java.util.Collections;
@@ -43,30 +42,30 @@ public enum Crime implements ReputationEventType {
 
     public int getMajorNegativeChange() {
         return switch (this) {
-            case LIGHT -> Config.Server.PUNISHMENT_LIGHT_MAJOR_NEGATIVE.get();
-            case MEDIUM -> Config.Server.PUNISHMENT_MEDIUM_MAJOR_NEGATIVE.get();
-            case HEAVY -> Config.Server.PUNISHMENT_HEAVY_MAJOR_NEGATIVE.get();
+            case LIGHT -> Config.Common.PUNISHMENT_LIGHT_MAJOR_NEGATIVE.get();
+            case MEDIUM -> Config.Common.PUNISHMENT_MEDIUM_MAJOR_NEGATIVE.get();
+            case HEAVY -> Config.Common.PUNISHMENT_HEAVY_MAJOR_NEGATIVE.get();
         };
     }
 
     public int getMinorNegativeChange() {
         return switch (this) {
-            case LIGHT -> Config.Server.PUNISHMENT_LIGHT_MINOR_NEGATIVE.get();
-            case MEDIUM -> Config.Server.PUNISHMENT_MEDIUM_MINOR_NEGATIVE.get();
-            case HEAVY -> Config.Server.PUNISHMENT_HEAVY_MINOR_NEGATIVE.get();
+            case LIGHT -> Config.Common.PUNISHMENT_LIGHT_MINOR_NEGATIVE.get();
+            case MEDIUM -> Config.Common.PUNISHMENT_MEDIUM_MINOR_NEGATIVE.get();
+            case HEAVY -> Config.Common.PUNISHMENT_HEAVY_MINOR_NEGATIVE.get();
         };
     }
 
     public ResourceLocation getStat() {
         return switch (this) {
-            case LIGHT -> Thief.Stats.CAUGHT_ON_VILLAGE_LIGHT_THEFTS.get();
-            case MEDIUM -> Thief.Stats.CAUGHT_ON_VILLAGE_MEDIUM_THEFTS.get();
-            case HEAVY -> Thief.Stats.CAUGHT_ON_VILLAGE_HEAVY_THEFTS.get();
+            case LIGHT -> Thief.Stats.CAUGHT_ON_VILLAGE_LIGHT_THEFTS;
+            case MEDIUM -> Thief.Stats.CAUGHT_ON_VILLAGE_MEDIUM_THEFTS;
+            case HEAVY -> Thief.Stats.CAUGHT_ON_VILLAGE_HEAVY_THEFTS;
         };
     }
 
     public boolean isOverGuardAttackThreshold() {
-        return Config.Server.GUARD_ATTACK_THRESHOLD.get().getCrime()
+        return Config.Common.GUARD_ATTACK_THRESHOLD.get().getCrime()
                 .map(crime -> this.ordinal() >= crime.ordinal())
                 .orElse(false);
     }
@@ -84,11 +83,11 @@ public enum Crime implements ReputationEventType {
     // --
 
     public Outcome commit(ServerLevel level, LivingEntity criminal, BlockPos crimeTargetPosition) {
-        if (Config.Server.HERO_OF_THE_VILLAGE_CAN_STEAL.get() && criminal.hasEffect(MobEffects.HERO_OF_THE_VILLAGE)) {
+        if (Config.Common.HERO_OF_THE_VILLAGE_CAN_STEAL.get() && criminal.hasEffect(MobEffects.HERO_OF_THE_VILLAGE)) {
             return Outcome.NONE;
         }
 
-        if (Config.Server.CRIME_ONLY_IN_PROTECTED_STRUCTURE.get() && !isInProtectedStructure(level, crimeTargetPosition)) {
+        if (Config.Common.CRIME_ONLY_IN_PROTECTED_STRUCTURE.get() && !isInProtectedStructure(level, crimeTargetPosition)) {
             return Outcome.NONE;
         }
 

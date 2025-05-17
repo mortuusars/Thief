@@ -38,13 +38,16 @@ public class CommonEvents {
         }
 
         ItemStack item = player.getItemInHand(hand);
-        if ((!Config.Server.REQUIRES_SNEAK.get() || player.isSecondaryUseActive()) && canGift(serverPlayer, villager, item)) {
+        if ((!Config.Common.REQUIRES_SNEAK.get() || player.isSecondaryUseActive()) && canGift(serverPlayer, villager, item)) {
             ItemStack gift = item.split(1);
 
-            villager.getGossips().add(player.getUUID(), GossipType.MINOR_POSITIVE,
-                    Config.Server.GIFTS_MINOR_POSITIVE_INCREASE.get());
+            int minorPositiveRep = villager.getGossips().getReputation(player.getUUID(), gossipType -> gossipType == GossipType.MINOR_POSITIVE);
+            if (minorPositiveRep < 20) {
+                villager.getGossips().add(player.getUUID(), GossipType.MINOR_POSITIVE,
+                        Config.Common.GIFTS_MINOR_POSITIVE_INCREASE.get());
+            }
             villager.getGossips().remove(player.getUUID(), GossipType.MINOR_NEGATIVE,
-                    Config.Server.GIFTS_MINOR_NEGATIVE_REDUCTION.get());
+                    Config.Common.GIFTS_MINOR_NEGATIVE_REDUCTION.get());
 
             // Calm down panicking villager
             if (villager.getBrain().isActive(Activity.PANIC) && villager.getPlayerReputation(player) > -60) {
@@ -57,7 +60,7 @@ public class CommonEvents {
                 lastGiftSoundPlayedAt = player.level().getGameTime();
             }
 
-            Thief.CriteriaTriggers.VILLAGER_GIFT.get().trigger(serverPlayer, villager, gift);
+            Thief.CriteriaTriggers.VILLAGER_GIFT.trigger(serverPlayer, villager, gift);
 
             return InteractionResult.SUCCESS;
         }
@@ -65,18 +68,18 @@ public class CommonEvents {
         if (!Reputation.fromValue(villager, player).canTrade()) {
             // Prevent trading
             villager.setUnhappy();
-            return InteractionResult.SUCCESS_NO_ITEM_USED;
+            return InteractionResult.SUCCESS;
         }
 
         return InteractionResult.PASS;
     }
 
     public static boolean canGift(ServerPlayer player, Villager villager, ItemStack item) {
-        if (!Config.Server.GIFTS_ENABLED.get()) return false;
+        if (!Config.Common.GIFTS_ENABLED.get()) return false;
         if (!item.is(Thief.Tags.Items.VILLAGER_GIFTS)) return false;
         int minorPositiveRep = villager.getGossips().getReputation(player.getUUID(), gossipType -> gossipType == GossipType.MINOR_POSITIVE);
         int minorNegativeRep = villager.getGossips().getReputation(player.getUUID(), gossipType -> gossipType == GossipType.MINOR_NEGATIVE);
-        return minorPositiveRep < GossipType.MINOR_POSITIVE.max || minorNegativeRep < 0;
+        return minorPositiveRep < 20 /* limit as in 1.21*/ || minorNegativeRep < 0;
     }
 
     public static void onPlayerTick(Player player) {
@@ -89,7 +92,7 @@ public class CommonEvents {
                 witness.addEffect(new MobEffectInstance(MobEffects.GLOWING, 4));
             }
 
-            double radius = Config.Server.WITNESS_MAX_DISTANCE.get() * Stealth.getVisibility(serverPlayer);
+            double radius = Config.Common.WITNESS_MAX_DISTANCE.get() * Stealth.getVisibility(serverPlayer);
             int particles = 64; // number of particles in the ring
 
             for (int i = 0; i < particles; i++) {

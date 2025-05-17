@@ -1,18 +1,17 @@
 package io.github.mortuusars.thief.fabric;
 
-import fuzs.forgeconfigapiport.fabric.api.neoforge.v4.NeoForgeConfigRegistry;
+import fuzs.forgeconfigapiport.api.config.v2.ForgeConfigRegistry;
 import io.github.mortuusars.thief.Config;
 import io.github.mortuusars.thief.Thief;
 import io.github.mortuusars.thief.event.CommonEvents;
-import io.github.mortuusars.thief.network.fabric.FabricC2SPackets;
-import io.github.mortuusars.thief.network.fabric.FabricS2CPackets;
+import io.github.mortuusars.thief.network.fabric.PacketsImpl;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.player.UseEntityCallback;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.InteractionResult;
-import net.neoforged.fml.config.ModConfig;
+import net.minecraftforge.fml.config.ModConfig;
 import org.jetbrains.annotations.Nullable;
 
 public class ThiefFabric implements ModInitializer {
@@ -23,8 +22,11 @@ public class ThiefFabric implements ModInitializer {
     public void onInitialize() {
         Thief.init();
 
-        NeoForgeConfigRegistry.INSTANCE.register(Thief.ID, ModConfig.Type.SERVER, Config.Server.SPEC);
-        NeoForgeConfigRegistry.INSTANCE.register(Thief.ID, ModConfig.Type.CLIENT, Config.Client.SPEC);
+        ForgeConfigRegistry.INSTANCE.register(Thief.ID, ModConfig.Type.COMMON, Config.Common.SPEC);
+        ForgeConfigRegistry.INSTANCE.register(Thief.ID, ModConfig.Type.CLIENT, Config.Client.SPEC);
+
+        Thief.CriteriaTriggers.register();
+        Thief.Stats.register();
 
         CommandRegistrationCallback.EVENT.register(CommonEvents::registerCommands);
 
@@ -40,7 +42,6 @@ public class ThiefFabric implements ModInitializer {
             return CommonEvents.onEntityInteracted(player, hand, entity);
         });
 
-        FabricC2SPackets.register();
-        FabricS2CPackets.register();
+        PacketsImpl.registerC2SPackets();
     }
 }
