@@ -47,6 +47,8 @@ dependencies {
     modRuntimeOnly("maven.modrinth:guard-villagers:cXW6pA2s")
     modRuntimeOnly("maven.modrinth:carry-on:79dpvD0M")
 
+    // implementation("curse.maven:it-takes-a-pillage-continuation-1111063:6242715")
+
     modRuntimeOnly("mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}") { transitive = false }
     modRuntimeOnly("curse.maven:jade-324717:${jade_neoforge_id}") { transitive = false }
     modRuntimeOnly("curse.maven:embeddium-908741:6118392")
