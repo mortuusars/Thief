@@ -44,13 +44,15 @@ dependencies {
     compileOnly(annotationProcessor("io.github.llamalad7:mixinextras-common:0.4.1"))
     implementation(include("io.github.llamalad7:mixinextras-fabric:0.4.1"))
 
-    modApi "fuzs.forgeconfigapiport:forgeconfigapiport-fabric:${forge_config_api_version}"
+    modApi("fuzs.forgeconfigapiport:forgeconfigapiport-fabric:${forge_config_api_version}")
 
     modCompileOnlyApi("curse.maven:jade-324717:${jade_fabric_id}")
     modRuntimeOnly("curse.maven:jade-324717:${jade_fabric_id}") { transitive = false }
 
     modCompileOnlyApi("mezz.jei:jei-${minecraft_version}-fabric-api:${jei_version}")
     modRuntimeOnly("mezz.jei:jei-${minecraft_version}-fabric:${jei_version}")
+
+    // modImplementation("curse.maven:it-takes-a-pillage-continuation-1111063:6242718")
 
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionFabric")) { transitive false }
