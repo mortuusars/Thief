@@ -30,13 +30,20 @@ public class VillagerReputationTooltip {
     private static int lastTrading;
 
     public static void render(GuiGraphics guiGraphics, DeltaTracker deltaTracker) {
-        if (!Config.Client.SHOW_VILLAGER_REPUTATION_TOOLTIP.get()) return;
-
+        if (!Config.Client.VILLAGER_REPUTATION_TOOLTIP_ENABLED.get()) return;
         Minecraft minecraft = Minecraft.getInstance();
-        if (minecraft.level == null || minecraft.player == null || minecraft.player.isSpectator() || minecraft.screen != null
-                || !minecraft.player.getMainHandItem().is(Thief.Tags.Items.VILLAGER_GIFTS)
+        if (minecraft.options.hideGui
+                || minecraft.level == null
+                || minecraft.player == null
+                || minecraft.player.isSpectator()
+                || minecraft.screen != null
                 || !(minecraft.hitResult instanceof EntityHitResult entityHitResult)
                 || !(entityHitResult.getEntity() instanceof Villager villager)) {
+            return;
+        }
+
+        if (Config.Client.VILLAGER_REPUTATION_TOOLTIP_REQUIRES_GIFT.get()
+                && !minecraft.player.getMainHandItem().is(Thief.Tags.Items.VILLAGER_GIFTS)) {
             return;
         }
 

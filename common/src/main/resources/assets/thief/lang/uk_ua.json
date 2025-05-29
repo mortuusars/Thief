@@ -55,7 +55,8 @@
   "thief.configuration.trade_reputation_threshold": "Рівень Репутації Необхідний Для Торгівлі",
   "thief.configuration.guard_attack_threshold": "Тяжкість Злочину При Якому Охоронці Атакують",
   "thief.configuration.requires_sneak": "Потребує Крадіння",
-  "thief.configuration.show_villager_reputation_tooltip": "Показати Підказку Репуції Селянина",
+  "thief.configuration.show_villager_reputation_tooltip": "Показати Підказку Репутації Селянина",
   "thief.configuration.sleeping_in_villagers_bed": "Тяжкість Злочину За Сон У Ліжку Селянина",
-  "thief.configuration.witness": "Свідок"
+  "thief.configuration.witness": "Свідок",
+  "thief.configuration.villager_reputation_tooltip_requires_gift": "Підказка Репутації Селянина Потребує Подарунку У Руці"
 }
