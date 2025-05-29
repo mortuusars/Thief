@@ -89,7 +89,7 @@ public class NeoForgeCommonEvents {
         }
 
         @SubscribeEvent
-        public static void onEntityInteract(LivingDeathEvent event) {
+        public static void onLivingDeath(LivingDeathEvent event) {
             if (event.getSource().getEntity() instanceof ServerPlayer player) {
                 ServerEvents.onEntityKilled(player, event.getEntity(), event.getSource());
             }

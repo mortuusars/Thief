@@ -33,7 +33,7 @@ public class ServerEvents {
     }
 
     public static void onEntityKilled(ServerPlayer player, LivingEntity target, DamageSource damageSource) {
-        if (!Config.Server.CRIME_FOR_KILLING_PROTECTED_ENTITIES.get()) return;
+        if (!Config.Common.CRIME_FOR_KILLING_PROTECTED_ENTITIES.get()) return;
         Crime.fromKilling(player, target).getCrime().ifPresent(crime -> {
             crime.commit(player.serverLevel(), player, target.blockPosition());
         });

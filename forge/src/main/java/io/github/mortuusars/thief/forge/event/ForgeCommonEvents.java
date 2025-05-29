@@ -8,6 +8,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionResult;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -47,6 +48,13 @@ public class ForgeCommonEvents {
         public static void onEntityInteract(PlayerInteractEvent.EntityInteract event) {
             if (CommonEvents.onEntityInteracted(event.getEntity(), event.getHand(), event.getTarget()) != InteractionResult.PASS) {
                 event.setCanceled(true);
+            }
+        }
+
+        @SubscribeEvent
+        public static void onLivingDeath(LivingDeathEvent event) {
+            if (event.getSource().getEntity() instanceof ServerPlayer player) {
+                ServerEvents.onEntityKilled(player, event.getEntity(), event.getSource());
             }
         }
 
