@@ -7,6 +7,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class ServerEvents {
@@ -28,5 +30,12 @@ public class ServerEvents {
 
         Crime.fromBlockStateInteracting(player, pos, state).getCrime().ifPresent(crime ->
                 crime.commit(player.serverLevel(), player, pos));
+    }
+
+    public static void onEntityKilled(ServerPlayer player, LivingEntity target, DamageSource damageSource) {
+        if (!Config.Server.CRIME_FOR_KILLING_PROTECTED_ENTITIES.get()) return;
+        Crime.fromKilling(player, target).getCrime().ifPresent(crime -> {
+            crime.commit(player.serverLevel(), player, target.blockPosition());
+        });
     }
 }

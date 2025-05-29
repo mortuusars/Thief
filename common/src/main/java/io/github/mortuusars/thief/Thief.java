@@ -160,8 +160,16 @@ public static class Stats {
         }
 
         public static class EntityTypes {
+            public static final TagKey<EntityType<?>> KILLING_PROTECTED_LIGHT =
+                    TagKey.create(net.minecraft.core.registries.Registries.ENTITY_TYPE, resource("killing_protected/light"));
+            public static final TagKey<EntityType<?>> KILLING_PROTECTED_MEDIUM =
+                    TagKey.create(net.minecraft.core.registries.Registries.ENTITY_TYPE, resource("killing_protected/medium"));
+            public static final TagKey<EntityType<?>> KILLING_PROTECTED_HEAVY =
+                    TagKey.create(net.minecraft.core.registries.Registries.ENTITY_TYPE, resource("killing_protected/heavy"));
+
             public static final TagKey<EntityType<?>> WITNESSES =
                     TagKey.create(net.minecraft.core.registries.Registries.ENTITY_TYPE, resource("witnesses"));
+
             public static final TagKey<EntityType<?>> GUARDS =
                     TagKey.create(net.minecraft.core.registries.Registries.ENTITY_TYPE, resource("guards"));
         }
