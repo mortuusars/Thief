@@ -15,6 +15,7 @@ public class Config {
         // Crimes
         public static final ForgeConfigSpec.BooleanValue CRIME_FOR_BREAKING_PROTECTED_BLOCKS;
         public static final ForgeConfigSpec.BooleanValue CRIME_FOR_INTERACTING_WITH_PROTECTED_BLOCKS;
+        public static final ForgeConfigSpec.BooleanValue CRIME_FOR_KILLING_PROTECTED_ENTITIES;
         public static final ForgeConfigSpec.EnumValue<PotentialCrime> CRIME_FOR_KICKING_VILLAGER_OUT_OF_BED;
         public static final ForgeConfigSpec.EnumValue<PotentialCrime> CRIME_FOR_SLEEPING_IN_VILLAGERS_BED;
         public static final ForgeConfigSpec.BooleanValue CRIME_ONLY_IN_PROTECTED_STRUCTURE;
@@ -61,6 +62,10 @@ public class Config {
                         .comment(" Interacting with protected blocks (#thief:interact_protected/<level>) in protected structure (#thief:protected) is considered a crime.",
                                 " Default: true")
                         .define("interacting_with_protected_blocks", true);
+                CRIME_FOR_KILLING_PROTECTED_ENTITIES = builder
+                        .comment(" Killing protected entities (#thief:killing_protected/<level>) in protected structure (#thief:protected) is considered a crime.",
+                                " Default: true")
+                        .define("killing_protected_entities", true);
                 CRIME_FOR_KICKING_VILLAGER_OUT_OF_BED = builder
                         .comment(" Crime severity for kicking a villager out of bed.",
                                 " Default: LIGHT")

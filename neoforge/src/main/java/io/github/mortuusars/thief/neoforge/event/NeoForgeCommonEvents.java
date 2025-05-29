@@ -9,6 +9,7 @@ import io.github.mortuusars.thief.network.packet.C2SPackets;
 import io.github.mortuusars.thief.network.packet.CommonPackets;
 import io.github.mortuusars.thief.network.packet.Packet;
 import io.github.mortuusars.thief.network.packet.S2CPackets;
+import io.github.mortuusars.thief.world.Crime;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
@@ -21,6 +22,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
+import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.neoforge.event.level.BlockEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
@@ -83,6 +85,13 @@ public class NeoForgeCommonEvents {
         public static void onEntityInteract(PlayerInteractEvent.EntityInteract event) {
             if (CommonEvents.onEntityInteracted(event.getEntity(), event.getHand(), event.getTarget()) != InteractionResult.PASS) {
                 event.setCanceled(true);
+            }
+        }
+
+        @SubscribeEvent
+        public static void onEntityInteract(LivingDeathEvent event) {
+            if (event.getSource().getEntity() instanceof ServerPlayer player) {
+                ServerEvents.onEntityKilled(player, event.getEntity(), event.getSource());
             }
         }
 
