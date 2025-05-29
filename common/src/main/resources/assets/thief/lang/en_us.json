@@ -35,6 +35,7 @@
   "thief.configuration.enabled": "Enabled",
   "thief.configuration.fix_shift_click_villager_trading_reputation": "Fix Shift+Click Villager Trading Reputation",
   "thief.configuration.gifts": "Gifts",
+  "thief.configuration.guard_attack_threshold": "Reputation Level Needed to Trade",
   "thief.configuration.heavy_major_change": "Heavy: Major Negative",
   "thief.configuration.heavy_minor_change": "Heavy: Minor Negative",
   "thief.configuration.hero_can_steal": "Hero Can Steal",
@@ -52,10 +53,10 @@
   "thief.configuration.misc": "Misc",
   "thief.configuration.punishment": "Punishment",
   "thief.configuration.reputation": "Reputation",
-  "thief.configuration.trade_reputation_threshold": "Reputation Level Needed to Trade",
-  "thief.configuration.guard_attack_threshold": "Reputation Level Needed to Trade",
   "thief.configuration.requires_sneak": "Requires Sneak",
   "thief.configuration.show_villager_reputation_tooltip": "Show Villager Reputation Tooltip",
   "thief.configuration.sleeping_in_villagers_bed": "Sleep in Villager's Bed Severity",
+  "thief.configuration.trade_reputation_threshold": "Reputation Level Needed to Trade",
+  "thief.configuration.villager_reputation_tooltip_requires_gift": "Villager Reputation Tooltip Requires Gift In Hand",
   "thief.configuration.witness": "Witness"
 }

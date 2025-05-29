@@ -183,15 +183,21 @@ public class Config {
     public static class Client {
         public static final ForgeConfigSpec SPEC;
 
-        public static final ForgeConfigSpec.BooleanValue SHOW_VILLAGER_REPUTATION_TOOLTIP;
+        public static final ForgeConfigSpec.BooleanValue VILLAGER_REPUTATION_TOOLTIP_ENABLED;
+        public static final ForgeConfigSpec.BooleanValue VILLAGER_REPUTATION_TOOLTIP_REQUIRES_GIFT;
 
         static {
             ForgeConfigSpec.Builder builder = new ForgeConfigSpec.Builder();
 
-            SHOW_VILLAGER_REPUTATION_TOOLTIP = builder
-                    .comment(" Tooltip with reputation info will be shown when looking at a Villager while holding an item tagged as '#thief:villager_gifts'.",
+            VILLAGER_REPUTATION_TOOLTIP_ENABLED = builder
+                    .comment(" Reputation tooltip will be shown when looking at a Villager.",
                             " Default: true.")
                     .define("show_villager_reputation_tooltip", true);
+
+            VILLAGER_REPUTATION_TOOLTIP_REQUIRES_GIFT = builder
+                    .comment(" Villager reputation tooltip requires item tagged as '#thief:villager_gifts' in hand.",
+                            " Default: true.")
+                    .define("villager_reputation_tooltip_requires_gift", true);
 
             SPEC = builder.build();
         }
