@@ -3,8 +3,11 @@ package io.github.mortuusars.thief.world;
 import com.mojang.logging.LogUtils;
 import dev.worldgen.lithostitched.worldgen.structure.DelegatingStructure;
 import io.github.mortuusars.thief.Config;
+import io.github.mortuusars.thief.PlatformHelper;
 import io.github.mortuusars.thief.Thief;
 import io.github.mortuusars.thief.api.witness.WitnessReaction;
+import io.github.mortuusars.thief.compat.Mods;
+import io.github.mortuusars.thief.compat.lithostitched.LithostitchedCompat;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
@@ -39,30 +42,6 @@ public enum Crime implements ReputationEventType {
 
     Crime(String name) {
         this.name = name;
-    }
-
-    public static StructureStart getRealStructureWithPieceAt(ServerLevel level, BlockPos pos,
-                                                             TagKey<Structure> structureTag) {
-        Registry<Structure> registry = level.registryAccess().registryOrThrow(Registries.STRUCTURE);
-        Iterator<StructureStart> structures = level.structureManager().startsForStructure(new ChunkPos(pos),
-                (structure) -> {
-            if (structure instanceof DelegatingStructure)
-                structure = ((DelegatingStructure) structure).delegate();
-            return registry.getHolder(registry.getId(structure)).map((reference) -> reference.is(structureTag)).orElse(false);
-        }).iterator();
-
-        StructureStart structureStart;
-        do {
-            if (!structures.hasNext()) {
-                return StructureStart.INVALID_START;
-            }
-            structureStart = structures.next();
-        } while (!level.structureManager().structureHasPieceAt(pos, structureStart));
-        return structureStart;
-    }
-
-    public static boolean isInProtectedStructure(ServerLevel level, BlockPos pos) {
-        return getRealStructureWithPieceAt(level, pos, Thief.Tags.Structures.PROTECTED).isValid();
     }
 
     public String getName() {
@@ -144,6 +123,13 @@ public enum Crime implements ReputationEventType {
                 criminal.getName(), reputation.getName(), getName(), witnesses.size());
 
         return new Outcome(true, witnesses);
+    }
+
+    public static boolean isInProtectedStructure(ServerLevel level, BlockPos pos) {
+        if (Mods.LITHOSTITCHED.isLoaded()) {
+            return LithostitchedCompat.getStructureWithPieceAt(level, pos, Thief.Tags.Structures.PROTECTED).isValid();
+        }
+        return level.structureManager().getStructureWithPieceAt(pos, Thief.Tags.Structures.PROTECTED).isValid();
     }
 
     // --

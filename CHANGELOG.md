@@ -1,5 +1,9 @@
 # Changelog
 
+## UNRELEASED
+- Added support for structures that were modified by Lithostitched (thanks 'murphy-slaw').
+  - Fixes #protected structures not being detected properly.
+
 ## 1.1.0 - 2025-05-29
 - Added killing crimes.
   - Controlled by `#thief:protected/<level>` entity-type tag.

@@ -53,8 +53,8 @@ dependencies {
     modCompileOnlyApi("mezz.jei:jei-${minecraft_version}-fabric-api:${jei_version}")
     modRuntimeOnly("mezz.jei:jei-${minecraft_version}-fabric:${jei_version}")
 
-    modImplementation("maven.modrinth:lithostitched:${lithostitched_fabric_version}")
-    modImplementation("maven.modrinth:improved-village-placement:${improved_village_placement_version}")
+//    modImplementation("maven.modrinth:lithostitched:${lithostitched_fabric_version}")
+//    modImplementation("maven.modrinth:improved-village-placement:${improved_village_placement_version}")
 
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionFabric")) { transitive false }
