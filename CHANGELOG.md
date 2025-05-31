@@ -1,8 +1,8 @@
 # Changelog
 
-## UNRELEASED
+## 1.1.1 - 2025-05-31
 - Added support for structures that were modified by Lithostitched (thanks 'murphy-slaw').
-  - Fixes #protected structures not being detected properly.
+  - Fixes `#thief:protected` structures not being detected properly with some mods.
 
 ## 1.1.0 - 2025-05-29
 - Added killing crimes.
