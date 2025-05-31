@@ -29,6 +29,7 @@ dependencies {
 
     modCompileOnly("curse.maven:architectury-${architectury_cf_version}")
 
-    api "fuzs.forgeconfigapiport:forgeconfigapiport-common:${forge_config_api_version}"
-    modImplementation "maven.modrinth:lithostitched:${lithostitched_fabric_version}"
+    api("fuzs.forgeconfigapiport:forgeconfigapiport-common:${forge_config_api_version}")
+
+    modCompileOnly("maven.modrinth:lithostitched:${lithostitched_fabric_version}")
 }

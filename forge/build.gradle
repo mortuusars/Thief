@@ -76,7 +76,9 @@ dependencies {
 
     modCompileOnlyApi("curse.maven:jade-324717:${jade_forge_id}")
     modRuntimeOnly("curse.maven:jade-324717:${jade_forge_id}") { transitive = false }
-    modImplementation "maven.modrinth:lithostitched:${lithostitched_forge_version}"
+
+    modImplementation("maven.modrinth:lithostitched:${lithostitched_forge_version}")
+    modImplementation("maven.modrinth:improved-village-placement:${improved_village_placement_version}")
 
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionForge")) { transitive = false }
