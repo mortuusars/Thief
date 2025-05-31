@@ -9,9 +9,5 @@ public class Mods {
         public boolean isLoaded() {
             return PlatformHelper.isModLoaded(id);
         }
-
-        public boolean isLoading() {
-            return PlatformHelper.isModLoading(id);
-        }
     }
 }

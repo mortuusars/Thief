@@ -1,32 +1,24 @@
 package io.github.mortuusars.thief.world;
 
 import com.mojang.logging.LogUtils;
-import dev.worldgen.lithostitched.worldgen.structure.DelegatingStructure;
 import io.github.mortuusars.thief.Config;
-import io.github.mortuusars.thief.PlatformHelper;
 import io.github.mortuusars.thief.Thief;
 import io.github.mortuusars.thief.api.witness.WitnessReaction;
 import io.github.mortuusars.thief.compat.Mods;
 import io.github.mortuusars.thief.compat.lithostitched.LithostitchedCompat;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Registry;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.tags.TagKey;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.village.ReputationEventType;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.block.state.BlockState;
-import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 
 public enum Crime implements ReputationEventType {
