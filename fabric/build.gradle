@@ -39,7 +39,8 @@ dependencies {
     modRuntimeOnly("maven.modrinth:sodium:mc1.21.1-0.6.13-fabric")
 //    modRuntimeOnly("maven.modrinth:iris:1.8.8+1.21.1-fabric")
 
-    modImplementation "maven.modrinth:lithostitched:${lithostitched_fabric_version}"
+    modImplementation("maven.modrinth:lithostitched:${lithostitched_fabric_version}")
+    modImplementation("maven.modrinth:improved-village-placement:${improved_village_placement_version}")
 
     common(project(path: ':common', configuration: 'namedElements')) { transitive false }
     shadowBundle project(path: ':common', configuration: 'transformProductionFabric')

@@ -29,7 +29,7 @@ dependencies {
     modApi "fuzs.forgeconfigapiport:forgeconfigapiport-common-neoforgeapi:${forge_config_api_port_version}"
     modCompileOnlyApi "mezz.jei:jei-${minecraft_version}-common-api:${jei_version}"
 
-    modImplementation "maven.modrinth:lithostitched:${lithostitched_fabric_version}"
+    modCompileOnly("maven.modrinth:lithostitched:${lithostitched_fabric_version}")
 
     testImplementation(platform("org.junit:junit-bom:${project.property("jupiterVersion")}"))
     testImplementation("org.junit.jupiter:junit-jupiter")
