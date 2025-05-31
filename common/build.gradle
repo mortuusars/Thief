@@ -11,6 +11,9 @@ repositories {
         name = "Fuzs Mod Resources"
         url = "https://raw.githubusercontent.com/Fuzss/modresources/main/maven/"
     }
+    maven {
+        url = "https://api.modrinth.com/maven"
+    }
 }
 
 dependencies {
@@ -27,4 +30,5 @@ dependencies {
     modCompileOnly("curse.maven:architectury-${architectury_cf_version}")
 
     api "fuzs.forgeconfigapiport:forgeconfigapiport-common:${forge_config_api_version}"
+    modImplementation "maven.modrinth:lithostitched:${lithostitched_fabric_version}"
 }

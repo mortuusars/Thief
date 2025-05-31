@@ -58,6 +58,7 @@ repositories {
             includeGroup "curse.maven"
         }
     }
+    maven { url = "https://api.modrinth.com/maven" } // Lithostitched
 }
 
 dependencies {
@@ -71,10 +72,11 @@ dependencies {
     modCompileOnlyApi("mezz.jei:jei-${minecraft_version}-forge-api:${jei_version}")
     modRuntimeOnly("mezz.jei:jei-${minecraft_version}-forge:${jei_version}") { transitive = false }
 
-    modCompileOnlyApi("dev.latvian.mods:kubejs-forge:${kubejs_version}")
+    modCompileOnlyApi("curse.maven:kubejs-${kubejs_version}")
 
     modCompileOnlyApi("curse.maven:jade-324717:${jade_forge_id}")
     modRuntimeOnly("curse.maven:jade-324717:${jade_forge_id}") { transitive = false }
+    modImplementation "maven.modrinth:lithostitched:${lithostitched_forge_version}"
 
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionForge")) { transitive = false }
