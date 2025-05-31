@@ -1,22 +1,31 @@
 package io.github.mortuusars.thief.world;
 
 import com.mojang.logging.LogUtils;
+import dev.worldgen.lithostitched.worldgen.structure.DelegatingStructure;
 import io.github.mortuusars.thief.Config;
 import io.github.mortuusars.thief.Thief;
 import io.github.mortuusars.thief.api.witness.WitnessReaction;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.village.ReputationEventType;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.structure.Structure;
+import net.minecraft.world.level.levelgen.structure.StructureStart;
+import org.lwjgl.system.macosx.CGEventTapCallBack;
 import org.slf4j.Logger;
 
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 public enum Crime implements ReputationEventType {
@@ -32,8 +41,28 @@ public enum Crime implements ReputationEventType {
         this.name = name;
     }
 
+    public static StructureStart getRealStructureWithPieceAt(ServerLevel level, BlockPos pos,
+                                                             TagKey<Structure> structureTag) {
+        Registry<Structure> registry = level.registryAccess().registryOrThrow(Registries.STRUCTURE);
+        Iterator<StructureStart> structures = level.structureManager().startsForStructure(new ChunkPos(pos),
+                (structure) -> {
+            if (structure instanceof DelegatingStructure)
+                structure = ((DelegatingStructure) structure).delegate();
+            return registry.getHolder(registry.getId(structure)).map((reference) -> reference.is(structureTag)).orElse(false);
+        }).iterator();
+
+        StructureStart structureStart;
+        do {
+            if (!structures.hasNext()) {
+                return StructureStart.INVALID_START;
+            }
+            structureStart = structures.next();
+        } while (!level.structureManager().structureHasPieceAt(pos, structureStart));
+        return structureStart;
+    }
+
     public static boolean isInProtectedStructure(ServerLevel level, BlockPos pos) {
-        return level.structureManager().getStructureWithPieceAt(pos, Thief.Tags.Structures.PROTECTED).isValid();
+        return getRealStructureWithPieceAt(level, pos, Thief.Tags.Structures.PROTECTED).isValid();
     }
 
     public String getName() {
