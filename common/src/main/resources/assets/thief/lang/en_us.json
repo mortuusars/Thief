@@ -28,6 +28,7 @@
   "stat.thief.caught_at_heavy_thefts_in_village": "Times Caught Committing Heavy Thefts in a Village",
   "stat.thief.caught_at_light_thefts_in_village": "Times Caught Committing Light Thefts in a Village",
   "stat.thief.caught_at_medium_thefts_in_village": "Times Caught Committing Medium Thefts in a Village",
+  "tag.item.thief.villager_gifts": "Villager Gifts",
   "thief.configuration.always_notice_distance": "Always Notice Distance",
   "thief.configuration.breaking_protected_blocks": "Breaking Protected Blocks Is Crime",
   "thief.configuration.crime": "Crime",
