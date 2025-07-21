@@ -27,5 +27,6 @@ dependencies {
 
     api("fuzs.forgeconfigapiport:forgeconfigapiport-common:${forge_config_api_version}")
 
+    modCompileOnlyApi("dev.latvian.mods:kubejs:${kubejs_version}")
     modCompileOnly("maven.modrinth:lithostitched:${lithostitched_fabric_version}")
 }
