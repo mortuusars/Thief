@@ -5,7 +5,7 @@ import io.github.mortuusars.thief.Thief;
 import net.minecraft.advancements.critereon.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
@@ -24,8 +24,8 @@ public class VillagerGiftTrigger extends SimpleCriterionTrigger<VillagerGiftTrig
         return new TriggerInstance(predicate, entityPredicate, itemPredicate);
     }
 
-    public void trigger(ServerPlayer player, LivingEntity entity, ItemStack gift) {
-        this.trigger(player, triggerInstance -> triggerInstance.matches(player, entity, gift));
+    public void trigger(ServerPlayer player, Villager villager, ItemStack gift) {
+        this.trigger(player, triggerInstance -> triggerInstance.matches(player, villager, gift));
     }
 
     public static class TriggerInstance extends AbstractCriterionTriggerInstance {
@@ -38,8 +38,8 @@ public class VillagerGiftTrigger extends SimpleCriterionTrigger<VillagerGiftTrig
             this.itemPredicate = itemPredicate;
         }
 
-        public boolean matches(ServerPlayer player, LivingEntity entity, ItemStack gift) {
-            return (this.entityPredicate.equals(EntityPredicate.ANY) || this.entityPredicate.matches(player, entity))
+        public boolean matches(ServerPlayer player, Villager villager, ItemStack gift) {
+            return (this.entityPredicate.equals(EntityPredicate.ANY) || this.entityPredicate.matches(player, villager))
                     && (this.itemPredicate.equals(ItemPredicate.ANY) || this.itemPredicate.matches(gift));
         }
 

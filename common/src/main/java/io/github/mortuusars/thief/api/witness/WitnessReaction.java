@@ -22,13 +22,11 @@ public class WitnessReaction {
 
     static {
         register((level, crime, witness, criminal) -> {
-            if (witness instanceof Villager villager) {
-                villager.setUnhappy();
-                level.onReputationEvent(crime, criminal, villager);
-                level.broadcastEntityEvent(villager, EntityEvent.VILLAGER_ANGRY);
-                return true;
-            }
-            return false;
+            if (!(witness instanceof Villager villager)) return false;
+            villager.setUnhappy();
+            level.onReputationEvent(crime, criminal, villager);
+            level.broadcastEntityEvent(villager, EntityEvent.VILLAGER_ANGRY);
+            return true;
         });
 
         register((level, crime, witness, criminal) -> {

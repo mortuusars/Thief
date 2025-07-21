@@ -2,6 +2,7 @@ package io.github.mortuusars.thief.event;
 
 import com.mojang.brigadier.CommandDispatcher;
 import io.github.mortuusars.thief.Config;
+import io.github.mortuusars.thief.PlatformHelper;
 import io.github.mortuusars.thief.Thief;
 import io.github.mortuusars.thief.command.ThiefCommand;
 import io.github.mortuusars.thief.world.Crime;
@@ -61,6 +62,8 @@ public class CommonEvents {
                 player.level().playSound(null, villager, SoundEvents.VILLAGER_CELEBRATE, SoundSource.NEUTRAL, 1, 1);
                 lastGiftSoundPlayedAt = player.level().getGameTime();
             }
+
+            PlatformHelper.fireGiftGivenEvent(serverPlayer, villager, gift);
 
             Thief.CriteriaTriggers.VILLAGER_GIFT.trigger(serverPlayer, villager, gift);
 

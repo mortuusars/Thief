@@ -114,6 +114,8 @@ public enum Crime implements ReputationEventType {
             WitnessReaction.handle(level, this, witness, criminal);
         }
 
+        PlatformHelper.fireCrimeCommitedEvent(criminal, this, witnesses);
+
         if (criminal instanceof Player player) {
             player.displayClientMessage(Component.translatable("gui.thief.crime_commited." + getName()), true);
             player.awardStat(getStat());
