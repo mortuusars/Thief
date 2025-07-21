@@ -6,9 +6,9 @@
   "client": [
   ],
   "mixins": [
-    "dont_show_traders_to_criminals.ShowTradesToPlayerMixin",
     "bed_crimes.BedBlockMixin",
     "bed_crimes.PlayerMixin",
+    "dont_show_traders_to_criminals.ShowTradesToPlayerMixin",
     "fix_bulk_trade_reputation.VillagerMixin",
     "raid_win_reputation.RaidMixin",
     "thief_reputation_events.VillagerMixin"

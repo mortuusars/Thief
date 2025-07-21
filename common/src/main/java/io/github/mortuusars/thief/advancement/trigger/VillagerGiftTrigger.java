@@ -4,7 +4,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.advancements.critereon.*;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
@@ -16,9 +16,9 @@ public class VillagerGiftTrigger extends SimpleCriterionTrigger<VillagerGiftTrig
         return TriggerInstance.CODEC;
     }
 
-    public void trigger(ServerPlayer player, LivingEntity entity, ItemStack giftStack) {
+    public void trigger(ServerPlayer player, Villager villager, ItemStack giftStack) {
         this.trigger(player, triggerInstance ->
-                triggerInstance.matches(player, entity, giftStack));
+                triggerInstance.matches(player, villager, giftStack));
     }
 
     public record TriggerInstance(Optional<ContextAwarePredicate> player,
@@ -31,9 +31,9 @@ public class VillagerGiftTrigger extends SimpleCriterionTrigger<VillagerGiftTrig
                 .apply(instance, TriggerInstance::new));
 
         public boolean matches(ServerPlayer player,
-                               LivingEntity entity,
+                               Villager villager,
                                ItemStack gift) {
-            return (this.entity.isEmpty() || this.entity.get().matches(EntityPredicate.createContext(player, entity)))
+            return (this.entity.isEmpty() || this.entity.get().matches(EntityPredicate.createContext(player, villager)))
                     && (this.gift.isEmpty() || this.gift.get().test(gift));
         }
     }

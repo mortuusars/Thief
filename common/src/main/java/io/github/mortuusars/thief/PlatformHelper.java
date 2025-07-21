@@ -22,4 +22,19 @@ public class PlatformHelper {
     public static boolean isInDevEnv() {
         throw new AssertionError();
     }
+
+    @ExpectPlatform
+    public static void fireCrimeCommitedEvent(LivingEntity criminal, Crime crime, List<LivingEntity> witnesses) {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    public static void fireGiftGivenEvent(ServerPlayer player, Villager villager, ItemStack gift) {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    public static void fireReputationLevelChangedEvent(LivingEntity criminal, Villager villager, Reputation oldReputation, Reputation newReputation) {
+        throw new AssertionError();
+    }
 }
