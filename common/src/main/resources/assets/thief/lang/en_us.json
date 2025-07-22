@@ -1,4 +1,6 @@
 {
+  "advancement.thief.guard_attacks.description": "Provoke a violent response in a village by commiting enough crimes",
+  "advancement.thief.guard_attacks.title": "This Is The Part Where They Kill You",
   "advancement.thief.kind_gesture.description": "Make a Villager like you more by giving them a gift",
   "advancement.thief.kind_gesture.title": "A Kind Gesture",
   "gui.thief.crime_commited.heavy": "§cYou have been caught committing a heavy crime",

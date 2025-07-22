@@ -101,7 +101,9 @@ public class Thief {
     }
 
     public static class CriteriaTriggers {
+        public static Supplier<CrimeCommitedTrigger> CRIME_COMMITED = Register.criterionTrigger("crime_committed", CrimeCommitedTrigger::new);
         public static Supplier<VillagerGiftTrigger> VILLAGER_GIFT = Register.criterionTrigger("villager_gift", VillagerGiftTrigger::new);
+        public static Supplier<GuardAttacksCriminalTrigger> GUARD_ATTACKS_CRIMINAL = Register.criterionTrigger("guard_attacks_criminal", GuardAttacksCriminalTrigger::new);
 
         public static void init() {
         }
