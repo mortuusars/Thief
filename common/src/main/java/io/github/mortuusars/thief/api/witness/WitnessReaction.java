@@ -4,6 +4,7 @@ import io.github.mortuusars.thief.Thief;
 import io.github.mortuusars.thief.world.Crime;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EntityEvent;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.NeutralMob;
@@ -32,10 +33,14 @@ public class WitnessReaction {
         register((level, crime, witness, criminal) -> {
             if (witness.getType().is(Thief.Tags.EntityTypes.GUARDS)
                     && witness instanceof NeutralMob neutralMob
-                    && crime.shouldGuardsAttack(level, witness, criminal)
+                    && crime.shouldGuardsAttack(level, criminal)
                     && witness.canAttack(criminal)
                     && neutralMob.getTarget() == null) { // Only if not already attacking something
                 neutralMob.setTarget(criminal); // Attack
+
+                if (criminal instanceof ServerPlayer player) {
+                    Thief.CriteriaTriggers.GUARD_ATTACKS_CRIMINAL.trigger(player, witness);
+                }
 
                 for (int i = 0; i < 5; i++) {
                     double d = witness.getRandom().nextGaussian() * 0.02;

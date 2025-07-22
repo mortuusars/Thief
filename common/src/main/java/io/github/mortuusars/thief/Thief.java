@@ -2,6 +2,8 @@ package io.github.mortuusars.thief;
 
 import com.google.common.base.Preconditions;
 import com.mojang.logging.LogUtils;
+import io.github.mortuusars.thief.advancement.trigger.CrimeCommitedTrigger;
+import io.github.mortuusars.thief.advancement.trigger.GuardAttacksCriminalTrigger;
 import io.github.mortuusars.thief.advancement.trigger.VillagerGiftTrigger;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -115,10 +117,14 @@ public class Thief {
     }
 
     public static class CriteriaTriggers {
+        public static CrimeCommitedTrigger CRIME_COMMITED = new CrimeCommitedTrigger();
         public static VillagerGiftTrigger VILLAGER_GIFT = new VillagerGiftTrigger();
+        public static GuardAttacksCriminalTrigger GUARD_ATTACKS_CRIMINAL = new GuardAttacksCriminalTrigger();
 
         public static void register() {
+            net.minecraft.advancements.CriteriaTriggers.register(CRIME_COMMITED);
             net.minecraft.advancements.CriteriaTriggers.register(VILLAGER_GIFT);
+            net.minecraft.advancements.CriteriaTriggers.register(GUARD_ATTACKS_CRIMINAL);
         }
     }
 

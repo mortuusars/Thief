@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.2.0 - 2025-07-22
+- Added hidden advancement when village guard attacks due to low reputation or witnessing a crime.
+- Added several KubeJS server events:
+  - `ThiefEvents.crimeCommited` - fired when a player would be punished for the crime.
+  - `ThiefEvents.giftGiven` - fired when player gives a gift to the villager.
+  - `ThiefEvents.reputationLevelChanged` - fired when villager reputation level with entity is changed (includes vanilla reputation changes as well, such as hitting a villager).
+
 ## 1.1.1 - 2025-05-31
 - Added support for structures that were modified by Lithostitched (thanks 'murphy-slaw').
   - Fixes `#thief:protected` structures not being detected properly with some mods.

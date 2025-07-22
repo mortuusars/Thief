@@ -10,6 +10,7 @@
     "bed_crimes.PlayerMixin",
     "dont_show_traders_to_criminals.ShowTradesToPlayerMixin",
     "fix_bulk_trade_reputation.VillagerMixin",
+    "guard_attacks_advancement.DefendVillageTargetGoalMixin",
     "raid_win_reputation.RaidMixin",
     "thief_reputation_events.VillagerMixin"
   ],

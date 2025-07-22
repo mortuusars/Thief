@@ -78,7 +78,7 @@ public enum Crime implements ReputationEventType {
                 .orElse(false);
     }
 
-    public boolean shouldGuardsAttack(ServerLevel level, LivingEntity witness, LivingEntity criminal) {
+    public boolean shouldGuardsAttack(ServerLevel level, LivingEntity criminal) {
         return isOverGuardAttackThreshold()
                 && !Reputation.averageFromCrowd(criminal, Witness.getWitnesses(criminal)).ignores(this);
     }
@@ -116,9 +116,11 @@ public enum Crime implements ReputationEventType {
 
         PlatformHelper.fireCrimeCommitedEvent(criminal, this, witnesses);
 
-        if (criminal instanceof Player player) {
+        if (criminal instanceof ServerPlayer player) {
             player.displayClientMessage(Component.translatable("gui.thief.crime_commited." + getName()), true);
             player.awardStat(getStat());
+
+            Thief.CriteriaTriggers.CRIME_COMMITED.trigger(player, this, witnesses);
         }
 
         LOGGER.debug("{} with average reputation '{}', has commited a {} crime and was seen by {} witnesses.",

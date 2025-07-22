@@ -1,4 +1,6 @@
 {
+  "advancement.thief.guard_attacks.description": "Спровокуйте жорстку реакцію у поселенні вчинивши достатньо злочинів",
+  "advancement.thief.guard_attacks.title": "А тепер вони вас вбивають",
   "advancement.thief.kind_gesture.description": "Покращте відносини з селянином, зробивши йому подарунок",
   "advancement.thief.kind_gesture.title": "Жест доброї волі",
   "gui.thief.crime_commited.heavy": "§cВас підловили на вчиненні тяжкого злочину",
@@ -35,6 +37,7 @@
   "thief.configuration.enabled": "Увімкнено",
   "thief.configuration.fix_shift_click_villager_trading_reputation": "Випрвити Shift+ЛКМ Репутацію За Торгівлю З Селянином",
   "thief.configuration.gifts": "Подарунки",
+  "thief.configuration.guard_attack_threshold": "Тяжкість Злочину При Якому Охоронці Атакують",
   "thief.configuration.heavy_major_change": "Важкий: Великий Негатив",
   "thief.configuration.heavy_minor_change": "Важкий: Малий Негатив",
   "thief.configuration.hero_can_steal": "Герой Може Красти",
@@ -52,11 +55,10 @@
   "thief.configuration.misc": "Різне",
   "thief.configuration.punishment": "Покарання",
   "thief.configuration.reputation": "Репутація",
-  "thief.configuration.trade_reputation_threshold": "Рівень Репутації Необхідний Для Торгівлі",
-  "thief.configuration.guard_attack_threshold": "Тяжкість Злочину При Якому Охоронці Атакують",
   "thief.configuration.requires_sneak": "Потребує Крадіння",
   "thief.configuration.show_villager_reputation_tooltip": "Показати Підказку Репутації Селянина",
   "thief.configuration.sleeping_in_villagers_bed": "Тяжкість Злочину За Сон У Ліжку Селянина",
-  "thief.configuration.witness": "Свідок",
-  "thief.configuration.villager_reputation_tooltip_requires_gift": "Підказка Репутації Селянина Потребує Подарунку У Руці"
+  "thief.configuration.trade_reputation_threshold": "Рівень Репутації Необхідний Для Торгівлі",
+  "thief.configuration.villager_reputation_tooltip_requires_gift": "Підказка Репутації Селянина Потребує Подарунку У Руці",
+  "thief.configuration.witness": "Свідок"
 }
