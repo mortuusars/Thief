@@ -42,7 +42,7 @@ public class Config {
         public static final ModConfigSpec.BooleanValue REQUIRES_SNEAK;
 
         // Hero of the Village
-        public static final ModConfigSpec.BooleanValue HERO_OF_THE_VILLAGE_CAN_STEAL;
+        public static final ModConfigSpec.BooleanValue HERO_OF_THE_VILLAGE_CAN_COMMIT_CRIMES;
         public static final ModConfigSpec.IntValue HERO_MAJOR_POSITIVE_INCREASE;
         public static final ModConfigSpec.IntValue HERO_MINOR_POSITIVE_INCREASE;
 
@@ -152,10 +152,10 @@ public class Config {
 
             {
                 builder.push("hero_of_the_village");
-                HERO_OF_THE_VILLAGE_CAN_STEAL = builder
-                        .comment(" Players with 'Hero of the Village' buff can steal without consequences.",
+                HERO_OF_THE_VILLAGE_CAN_COMMIT_CRIMES = builder
+                        .comment(" Players with 'Hero of the Village' buff can commit crimes without consequences.",
                                 " Default: true")
-                        .define("hero_can_steal", true);
+                        .define("hero_immunity", true);
                 HERO_MAJOR_POSITIVE_INCREASE = builder
                         .comment(" 'Major Positive' reputation increase with nearby villagers when raid is defeated.",
                                 " Default: 2")

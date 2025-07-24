@@ -1,9 +1,9 @@
-package io.github.mortuusars.thief.forge.api.event;
+package io.github.mortuusars.thief.neoforge.api.event;
 
 import io.github.mortuusars.thief.world.Reputation;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.npc.Villager;
-import net.minecraftforge.eventbus.api.Event;
+import net.neoforged.bus.api.Event;
 
 /**
  * Fired when the entity reputation with specific villager changes.

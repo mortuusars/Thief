@@ -39,7 +39,7 @@ public class WitnessReaction {
                 neutralMob.setTarget(criminal); // Attack
 
                 if (criminal instanceof ServerPlayer player) {
-                    Thief.CriteriaTriggers.GUARD_ATTACKS_CRIMINAL.trigger(player, witness);
+                    Thief.CriteriaTriggers.GUARD_ATTACKS_CRIMINAL.get().trigger(player, witness);
                 }
 
                 for (int i = 0; i < 5; i++) {

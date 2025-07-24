@@ -1,55 +1,39 @@
 package io.github.mortuusars.thief.advancement.trigger;
 
-import com.google.gson.JsonObject;
-import io.github.mortuusars.thief.Thief;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.github.mortuusars.thief.world.Crime;
 import net.minecraft.advancements.critereon.*;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
+import java.util.Optional;
 
 public class CrimeCommitedTrigger extends SimpleCriterionTrigger<CrimeCommitedTrigger.TriggerInstance> {
-    public static final ResourceLocation ID = Thief.resource("crime_commited");
-
-    public @NotNull ResourceLocation getId() {
-        return ID;
-    }
-
     @Override
-    protected @NotNull TriggerInstance createInstance(JsonObject json, @NotNull ContextAwarePredicate predicate,
-                                                      @NotNull DeserializationContext deserializationContext) {
-        MinMaxBounds.Ints crime = MinMaxBounds.Ints.fromJson(json.get("crime"));
-        EntityPredicate witness = EntityPredicate.fromJson(json.get("witness"));
-        return new TriggerInstance(predicate, crime, witness);
+    public @NotNull Codec<TriggerInstance> codec() {
+        return TriggerInstance.CODEC;
     }
 
     public void trigger(ServerPlayer player, Crime crime, List<LivingEntity> witnesses) {
-        this.trigger(player, triggerInstance -> triggerInstance.matches(player, crime, witnesses));
+        this.trigger(player, triggerInstance ->
+                triggerInstance.matches(player, crime, witnesses));
     }
 
-    public static class TriggerInstance extends AbstractCriterionTriggerInstance {
-        private final MinMaxBounds.Ints crime;
-        private final EntityPredicate witness;
-
-        public TriggerInstance(ContextAwarePredicate predicate, MinMaxBounds.Ints crime, EntityPredicate witness) {
-            super(ID, predicate);
-            this.crime = crime;
-            this.witness = witness;
-        }
+    public record TriggerInstance(Optional<ContextAwarePredicate> player,
+                                  Optional<MinMaxBounds.Ints> crime,
+                                  Optional<ContextAwarePredicate> witness) implements SimpleCriterionTrigger.SimpleInstance {
+        public static final Codec<TriggerInstance> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+                EntityPredicate.ADVANCEMENT_CODEC.optionalFieldOf("player").forGetter(TriggerInstance::player),
+                MinMaxBounds.Ints.CODEC.optionalFieldOf("crime").forGetter(TriggerInstance::crime),
+                EntityPredicate.ADVANCEMENT_CODEC.optionalFieldOf("witness").forGetter(TriggerInstance::witness))
+                .apply(instance, TriggerInstance::new));
 
         public boolean matches(ServerPlayer player, Crime crime, List<LivingEntity> witnesses) {
-            return (this.crime.isAny() || this.crime.matches(crime.ordinal())
-                    && (witness.equals(EntityPredicate.ANY) || witnesses.stream().allMatch(w -> witness.matches(player, w))));
-        }
-
-        public @NotNull JsonObject serializeToJson(@NotNull SerializationContext conditions) {
-            JsonObject jsonobject = super.serializeToJson(conditions);
-            jsonobject.add("crime", this.crime.serializeToJson());
-            jsonobject.add("witness", this.witness.serializeToJson());
-            return jsonobject;
+            return (this.crime.isEmpty() || this.crime.get().matches(crime.ordinal())
+                    && (witness.isEmpty() || witnesses.stream().allMatch(w -> witness.get().matches(EntityPredicate.createContext(player, w)))));
         }
     }
 }

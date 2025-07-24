@@ -1,9 +1,9 @@
-package io.github.mortuusars.thief.forge.api.event;
+package io.github.mortuusars.thief.neoforge.api.event;
 
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.eventbus.api.Event;
+import net.neoforged.bus.api.Event;
 
 /**
  * Fired when the player gifts an item to a villager

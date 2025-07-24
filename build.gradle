@@ -49,12 +49,6 @@ subprojects {
             name = "ModMaven"
             url = "https://modmaven.dev"
         }
-        maven { // saps.dev Maven (KubeJS and Rhino)
-            url = "https://maven.saps.dev/releases"
-            content {
-                includeGroup "dev.latvian.mods"
-            }
-        }
         maven {
             name = "Mortuusars Github Maven"
             url = "https://raw.githubusercontent.com/mortuusars/resources/main/maven/"

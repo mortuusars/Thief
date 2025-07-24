@@ -31,16 +31,15 @@ dependencies {
     modImplementation("net.fabricmc.fabric-api:fabric-api:${fabric_api_version}")
     modImplementation("fuzs.forgeconfigapiport:forgeconfigapiport-fabric:${forge_config_api_port_version}")
 
-//    modRuntimeOnly("maven.modrinth:guard-villagers-(fabricquilt):2.1.2-1.21")
+    modRuntimeOnly("mezz.jei:jei-${minecraft_version}-fabric:${jei_version}") { transitive = false }
+    modRuntimeOnly("maven.modrinth:modmenu:YIfqIJ8q") { transitive = false }
+    modRuntimeOnly("maven.modrinth:jade:15.10.0+fabric") { transitive = false }
+    modRuntimeOnly("maven.modrinth:sodium:mc1.21.1-0.6.13-fabric") { transitive = false }
+    // modRuntimeOnly("maven.modrinth:iris:1.8.8+1.21.1-fabric") { transitive = false }
 
-    modRuntimeOnly("mezz.jei:jei-${minecraft_version}-fabric:${jei_version}")
-    modRuntimeOnly("maven.modrinth:modmenu:YIfqIJ8q")
-    modRuntimeOnly("maven.modrinth:jade:15.10.0+fabric")
-    modRuntimeOnly("maven.modrinth:sodium:mc1.21.1-0.6.13-fabric")
-//    modRuntimeOnly("maven.modrinth:iris:1.8.8+1.21.1-fabric")
-
-//    modImplementation("maven.modrinth:lithostitched:${lithostitched_fabric_version}")
-//    modImplementation("maven.modrinth:improved-village-placement:${improved_village_placement_version}")
+    // modRuntimeOnly("maven.modrinth:guard-villagers-(fabricquilt):2.1.2-1.21") { transitive = false }
+    // modImplementation("maven.modrinth:lithostitched:${lithostitched_fabric_version}") { transitive = false }
+    // modImplementation("maven.modrinth:improved-village-placement:${improved_village_placement_version}") { transitive = false }
 
     common(project(path: ':common', configuration: 'namedElements')) { transitive false }
     shadowBundle project(path: ':common', configuration: 'transformProductionFabric')

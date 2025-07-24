@@ -22,7 +22,7 @@ public class DefendVillageTargetGoalMixin {
     @Inject(method = "start", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/ai/goal/target/TargetGoal;start()V"))
     private void onStart(CallbackInfo ci) {
         if (potentialTarget instanceof ServerPlayer player) {
-            Thief.CriteriaTriggers.GUARD_ATTACKS_CRIMINAL.trigger(player, golem);
+            Thief.CriteriaTriggers.GUARD_ATTACKS_CRIMINAL.get().trigger(player, golem);
         }
     }
 }

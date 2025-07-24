@@ -1,5 +1,8 @@
 package io.github.mortuusars.thief.fabric;
 
+import io.github.mortuusars.thief.fabric.api.event.CrimeCommitedCallback;
+import io.github.mortuusars.thief.fabric.api.event.GiftGivenCallback;
+import io.github.mortuusars.thief.fabric.api.event.ReputationLevelChangedCallback;
 import io.github.mortuusars.thief.world.Crime;
 import io.github.mortuusars.thief.world.Reputation;
 import io.netty.buffer.ByteBufUtil;

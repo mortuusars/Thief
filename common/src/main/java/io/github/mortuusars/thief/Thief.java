@@ -2,6 +2,8 @@ package io.github.mortuusars.thief;
 
 import com.google.common.base.Preconditions;
 import com.mojang.logging.LogUtils;
+import io.github.mortuusars.thief.advancement.trigger.CrimeCommitedTrigger;
+import io.github.mortuusars.thief.advancement.trigger.GuardAttacksCriminalTrigger;
 import io.github.mortuusars.thief.advancement.trigger.VillagerGiftTrigger;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;

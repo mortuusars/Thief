@@ -2,6 +2,7 @@ package io.github.mortuusars.thief.world;
 
 import com.mojang.logging.LogUtils;
 import io.github.mortuusars.thief.Config;
+import io.github.mortuusars.thief.PlatformHelper;
 import io.github.mortuusars.thief.Thief;
 import io.github.mortuusars.thief.api.witness.WitnessReaction;
 import io.github.mortuusars.thief.compat.Mods;
@@ -14,7 +15,6 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.village.ReputationEventType;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.state.BlockState;
 import org.slf4j.Logger;
 
@@ -81,7 +81,7 @@ public enum Crime implements ReputationEventType {
     // --
 
     public Outcome commit(ServerLevel level, LivingEntity criminal, BlockPos crimeTargetPosition) {
-        if (Config.Server.HERO_OF_THE_VILLAGE_CAN_STEAL.get() && criminal.hasEffect(MobEffects.HERO_OF_THE_VILLAGE)) {
+        if (Config.Server.HERO_OF_THE_VILLAGE_CAN_COMMIT_CRIMES.get() && criminal.hasEffect(MobEffects.HERO_OF_THE_VILLAGE)) {
             return Outcome.NONE;
         }
 
@@ -110,7 +110,7 @@ public enum Crime implements ReputationEventType {
             player.displayClientMessage(Component.translatable("gui.thief.crime_commited." + getName()), true);
             player.awardStat(getStat());
 
-            Thief.CriteriaTriggers.CRIME_COMMITED.trigger(player, this, witnesses);
+            Thief.CriteriaTriggers.CRIME_COMMITED.get().trigger(player, this, witnesses);
         }
 
         LOGGER.debug("{} with average reputation '{}', has commited a {} crime and was seen by {} witnesses.",

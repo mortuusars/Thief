@@ -1,8 +1,8 @@
-package io.github.mortuusars.thief.forge.api.event;
+package io.github.mortuusars.thief.neoforge.api.event;
 
 import io.github.mortuusars.thief.world.Crime;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraftforge.eventbus.api.Event;
+import net.neoforged.bus.api.Event;
 
 import java.util.List;
 
