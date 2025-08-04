@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.2.1 - 2025-08-04
+- Updated zh_cn translation (LogicWheat).
+
 ## 1.2.0 - 2025-07-22
 - Added hidden advancement when village guard attacks due to low reputation or witnessing a crime.
 - Added several KubeJS server events:
