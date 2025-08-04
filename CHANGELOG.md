@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.2.1 - 2025-08-04
+- Updated zh_cn translation (LogicWheat).
+
 ## 1.2.0.1 - 2025-07-24
 - Added zh_zn lang (by LogicWheat).
 
