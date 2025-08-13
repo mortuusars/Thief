@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.2.2 - 2025-08-13
+- Added `ChoiceTheorem's Overhauled Village` villages to `#thief:protected` tag.
+
 ## 1.2.1 - 2025-08-04
 - Updated zh_cn translation (LogicWheat).
 
