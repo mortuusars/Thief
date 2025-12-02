@@ -8,8 +8,10 @@ import io.github.mortuusars.thief.Thief;
 import io.github.mortuusars.thief.api.witness.WitnessReaction;
 import io.github.mortuusars.thief.compat.Mods;
 import io.github.mortuusars.thief.compat.lithostitched.LithostitchedCompat;
+import it.unimi.dsi.fastutil.longs.LongSet;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -30,6 +32,7 @@ import org.slf4j.Logger;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 public enum Crime implements ReputationEventType {
     LIGHT("light"),
@@ -130,9 +133,23 @@ public enum Crime implements ReputationEventType {
     }
 
     public static boolean isInProtectedStructure(ServerLevel level, BlockPos pos) {
+        /* Debug code stays just in case
+        Registry<Structure> registry = level.registryAccess().registryOrThrow(Registries.STRUCTURE);
+        registry.getTag(Thief.Tags.Structures.PROTECTED).ifPresent(named -> {
+            Thief.LOGGER.info("Thief Protected structures:");
+            named.stream().forEach(h -> h.unwrapKey().ifPresent(k -> Thief.LOGGER.info(k.location().toString())));
+        });*/
+
         if (Mods.LITHOSTITCHED.isLoaded()) {
             return LithostitchedCompat.getStructureWithPieceAt(level, pos, Thief.Tags.Structures.PROTECTED).isValid();
         }
+
+        /* Debug code stays just in case
+        Thief.LOGGER.info("Structures at:");
+        level.structureManager().getAllStructuresAt(pos).keySet().forEach(s -> {
+            Thief.LOGGER.info(registry.getKey(s).toString());
+        });*/
+
         return level.structureManager().getStructureWithPieceAt(pos, Thief.Tags.Structures.PROTECTED).isValid();
     }
 
