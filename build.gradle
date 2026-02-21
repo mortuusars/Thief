@@ -1,8 +1,8 @@
 plugins {
-    id "dev.architectury.loom" version "1.7-SNAPSHOT" apply false
-    id "architectury-plugin" version "3.4-SNAPSHOT"
-    id 'com.github.johnrengelman.shadow' version '8.1.1' apply false
-    id "me.modmuss50.mod-publish-plugin" version "0.8.4"
+    id 'dev.architectury.loom' version '1.13-SNAPSHOT' apply false
+    id 'architectury-plugin' version '3.4-SNAPSHOT'
+    id 'com.gradleup.shadow' version '8.3.6' apply false
+    id "me.modmuss50.mod-publish-plugin" version "1.1.0"
 }
 
 architectury {
@@ -36,18 +36,6 @@ subprojects {
         maven {
             name = 'ParchmentMC'
             url = 'https://maven.parchmentmc.org'
-        }
-        maven {
-            name = 'tterrag maven'
-            url = 'https://maven.tterrag.com/'
-        }
-        maven {
-            name = "Jared's maven"
-            url = "https://maven.blamejared.com/"
-        }
-        maven {
-            name = "ModMaven"
-            url = "https://modmaven.dev"
         }
         maven {
             name = "Mortuusars Github Maven"
@@ -84,6 +72,20 @@ subprojects {
             content {
                 includeGroup "com.github.rtyley"
             }
+        }
+
+        // JEI
+        maven {
+            name = 'tterrag maven'
+            url = 'https://maven.tterrag.com/'
+        }
+        maven {
+            name = "Jared's maven"
+            url = "https://maven.blamejared.com/"
+        }
+        maven {
+            name = "ModMaven"
+            url = "https://modmaven.dev"
         }
     }
 
@@ -244,7 +246,7 @@ publishMods {
         modLoaders.add("fabric")
         displayName = "${mod_name} - Fabric ${minecraft_version} - ${mod_version}"
         requires("fabric-api")
-        requires("forge-config-api-port-fabric")
+        requires("forge-config-api-port")
     }
 
     modrinth("modrinthNeoForge") {

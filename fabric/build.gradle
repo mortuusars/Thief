@@ -1,5 +1,5 @@
 plugins {
-    id "com.github.johnrengelman.shadow"
+    id 'com.gradleup.shadow'
 }
 
 architectury {
@@ -31,10 +31,10 @@ dependencies {
     modImplementation("net.fabricmc.fabric-api:fabric-api:${fabric_api_version}")
     modImplementation("fuzs.forgeconfigapiport:forgeconfigapiport-fabric:${forge_config_api_port_version}")
 
-    modRuntimeOnly("mezz.jei:jei-${minecraft_version}-fabric:${jei_version}") { transitive = false }
-    modRuntimeOnly("maven.modrinth:modmenu:YIfqIJ8q") { transitive = false }
-    modRuntimeOnly("maven.modrinth:jade:15.10.0+fabric") { transitive = false }
-    modRuntimeOnly("maven.modrinth:sodium:mc1.21.1-0.6.13-fabric") { transitive = false }
+//    modRuntimeOnly("mezz.jei:jei-${minecraft_version}-fabric:${jei_version}") { transitive = false }
+//    modRuntimeOnly("maven.modrinth:modmenu:YIfqIJ8q") { transitive = false }
+//    modRuntimeOnly("maven.modrinth:jade:15.10.0+fabric") { transitive = false }
+//    modRuntimeOnly("maven.modrinth:sodium:mc1.21.1-0.6.13-fabric") { transitive = false }
     // modRuntimeOnly("maven.modrinth:iris:1.8.8+1.21.1-fabric") { transitive = false }
 
     // modRuntimeOnly("maven.modrinth:guard-villagers-(fabricquilt):2.1.2-1.21") { transitive = false }
@@ -63,7 +63,6 @@ loom {
 }
 
 shadowJar {
-    exclude("architectury.common.json")
     configurations = [project.configurations.shadowBundle]
     archiveClassifier = 'dev-shadow'
 }
@@ -71,5 +70,4 @@ shadowJar {
 remapJar {
     injectAccessWidener = true
     input.set shadowJar.archiveFile
-    dependsOn shadowJar
 }

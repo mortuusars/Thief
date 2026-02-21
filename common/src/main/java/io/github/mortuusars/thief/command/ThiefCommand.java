@@ -128,7 +128,7 @@ public class ThiefCommand {
                 double z = player.getZ() + radius * Math.sin(angle);
                 double y = player.getY() + 1;
 
-                player.serverLevel().sendParticles(player, ParticleTypes.EXPLOSION, true,
+                player.serverLevel().sendParticles(player, ParticleTypes.EXPLOSION, true, true,
                       x, y, z, 1, 0, 0, 0, 0);
             }
         }

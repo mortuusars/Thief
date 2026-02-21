@@ -1,19 +1,18 @@
 package io.github.mortuusars.thief.neoforge;
 
 import com.mojang.brigadier.arguments.ArgumentType;
-import io.github.mortuusars.thief.Thief;
 import io.github.mortuusars.thief.Register;
+import io.github.mortuusars.thief.Thief;
 import net.minecraft.advancements.CriterionTrigger;
-import net.minecraft.advancements.critereon.ItemSubPredicate;
 import net.minecraft.commands.synchronization.ArgumentTypeInfo;
 import net.minecraft.commands.synchronization.ArgumentTypeInfos;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.stats.StatFormatter;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
@@ -30,9 +29,8 @@ import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfigur
 import net.neoforged.neoforge.common.extensions.IMenuTypeExtension;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 public class RegisterImpl {
@@ -45,16 +43,14 @@ public class RegisterImpl {
     public static final DeferredRegister<RecipeType<?>> RECIPE_TYPES = DeferredRegister.create(Registries.RECIPE_TYPE, Thief.ID);
     public static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS = DeferredRegister.create(Registries.RECIPE_SERIALIZER, Thief.ID);
     public static final DeferredRegister<CriterionTrigger<?>> CRITERION_TRIGGERS = DeferredRegister.create(Registries.TRIGGER_TYPE, Thief.ID);
-    public static final DeferredRegister<ItemSubPredicate.Type<?>> ITEM_SUB_PREDICATES = DeferredRegister.create(Registries.ITEM_SUB_PREDICATE_TYPE, Thief.ID);
     public static final DeferredRegister<ArgumentTypeInfo<?, ?>> COMMAND_ARGUMENT_TYPES = DeferredRegister.create(Registries.COMMAND_ARGUMENT_TYPE, Thief.ID);
     public static final DeferredRegister<Feature<?>> WORLD_GEN_FEATURES = DeferredRegister.create(Registries.FEATURE, Thief.ID);
     public static final DeferredRegister.DataComponents DATA_COMPONENT_TYPES = DeferredRegister.createDataComponents(Registries.DATA_COMPONENT_TYPE, Thief.ID);
     public static final DeferredRegister<ParticleType<?>> PARTICLE_TYPES = DeferredRegister.create(Registries.PARTICLE_TYPE, Thief.ID);
     public static final DeferredRegister<ResourceLocation> CUSTOM_STATS = DeferredRegister.create(Registries.CUSTOM_STAT, Thief.ID);
-    public static final Map<ResourceLocation, StatFormatter> STATS = new HashMap<>();
 
-    public static <T extends Block> Supplier<T> block(String id, Supplier<T> supplier) {
-        return BLOCKS.register(id, supplier);
+    public static <T extends Block> Supplier<T> block(String id, Function<ResourceLocation, T> func) {
+        return BLOCKS.register(id, func);
     }
 
     public static <T extends BlockEntityType<E>, E extends BlockEntity> Supplier<T> blockEntityType(String id, Supplier<T> sup) {
@@ -62,30 +58,21 @@ public class RegisterImpl {
     }
 
     public static <T extends BlockEntity> BlockEntityType<T> newBlockEntityType(Register.BlockEntitySupplier<T> blockEntitySupplier, Block... validBlocks) {
-        return BlockEntityType.Builder.of(blockEntitySupplier::create, validBlocks).build(null);
+        return new BlockEntityType<>(blockEntitySupplier::create, validBlocks);
     }
 
-    public static <T extends Item> Supplier<T> item(String id, Supplier<T> supplier) {
-        return ITEMS.register(id, supplier);
+    public static <T extends Item> Supplier<T> item(String id, Function<ResourceLocation, T> func) {
+        return ITEMS.register(id, func);
     }
 
     public static <T extends Entity> Supplier<EntityType<T>> entityType(String id, EntityType.EntityFactory<T> factory, MobCategory category,
                                                                         float width, float height, int clientTrackingRange, boolean velocityUpdates, int updateInterval) {
         return ENTITY_TYPES.register(id, () -> EntityType.Builder.of(factory, category)
-                .sized(width, height)
-                .clientTrackingRange(clientTrackingRange)
-                .setShouldReceiveVelocityUpdates(velocityUpdates)
-                .updateInterval(updateInterval)
-                .build(id));
-    }
-
-    public static <T extends Entity> Supplier<EntityType<T>> entityType(String id, EntityType.EntityFactory<T> factory, MobCategory category, boolean receiveVelocityUpdates, Consumer<EntityType.Builder<T>> typeBuilder) {
-        return ENTITY_TYPES.register(id, () -> {
-            EntityType.Builder<T> builder = EntityType.Builder.of(factory, category);
-            builder.setShouldReceiveVelocityUpdates(receiveVelocityUpdates);
-            typeBuilder.accept(builder);
-            return builder.build(id);
-        });
+              .sized(width, height)
+              .clientTrackingRange(clientTrackingRange)
+              .setShouldReceiveVelocityUpdates(velocityUpdates)
+              .updateInterval(updateInterval)
+              .build(ResourceKey.create(Registries.ENTITY_TYPE, Thief.resource(id))));
     }
 
     public static <T extends SoundEvent> Supplier<T> soundEvent(String id, Supplier<T> supplier) {
@@ -108,14 +95,10 @@ public class RegisterImpl {
         return CRITERION_TRIGGERS.register(name, supplier);
     }
 
-    public static <T extends ItemSubPredicate.Type<?>> Supplier<T> itemSubPredicate(String name, Supplier<T> supplier) {
-        return ITEM_SUB_PREDICATES.register(name, supplier);
-    }
-
     public static <A extends ArgumentType<?>, T extends ArgumentTypeInfo.Template<A>, I extends ArgumentTypeInfo<A, T>>
     Supplier<ArgumentTypeInfo<A, T>> commandArgumentType(String id, Class<A> infoClass, I argumentTypeInfo) {
         return COMMAND_ARGUMENT_TYPES.register(id,
-                () -> ArgumentTypeInfos.registerByClass(infoClass, argumentTypeInfo));
+              () -> ArgumentTypeInfos.registerByClass(infoClass, argumentTypeInfo));
     }
 
     public static <T extends FeatureConfiguration> Supplier<Feature<?>> worldGenFeature(String name, Supplier<Feature<T>> featureSupplier) {
@@ -132,10 +115,5 @@ public class RegisterImpl {
 
     public static <T extends ParticleType<? extends ParticleOptions>> Supplier<ParticleType<?>> particleType(String name, Supplier<T> supplier) {
         return PARTICLE_TYPES.register(name, supplier);
-    }
-
-    public static Supplier<ResourceLocation> stat(ResourceLocation location, StatFormatter formatter) {
-        STATS.put(location, formatter);
-        return CUSTOM_STATS.register(location.getPath(), () -> location);
     }
 }

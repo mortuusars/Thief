@@ -1,24 +1,24 @@
 package io.github.mortuusars.thief.fabric;
 
 import com.mojang.brigadier.arguments.ArgumentType;
-import io.github.mortuusars.thief.Thief;
 import io.github.mortuusars.thief.Register;
-import io.netty.buffer.Unpooled;
+import io.github.mortuusars.thief.Thief;
 import net.fabricmc.fabric.api.command.v2.ArgumentTypeRegistry;
+import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerType;
 import net.minecraft.advancements.CriterionTrigger;
-import net.minecraft.advancements.critereon.ItemSubPredicate;
 import net.minecraft.commands.synchronization.ArgumentTypeInfo;
 import net.minecraft.core.Registry;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.RegistryFriendlyByteBuf;
-import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.stats.StatFormatter;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
@@ -38,8 +38,9 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 public class RegisterImpl {
-    public static <T extends Block> Supplier<T> block(String id, Supplier<T> supplier) {
-        T obj = Registry.register(BuiltInRegistries.BLOCK, Thief.resource(id), supplier.get());
+    public static <T extends Block> Supplier<T> block(String id, Function<ResourceLocation, T> supplier) {
+        ResourceLocation rl = Thief.resource(id);
+        T obj = Registry.register(BuiltInRegistries.BLOCK, rl, supplier.apply(rl));
         return () -> obj;
     }
 
@@ -49,11 +50,12 @@ public class RegisterImpl {
     }
 
     public static <T extends BlockEntity> BlockEntityType<T> newBlockEntityType(Register.BlockEntitySupplier<T> blockEntitySupplier, Block... validBlocks) {
-        return BlockEntityType.Builder.of(blockEntitySupplier::create, validBlocks).build();
+        return FabricBlockEntityTypeBuilder.create(blockEntitySupplier::create, validBlocks).build();
     }
 
-    public static <T extends Item> Supplier<T> item(String id, Supplier<T> supplier) {
-        T obj = Registry.register(BuiltInRegistries.ITEM, Thief.resource(id), supplier.get());
+    public static <T extends Item> Supplier<T> item(String id, Function<ResourceLocation, T> func) {
+        ResourceLocation rl = Thief.resource(id);
+        T obj = Registry.register(BuiltInRegistries.ITEM, rl, func.apply(rl));
         return () -> obj;
     }
 
@@ -61,20 +63,12 @@ public class RegisterImpl {
                                                                         MobCategory category, float width, float height,
                                                                         int clientTrackingRange, boolean velocityUpdates, int updateInterval) {
         EntityType<T> type = Registry.register(BuiltInRegistries.ENTITY_TYPE, Thief.resource(id),
-                EntityType.Builder.of(factory, category)
-                        .sized(width, height)
-                        .clientTrackingRange(clientTrackingRange)
-                        .alwaysUpdateVelocity(velocityUpdates)
-                        .updateInterval(updateInterval)
-                        .build());
-        return () -> type;
-    }
-
-    public static <T extends Entity> Supplier<EntityType<T>> entityType(String id, EntityType.EntityFactory<T> factory, MobCategory category, boolean receiveVelocityUpdates, Consumer<EntityType.Builder<T>> typeBuilder) {
-        EntityType.Builder<T> builder = EntityType.Builder.of(factory, category);
-        typeBuilder.accept(builder);
-        builder.alwaysUpdateVelocity(receiveVelocityUpdates);
-        EntityType<T> type = Registry.register(BuiltInRegistries.ENTITY_TYPE, Thief.resource(id), builder.build());
+              EntityType.Builder.of(factory, category)
+                    .sized(width, height)
+                    .clientTrackingRange(clientTrackingRange)
+                    .alwaysUpdateVelocity(velocityUpdates)
+                    .updateInterval(updateInterval)
+                    .build(ResourceKey.create(Registries.ENTITY_TYPE, Thief.resource(id))));
         return () -> type;
     }
 
@@ -83,19 +77,10 @@ public class RegisterImpl {
         return () -> obj;
     }
 
-    public static <T extends MenuType<E>, E extends AbstractContainerMenu> Supplier<MenuType<E>> menuType(String id, Register.MenuTypeSupplier<E> supplier) {
-        ExtendedScreenHandlerType<E, byte[]> type = new ExtendedScreenHandlerType<>((syncId, inventory, data) -> {
-            RegistryFriendlyByteBuf buffer = new RegistryFriendlyByteBuf(Unpooled.wrappedBuffer(data), inventory.player.registryAccess());
-            E menu = supplier.create(syncId, inventory, buffer);
-            buffer.release();
-            return menu;
-        }, ByteBufCodecs.BYTE_ARRAY.mapStream(Function.identity()));
-
-        Registry.register(BuiltInRegistries.MENU, Thief.resource(id), type);
-
-        return () -> {
-            return type;
-        };
+    public static <T extends MenuType<E>, E extends AbstractContainerMenu> Supplier<MenuType<E>> menuType(String id, Register.MenuTypeSupplier<E> supplier, StreamCodec<RegistryFriendlyByteBuf, RegistryFriendlyByteBuf> packetCodec) {
+        ExtendedScreenHandlerType<E, RegistryFriendlyByteBuf> type = Registry.register(BuiltInRegistries.MENU, Thief.resource(id),
+              new ExtendedScreenHandlerType<>(supplier::create, packetCodec));
+        return () -> type;
     }
 
     public static Supplier<RecipeType<?>> recipeType(String id, Supplier<RecipeType<?>> supplier) {
@@ -110,11 +95,6 @@ public class RegisterImpl {
 
     public static <T extends CriterionTrigger<?>> Supplier<T> criterionTrigger(String name, Supplier<T> supplier) {
         T obj = Registry.register(BuiltInRegistries.TRIGGER_TYPES, Thief.resource(name), supplier.get());
-        return () -> obj;
-    }
-
-    public static <T extends ItemSubPredicate.Type<?>> Supplier<T> itemSubPredicate(String name, Supplier<T> supplier) {
-        T obj = Registry.register(BuiltInRegistries.ITEM_SUB_PREDICATE_TYPE, Thief.resource(name), supplier.get());
         return () -> obj;
     }
 
@@ -133,17 +113,11 @@ public class RegisterImpl {
         var builder = DataComponentType.<T>builder();
         builderConsumer.accept(builder);
         var componentType = builder.build();
-        return Registry.register(BuiltInRegistries.DATA_COMPONENT_TYPE, Thief.resource(name), componentType);
+        return Registry.register(BuiltInRegistries.DATA_COMPONENT_TYPE, Thief.ID + name, componentType);
     }
 
     public static <T extends ParticleType<? extends ParticleOptions>> Supplier<T> particleType(String name, Supplier<T> supplier) {
         T particleType = Registry.register(BuiltInRegistries.PARTICLE_TYPE, name, supplier.get());
         return () -> particleType;
-    }
-
-    public static Supplier<ResourceLocation> stat(ResourceLocation location, StatFormatter formatter) {
-        net.minecraft.core.Registry.register(BuiltInRegistries.CUSTOM_STAT, location, location);
-        net.minecraft.stats.Stats.CUSTOM.get(location, formatter);
-        return () -> location;
     }
 }

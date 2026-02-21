@@ -1,9 +1,9 @@
 # Changelog
 
-## UNRELEASED
+## 1.2.3 - 1.21.4 - 2026-02-21
+- Port to 1.21.4.
 - Added `crime.show_message` config option.
 - Renamed stats `Times Caught Committing <severity> Thefts in a Village` to `Caught Committing <severity> Crimes`.
-  - Internal name is changed as well, so progress will be reset.
 
 ## 1.2.2 - 2025-08-13
 - Added `ChoiceTheorem's Overhauled Village` villages to `#thief:protected` tag.

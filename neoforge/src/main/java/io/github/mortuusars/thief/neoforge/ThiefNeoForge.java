@@ -22,6 +22,10 @@ public class ThiefNeoForge {
         @Nullable IEventBus modEventBus = container.getEventBus();
         Preconditions.checkNotNull(modEventBus);
 
+        Thief.Stats.STATS.forEach((location, formatter) -> {
+            RegisterImpl.CUSTOM_STATS.register(location.getPath(), () -> location);
+        });
+
         RegisterImpl.BLOCKS.register(modEventBus);
         RegisterImpl.BLOCK_ENTITY_TYPES.register(modEventBus);
         RegisterImpl.ENTITY_TYPES.register(modEventBus);
@@ -30,7 +34,6 @@ public class ThiefNeoForge {
         RegisterImpl.RECIPE_TYPES.register(modEventBus);
         RegisterImpl.RECIPE_SERIALIZERS.register(modEventBus);
         RegisterImpl.CRITERION_TRIGGERS.register(modEventBus);
-        RegisterImpl.ITEM_SUB_PREDICATES.register(modEventBus);
         RegisterImpl.SOUND_EVENTS.register(modEventBus);
         RegisterImpl.COMMAND_ARGUMENT_TYPES.register(modEventBus);
         RegisterImpl.WORLD_GEN_FEATURES.register(modEventBus);

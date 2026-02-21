@@ -9,20 +9,15 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.RenderGuiEvent;
 
+@EventBusSubscriber(modid = Thief.ID, value = Dist.CLIENT)
 public class NeoForgeClientEvents {
-    @EventBusSubscriber(modid = Thief.ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
-    public static class ModBus {
-        @SubscribeEvent
-        public static void clientSetup(FMLClientSetupEvent event) {
-            event.enqueueWork(ThiefClient::init);
-        }
+    @SubscribeEvent
+    public static void clientSetup(FMLClientSetupEvent event) {
+        event.enqueueWork(ThiefClient::init);
     }
 
-    @EventBusSubscriber(modid = Thief.ID, bus = EventBusSubscriber.Bus.GAME, value = Dist.CLIENT)
-    public static class GameBus {
-        @SubscribeEvent
-        public static void onRenderGuiPost(RenderGuiEvent.Post event) {
-            ClientEvents.renderGui(event.getGuiGraphics(), event.getPartialTick());
-        }
+    @SubscribeEvent
+    public static void onRenderGuiPost(RenderGuiEvent.Post event) {
+        ClientEvents.renderGui(event.getGuiGraphics(), event.getPartialTick());
     }
 }

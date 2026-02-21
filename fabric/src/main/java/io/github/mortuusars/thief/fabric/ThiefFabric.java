@@ -52,6 +52,8 @@ public class ThiefFabric implements ModInitializer {
             }
         });
 
+        Thief.Stats.register();
+
         FabricC2SPackets.register();
         FabricS2CPackets.register();
     }

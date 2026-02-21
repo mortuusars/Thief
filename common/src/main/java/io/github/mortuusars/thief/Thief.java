@@ -5,6 +5,8 @@ import com.mojang.logging.LogUtils;
 import io.github.mortuusars.thief.advancement.trigger.CrimeCommitedTrigger;
 import io.github.mortuusars.thief.advancement.trigger.GuardAttacksCriminalTrigger;
 import io.github.mortuusars.thief.advancement.trigger.VillagerGiftTrigger;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.stats.StatFormatter;
@@ -15,6 +17,8 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import org.slf4j.Logger;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Supplier;
 
 public class Thief {
@@ -22,7 +26,6 @@ public class Thief {
     public static final Logger LOGGER = LogUtils.getLogger();
 
     public static void init() {
-        Stats.init();
         CriteriaTriggers.init();
     }
 
@@ -34,14 +37,26 @@ public class Thief {
     }
 
     public static class Stats {
-        public static final Supplier<ResourceLocation> CAUGHT_COMMITING_LIGHT_CRIMES =
-                Register.stat(resource("caught_commiting_light_crimes"), StatFormatter.DEFAULT);
-        public static final Supplier<ResourceLocation> CAUGHT_COMMITING_MEDIUM_CRIMES =
-                Register.stat(resource("caught_commiting_medium_crimes"), StatFormatter.DEFAULT);
-        public static final Supplier<ResourceLocation> CAUGHT_COMMITING_HEAVY_CRIMES =
-                Register.stat(resource("caught_commiting_heavy_crimes"), StatFormatter.DEFAULT);
+        public static final Map<ResourceLocation, StatFormatter> STATS = new HashMap<>();
 
-        public static void init() {
+        public static final ResourceLocation CAUGHT_COMMITING_LIGHT_CRIMES =
+              register(resource("caught_commiting_light_crimes"), StatFormatter.DEFAULT);
+        public static final ResourceLocation CAUGHT_COMMITING_MEDIUM_CRIMES =
+              register(resource("caught_commiting_medium_crimes"), StatFormatter.DEFAULT);
+        public static final ResourceLocation CAUGHT_COMMITING_HEAVY_CRIMES =
+              register(resource("caught_commiting_heavy_crimes"), StatFormatter.DEFAULT);
+
+        @SuppressWarnings("SameParameterValue")
+        private static ResourceLocation register(ResourceLocation location, StatFormatter formatter) {
+            STATS.put(location, formatter);
+            return location;
+        }
+
+        public static void register() {
+            STATS.forEach((location, formatter) -> {
+                Registry.register(BuiltInRegistries.CUSTOM_STAT, location, location);
+                net.minecraft.stats.Stats.CUSTOM.get(location, formatter);
+            });
         }
     }
 

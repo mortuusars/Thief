@@ -60,7 +60,7 @@ public class CommonEvents {
         if (!Reputation.fromValue(villager, player).canTrade()) {
             // Prevent trading
             villager.setUnhappy();
-            return InteractionResult.SUCCESS_NO_ITEM_USED;
+            return InteractionResult.SUCCESS;
         }
 
         return InteractionResult.PASS;

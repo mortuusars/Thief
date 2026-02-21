@@ -74,9 +74,9 @@ public enum Crime implements ReputationEventType, StringRepresentable {
 
     public ResourceLocation getStat() {
         return switch (this) {
-            case LIGHT -> Thief.Stats.CAUGHT_COMMITING_LIGHT_CRIMES.get();
-            case MEDIUM -> Thief.Stats.CAUGHT_COMMITING_MEDIUM_CRIMES.get();
-            case HEAVY -> Thief.Stats.CAUGHT_COMMITING_HEAVY_CRIMES.get();
+            case LIGHT -> Thief.Stats.CAUGHT_COMMITING_LIGHT_CRIMES;
+            case MEDIUM -> Thief.Stats.CAUGHT_COMMITING_MEDIUM_CRIMES;
+            case HEAVY -> Thief.Stats.CAUGHT_COMMITING_HEAVY_CRIMES;
         };
     }
 
