@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.2.2.1 - 2026-02-21
+- Added ja_jp localization
+
 ## 1.2.2 - 2025-08-13
 - Added `ChoiceTheorem's Overhauled Village` villages to `#thief:protected` tag.
 
