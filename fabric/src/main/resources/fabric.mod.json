@@ -27,9 +27,9 @@
     "${mod_id}-common.mixins.json"
   ],
   "depends": {
-    "minecraft": ">=1.21.0",
+    "minecraft": "${fabric_supported_minecraft_versions}",
     "fabric": "*",
     "fabric-api": "*",
-    "forgeconfigapiport": ">=21.0.0"
+    "forgeconfigapiport": ">=${forge_config_api_port_version}"
   }
 }

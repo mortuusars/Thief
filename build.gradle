@@ -128,6 +128,8 @@ subprojects {
                 neoforge_version                      : neoforge_version,
                 neoforge_version_range                : neoforge_version_range,
                 neoforge_loader_version_range         : neoforge_loader_version_range,
+                fabric_supported_minecraft_versions   : fabric_supported_minecraft_versions,
+                forge_config_api_port_version         : forge_config_api_port_version,
                 mod_id                                : mod_id,
                 mod_name                              : mod_name,
                 mod_version                           : mod_version,

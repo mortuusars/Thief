@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.2.3.1 - 2026-02-21
+- Added ja_jp localization
+- [Fabric] Fixed launch dependencies 
+
 ## 1.2.3 - 1.21.4 - 2026-02-21
 - Port to 1.21.4.
 - Added `crime.show_message` config option.
