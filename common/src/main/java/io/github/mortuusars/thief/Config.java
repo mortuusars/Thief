@@ -19,6 +19,7 @@ public class Config {
         public static final ModConfigSpec.EnumValue<PotentialCrime> CRIME_FOR_KICKING_VILLAGER_OUT_OF_BED;
         public static final ModConfigSpec.EnumValue<PotentialCrime> CRIME_FOR_SLEEPING_IN_VILLAGERS_BED;
         public static final ModConfigSpec.BooleanValue CRIME_ONLY_IN_PROTECTED_STRUCTURE;
+        public static final ModConfigSpec.BooleanValue CRIME_SHOW_MESSAGE;
 
         // Witness
         public static final ModConfigSpec.IntValue WITNESS_MAX_DISTANCE;
@@ -27,6 +28,7 @@ public class Config {
         // Punishment
         public static final ModConfigSpec.EnumValue<Reputation> TRADE_REPUTATION_THRESHOLD;
         public static final ModConfigSpec.EnumValue<PotentialCrime> GUARD_ATTACK_THRESHOLD;
+
         // Reputation
         public static final ModConfigSpec.IntValue PUNISHMENT_LIGHT_MAJOR_NEGATIVE;
         public static final ModConfigSpec.IntValue PUNISHMENT_LIGHT_MINOR_NEGATIVE;
@@ -78,6 +80,10 @@ public class Config {
                         .comment(" Check for crimes only in #thief:protected structures. If disabled, whole world is 'protected'.",
                                 " Default: true.")
                         .define("crime_only_in_protected_structures", true);
+                CRIME_SHOW_MESSAGE = builder
+                      .comment(" 'You have been caught committing ...' message will be displayed in the action bar when crime is committed.",
+                            " Default: true")
+                      .define("show_message", true);
                 builder.pop();
             }
 
@@ -183,11 +189,17 @@ public class Config {
     public static class Client {
         public static final ModConfigSpec SPEC;
 
+        public static final ModConfigSpec.BooleanValue POTENTIAL_CRIME_TOOLTIP_ENABLED;
         public static final ModConfigSpec.BooleanValue VILLAGER_REPUTATION_TOOLTIP_ENABLED;
         public static final ModConfigSpec.BooleanValue VILLAGER_REPUTATION_TOOLTIP_REQUIRES_GIFT;
 
         static {
             ModConfigSpec.Builder builder = new ModConfigSpec.Builder();
+
+            POTENTIAL_CRIME_TOOLTIP_ENABLED = builder
+                  .comment(" Tooltip with warning will be shown when looking at a protected block or entity.",
+                        " Default: true")
+                  .define("show_potential_crime_tooltip", true);
 
             VILLAGER_REPUTATION_TOOLTIP_ENABLED = builder
                     .comment(" Reputation tooltip will be shown when looking at a Villager.",

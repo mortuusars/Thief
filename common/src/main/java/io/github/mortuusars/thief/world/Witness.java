@@ -23,7 +23,7 @@ public class Witness {
 
         return criminal.level().getEntitiesOfClass(LivingEntity.class, crimeScene)
                 .stream()
-                .filter(e -> isWitness(criminal, e, visibility))
+                .filter(entity -> isWitness(criminal, entity, visibility))
                 .toList();
     }
 
@@ -39,7 +39,7 @@ public class Witness {
 
         return criminal.level().getEntitiesOfClass(entityClass, crimeScene)
                 .stream()
-                .filter(e -> isWitness(criminal, e, visibility))
+                .filter(entity -> isWitness(criminal, entity, visibility))
                 .toList();
     }
 

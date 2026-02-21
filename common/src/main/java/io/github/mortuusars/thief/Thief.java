@@ -22,18 +22,8 @@ public class Thief {
     public static final Logger LOGGER = LogUtils.getLogger();
 
     public static void init() {
-        Blocks.init();
-        BlockEntityTypes.init();
-        EntityTypes.init();
-        Items.init();
-        DataComponents.init();
         Stats.init();
         CriteriaTriggers.init();
-        ItemSubPredicates.init();
-        MenuTypes.init();
-        RecipeSerializers.init();
-        SoundEvents.init();
-        ArgumentTypes.init();
     }
 
     /**
@@ -43,60 +33,13 @@ public class Thief {
         return ResourceLocation.fromNamespaceAndPath(ID, path);
     }
 
-    public static class Blocks {
-        static void init() {
-        }
-    }
-
-    public static class BlockEntityTypes {
-        static void init() {
-        }
-    }
-
-    public static class Items {
-        static void init() {
-        }
-    }
-
-    public static class DataComponents {
-        static void init() {
-        }
-    }
-
-    public static class EntityTypes {
-        static void init() {
-        }
-    }
-
-    public static class MenuTypes {
-        static void init() {
-        }
-    }
-
-    public static class RecipeSerializers {
-        static void init() {
-        }
-    }
-
-    public static class SoundEvents {
-        private static Supplier<SoundEvent> register(String category, String key) {
-            Preconditions.checkState(category != null && !category.isEmpty(), "'category' should not be empty.");
-            Preconditions.checkState(key != null && !key.isEmpty(), "'key' should not be empty.");
-            String path = category + "." + key;
-            return Register.soundEvent(path, () -> SoundEvent.createVariableRangeEvent(Thief.resource(path)));
-        }
-
-        static void init() {
-        }
-    }
-
     public static class Stats {
-        public static final Supplier<ResourceLocation> CAUGHT_ON_VILLAGE_LIGHT_THEFTS =
-                Register.stat(resource("caught_at_light_thefts_in_village"), StatFormatter.DEFAULT);
-        public static final Supplier<ResourceLocation> CAUGHT_ON_VILLAGE_MEDIUM_THEFTS =
-                Register.stat(resource("caught_at_medium_thefts_in_village"), StatFormatter.DEFAULT);
-        public static final Supplier<ResourceLocation> CAUGHT_ON_VILLAGE_HEAVY_THEFTS =
-                Register.stat(resource("caught_at_heavy_thefts_in_village"), StatFormatter.DEFAULT);
+        public static final Supplier<ResourceLocation> CAUGHT_COMMITING_LIGHT_CRIMES =
+                Register.stat(resource("caught_commiting_light_crimes"), StatFormatter.DEFAULT);
+        public static final Supplier<ResourceLocation> CAUGHT_COMMITING_MEDIUM_CRIMES =
+                Register.stat(resource("caught_commiting_medium_crimes"), StatFormatter.DEFAULT);
+        public static final Supplier<ResourceLocation> CAUGHT_COMMITING_HEAVY_CRIMES =
+                Register.stat(resource("caught_commiting_heavy_crimes"), StatFormatter.DEFAULT);
 
         public static void init() {
         }
@@ -109,14 +52,6 @@ public class Thief {
 
         public static void init() {
         }
-    }
-
-    public static class ItemSubPredicates {
-        public static void init() {
-        }
-    }
-
-    public static class LootTables {
     }
 
     public static class Tags {
@@ -160,13 +95,5 @@ public class Thief {
             public static final TagKey<Structure> PROTECTED =
                     TagKey.create(net.minecraft.core.registries.Registries.STRUCTURE, resource("protected"));
         }
-    }
-
-    public static class ArgumentTypes {
-        public static void init() {
-        }
-    }
-
-    public static class Registries {
     }
 }

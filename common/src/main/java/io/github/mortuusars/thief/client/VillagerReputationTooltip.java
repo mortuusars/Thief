@@ -18,7 +18,7 @@ import java.util.ArrayList;
 
 public class VillagerReputationTooltip {
     private static int lastVillagerId = -1;
-    private static long lastRequestTime = -1L;
+    private static long lastQueryTime = -1L;
     private static int lastReputation = 0;
 
     // Gossips
@@ -29,8 +29,10 @@ public class VillagerReputationTooltip {
     private static int lastMajorPositive;
     private static int lastTrading;
 
-    public static void render(GuiGraphics guiGraphics, DeltaTracker deltaTracker) {
-        if (!Config.Client.VILLAGER_REPUTATION_TOOLTIP_ENABLED.get()) return;
+    public static boolean render(GuiGraphics guiGraphics, DeltaTracker deltaTracker) {
+        if (!Config.Client.VILLAGER_REPUTATION_TOOLTIP_ENABLED.get()) {
+            return false;
+        }
         Minecraft minecraft = Minecraft.getInstance();
         if (minecraft.options.hideGui
                 || minecraft.level == null
@@ -39,22 +41,22 @@ public class VillagerReputationTooltip {
                 || minecraft.screen != null
                 || !(minecraft.hitResult instanceof EntityHitResult entityHitResult)
                 || !(entityHitResult.getEntity() instanceof Villager villager)) {
-            return;
+            return false;
         }
 
         if (Config.Client.VILLAGER_REPUTATION_TOOLTIP_REQUIRES_GIFT.get()
                 && !minecraft.player.getMainHandItem().is(Thief.Tags.Items.VILLAGER_GIFTS)) {
-            return;
+            return false;
         }
 
         long gameTime = minecraft.level.getGameTime();
-        if (gameTime - lastRequestTime > 5) {
+        if (gameTime - lastQueryTime > 5) {
             Packets.sendToServer(new QueryVillagerReputationC2SP(villager.getId(), Minecraft.getInstance().options.advancedItemTooltips));
-            lastRequestTime = gameTime;
+            lastQueryTime = gameTime;
         }
 
         if (lastVillagerId != villager.getId()) {
-            return;
+            return false;
         }
 
         Reputation reputation = Reputation.fromValue(lastReputation);
@@ -80,6 +82,8 @@ public class VillagerReputationTooltip {
         int x = minecraft.getWindow().getGuiScaledWidth() / 2 + 8;
         int y = minecraft.getWindow().getGuiScaledHeight() / 2 - (int)(lines.size() / 2f * 9f);
         guiGraphics.renderTooltip(minecraft.font, lines, x, y + 10);
+
+        return true;
     }
 
     public static void updateReputation(int villagerId, int reputation) {

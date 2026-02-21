@@ -3,21 +3,27 @@ package io.github.mortuusars.thief.command;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import io.github.mortuusars.thief.Config;
 import io.github.mortuusars.thief.world.Crime;
 import io.github.mortuusars.thief.world.Reputation;
 import io.github.mortuusars.thief.world.Witness;
+import io.github.mortuusars.thief.world.stealth.Stealth;
 import net.minecraft.ChatFormatting;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.EntityArgument;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.npc.Villager;
 
 import java.util.List;
 
 public class ThiefCommand {
-    public static boolean showNoticeDistanceAndWitnesses = false;
+    private static boolean showNoticeDistanceAndWitnesses = false;
 
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
         dispatcher.register(Commands.literal("thief")
@@ -106,11 +112,25 @@ public class ThiefCommand {
         return 0;
     }
 
-    /*private static List<ServerPlayer> getTargetPlayers(CommandContext<CommandSourceStack> context) {
-        try {
-            return new ArrayList<>(EntityArgument.getPlayers(context, "targets"));
-        } catch (CommandSyntaxException e) {
-            return Collections.emptyList();
+    public static void onPlayerTick(ServerPlayer player) {
+        if (showNoticeDistanceAndWitnesses && player.level().getGameTime() % 3 == 0) {
+            List<LivingEntity> witnesses = Witness.getWitnesses(player);
+            for (LivingEntity witness : witnesses) {
+                witness.addEffect(new MobEffectInstance(MobEffects.GLOWING, 4));
+            }
+
+            double radius = Config.Server.WITNESS_MAX_DISTANCE.get() * Stealth.getVisibility(player);
+            int particles = 64; // number of particles in the ring
+
+            for (int i = 0; i < particles; i++) {
+                double angle = 2 * Math.PI * i / particles;
+                double x = player.getX() + radius * Math.cos(angle);
+                double z = player.getZ() + radius * Math.sin(angle);
+                double y = player.getY() + 1;
+
+                player.serverLevel().sendParticles(player, ParticleTypes.EXPLOSION, true,
+                      x, y, z, 1, 0, 0, 0, 0);
+            }
         }
-    }*/
+    }
 }

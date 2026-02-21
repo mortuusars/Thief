@@ -1,30 +1,43 @@
 package io.github.mortuusars.thief.world;
 
 import com.mojang.logging.LogUtils;
+import com.mojang.serialization.Codec;
 import io.github.mortuusars.thief.Config;
 import io.github.mortuusars.thief.PlatformHelper;
 import io.github.mortuusars.thief.Thief;
 import io.github.mortuusars.thief.api.witness.WitnessReaction;
 import io.github.mortuusars.thief.compat.Mods;
 import io.github.mortuusars.thief.compat.lithostitched.LithostitchedCompat;
+import io.netty.buffer.ByteBuf;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.ByIdMap;
+import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.village.ReputationEventType;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.function.IntFunction;
 
-public enum Crime implements ReputationEventType {
+public enum Crime implements ReputationEventType, StringRepresentable {
     LIGHT("light"),
     MEDIUM("medium"),
     HEAVY("heavy");
+
+    public static final Codec<Crime> CODEC = StringRepresentable.fromEnum(Crime::values);
+    public static final IntFunction<Crime> BY_ID = ByIdMap.continuous(Crime::ordinal, values(), ByIdMap.OutOfBoundsStrategy.ZERO);
+    public static final StreamCodec<ByteBuf, Crime> STREAM_CODEC = ByteBufCodecs.idMapper(BY_ID, Crime::ordinal);
 
     private static final Logger LOGGER = LogUtils.getLogger();
 
@@ -35,6 +48,11 @@ public enum Crime implements ReputationEventType {
     }
 
     public String getName() {
+        return name;
+    }
+
+    @Override
+    public @NotNull String getSerializedName() {
         return name;
     }
 
@@ -56,9 +74,9 @@ public enum Crime implements ReputationEventType {
 
     public ResourceLocation getStat() {
         return switch (this) {
-            case LIGHT -> Thief.Stats.CAUGHT_ON_VILLAGE_LIGHT_THEFTS.get();
-            case MEDIUM -> Thief.Stats.CAUGHT_ON_VILLAGE_MEDIUM_THEFTS.get();
-            case HEAVY -> Thief.Stats.CAUGHT_ON_VILLAGE_HEAVY_THEFTS.get();
+            case LIGHT -> Thief.Stats.CAUGHT_COMMITING_LIGHT_CRIMES.get();
+            case MEDIUM -> Thief.Stats.CAUGHT_COMMITING_MEDIUM_CRIMES.get();
+            case HEAVY -> Thief.Stats.CAUGHT_COMMITING_HEAVY_CRIMES.get();
         };
     }
 
@@ -107,7 +125,9 @@ public enum Crime implements ReputationEventType {
         PlatformHelper.fireCrimeCommitedEvent(criminal, this, witnesses);
 
         if (criminal instanceof ServerPlayer player) {
-            player.displayClientMessage(Component.translatable("gui.thief.crime_commited." + getName()), true);
+            if (Config.Server.CRIME_SHOW_MESSAGE.get()) {
+                player.displayClientMessage(Component.translatable("gui.thief.crime_commited." + getName()), true);
+            }
             player.awardStat(getStat());
 
             Thief.CriteriaTriggers.CRIME_COMMITED.get().trigger(player, this, witnesses);
@@ -128,7 +148,8 @@ public enum Crime implements ReputationEventType {
 
     // --
 
-    public static PotentialCrime fromBlockStateBreaking(ServerPlayer player, BlockPos pos, BlockState state) {
+    public static PotentialCrime fromBlockStateBreaking(Player player, BlockPos pos, BlockState state) {
+        if (!Config.Server.CRIME_FOR_BREAKING_PROTECTED_BLOCKS.get()) return PotentialCrime.NONE;
         // Reverse order to select heaviest offence if added to multiple tags:
         if (state.is(Thief.Tags.Blocks.BREAK_PROTECTED_HEAVY)) return PotentialCrime.HEAVY;
         if (state.is(Thief.Tags.Blocks.BREAK_PROTECTED_MEDIUM)) return PotentialCrime.MEDIUM;
@@ -136,7 +157,8 @@ public enum Crime implements ReputationEventType {
         return PotentialCrime.NONE;
     }
 
-    public static PotentialCrime fromBlockStateInteracting(ServerPlayer player, BlockPos pos, BlockState state) {
+    public static PotentialCrime fromBlockStateInteracting(Player player, BlockPos pos, BlockState state) {
+        if (!Config.Server.CRIME_FOR_INTERACTING_WITH_PROTECTED_BLOCKS.get()) return PotentialCrime.NONE;
         // Reverse order to select heaviest offence if added to multiple tags:
         if (state.is(Thief.Tags.Blocks.INTERACT_PROTECTED_HEAVY)) return PotentialCrime.HEAVY;
         if (state.is(Thief.Tags.Blocks.INTERACT_PROTECTED_MEDIUM)) return PotentialCrime.MEDIUM;
@@ -144,7 +166,8 @@ public enum Crime implements ReputationEventType {
         return PotentialCrime.NONE;
     }
 
-    public static PotentialCrime fromKilling(ServerPlayer player, LivingEntity target) {
+    public static PotentialCrime fromKilling(Player player, LivingEntity target) {
+        if (!Config.Server.CRIME_FOR_KILLING_PROTECTED_ENTITIES.get()) return PotentialCrime.NONE;
         // Reverse order to select heaviest offence if added to multiple tags:
         if (target.getType().is(Thief.Tags.EntityTypes.KILLING_PROTECTED_HEAVY)) return PotentialCrime.HEAVY;
         if (target.getType().is(Thief.Tags.EntityTypes.KILLING_PROTECTED_MEDIUM)) return PotentialCrime.MEDIUM;
