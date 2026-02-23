@@ -15,7 +15,7 @@ public class DarknessModifier implements Stealth.VisibilityModifier {
     }
 
     public static int getLightLevelAt(Level level, BlockPos pos) {
-        if (level.isClientSide) {
+        if (level.isClientSide()) {
             // This updates 'getSkyDarken' on the client. It'll return 0 if we don't update it.
             level.updateSkyBrightness();
         }

@@ -25,11 +25,6 @@ public class PlatformHelper {
     }
 
     @ExpectPlatform
-    public static boolean isInDevEnv() {
-        throw new AssertionError();
-    }
-
-    @ExpectPlatform
     public static void fireCrimeCommitedEvent(LivingEntity criminal, Crime crime, List<LivingEntity> witnesses) {
         throw new AssertionError();
     }

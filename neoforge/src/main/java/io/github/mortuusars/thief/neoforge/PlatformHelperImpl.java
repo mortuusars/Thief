@@ -27,10 +27,6 @@ public class PlatformHelperImpl {
         return ModList.get().isLoaded(modId);
     }
 
-    public static boolean isInDevEnv() {
-        return !FMLEnvironment.production;
-    }
-
     public static void fireCrimeCommitedEvent(LivingEntity criminal, Crime crime, List<LivingEntity> witnesses) {
         NeoForge.EVENT_BUS.post(new CrimeCommitedEvent(criminal, crime, witnesses));
     }

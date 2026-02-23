@@ -56,10 +56,6 @@ public class PlatformHelperImpl {
         return FabricLoader.getInstance().isModLoaded(modId);
     }
 
-    public static boolean isInDevEnv() {
-        return FabricLoader.getInstance().isDevelopmentEnvironment();
-    }
-
     public static void fireCrimeCommitedEvent(LivingEntity criminal, Crime crime, List<LivingEntity> witnesses) {
         CrimeCommitedCallback.EVENT.invoker().crimeCommited(criminal, crime, witnesses);
     }
