@@ -97,7 +97,7 @@ public class ThiefCommand {
     private static int commitCrime(CommandContext<CommandSourceStack> context, Crime crime) throws CommandSyntaxException {
         ServerPlayer player = context.getSource().getPlayerOrException();
 
-        Crime.Outcome outcome = crime.commit(player.serverLevel(), player, player.blockPosition());
+        Crime.Outcome outcome = crime.commit(player.level(), player, player.blockPosition());
         if (outcome.punished()) {
             context.getSource().sendSuccess(() -> Component.literal(
                             player.getScoreboardName() + " has commited " + crime.getName() + " crime with "
@@ -128,7 +128,7 @@ public class ThiefCommand {
                 double z = player.getZ() + radius * Math.sin(angle);
                 double y = player.getY() + 1;
 
-                player.serverLevel().sendParticles(player, ParticleTypes.EXPLOSION, true, true,
+                player.level().sendParticles(player, ParticleTypes.EXPLOSION, true, true,
                       x, y, z, 1, 0, 0, 0, 0);
             }
         }

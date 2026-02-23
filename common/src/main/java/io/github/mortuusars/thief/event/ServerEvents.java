@@ -13,7 +13,7 @@ import net.minecraft.world.level.block.state.BlockState;
 public class ServerEvents {
     public static void onBlockDestroyedByPlayer(ServerPlayer player, BlockPos pos, BlockState state) {
         Crime.fromBlockStateBreaking(player, pos, state).getCrime().ifPresent(crime ->
-                crime.commit(player.serverLevel(), player, pos));
+                crime.commit(player.level(), player, pos));
     }
 
     public static void onBlockInteract(ServerPlayer player, BlockPos pos, InteractionHand hand) {
@@ -28,11 +28,11 @@ public class ServerEvents {
         }
 
         Crime.fromBlockStateInteracting(player, pos, state).getCrime().ifPresent(crime ->
-                crime.commit(player.serverLevel(), player, pos));
+                crime.commit(player.level(), player, pos));
     }
 
     public static void onEntityKilled(ServerPlayer player, LivingEntity target, DamageSource damageSource) {
         Crime.fromKilling(player, target).getCrime().ifPresent(crime ->
-              crime.commit(player.serverLevel(), player, target.blockPosition()));
+              crime.commit(player.level(), player, target.blockPosition()));
     }
 }

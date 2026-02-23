@@ -81,7 +81,8 @@ public class VillagerReputationTooltip {
 
         int x = minecraft.getWindow().getGuiScaledWidth() / 2 + 8;
         int y = minecraft.getWindow().getGuiScaledHeight() / 2 - (int)(lines.size() / 2f * 9f);
-        guiGraphics.renderTooltip(minecraft.font, lines, x, y + 10);
+        guiGraphics.setTooltipForNextFrame(minecraft.font, lines, x, y + 10);
+        guiGraphics.renderDeferredTooltip();
 
         return true;
     }

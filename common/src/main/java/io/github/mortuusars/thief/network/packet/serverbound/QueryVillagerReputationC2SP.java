@@ -41,7 +41,7 @@ public record QueryVillagerReputationC2SP(int villagerId, boolean withGossips) i
             return false;
         }
 
-        @Nullable Entity entity = serverPlayer.serverLevel().getEntity(villagerId);
+        @Nullable Entity entity = serverPlayer.level().getEntity(villagerId);
         if (entity instanceof Villager villager) {
             Packets.sendToClient(new VillagerReputationS2CP(entity.getId(), villager.getPlayerReputation(player)), serverPlayer);
             if (withGossips) {
