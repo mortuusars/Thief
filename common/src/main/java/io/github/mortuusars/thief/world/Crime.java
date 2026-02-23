@@ -13,7 +13,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.ByIdMap;
@@ -72,7 +72,7 @@ public enum Crime implements ReputationEventType, StringRepresentable {
         };
     }
 
-    public ResourceLocation getStat() {
+    public Identifier getStat() {
         return switch (this) {
             case LIGHT -> Thief.Stats.CAUGHT_COMMITING_LIGHT_CRIMES;
             case MEDIUM -> Thief.Stats.CAUGHT_COMMITING_MEDIUM_CRIMES;

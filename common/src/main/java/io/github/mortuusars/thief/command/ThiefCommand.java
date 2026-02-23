@@ -15,10 +15,12 @@ import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.server.permissions.Permission;
+import net.minecraft.server.permissions.Permissions;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.npc.Villager;
+import net.minecraft.world.entity.npc.villager.Villager;
 
 import java.util.List;
 
@@ -27,7 +29,7 @@ public class ThiefCommand {
 
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
         dispatcher.register(Commands.literal("thief")
-                .requires((stack) -> stack.hasPermission(2))
+                .requires((stack) -> stack.permissions().hasPermission(Permissions.COMMANDS_GAMEMASTER))
                 .then(Commands.literal("debug")
                         .then(Commands.literal("is_in_protected_structure")
                                 .executes(ThiefCommand::isInProtectedStructure))

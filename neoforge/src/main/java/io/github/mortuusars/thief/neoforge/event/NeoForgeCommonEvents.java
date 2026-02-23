@@ -12,7 +12,7 @@ import io.github.mortuusars.thief.network.packet.S2CPackets;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.StatFormatter;
 import net.minecraft.stats.Stats;
@@ -35,7 +35,7 @@ public class NeoForgeCommonEvents {
     @SubscribeEvent
     public static void commonSetup(FMLCommonSetupEvent event) {
         event.enqueueWork(() -> {
-            for (Map.Entry<ResourceLocation, StatFormatter> entry : Thief.Stats.STATS.entrySet()) {
+            for (Map.Entry<Identifier, StatFormatter> entry : Thief.Stats.STATS.entrySet()) {
                 Stats.CUSTOM.get(entry.getKey(), entry.getValue());
             }
         });

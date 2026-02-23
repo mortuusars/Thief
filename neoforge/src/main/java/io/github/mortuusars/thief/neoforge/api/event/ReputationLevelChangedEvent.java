@@ -2,7 +2,7 @@ package io.github.mortuusars.thief.neoforge.api.event;
 
 import io.github.mortuusars.thief.world.Reputation;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.npc.Villager;
+import net.minecraft.world.entity.npc.villager.Villager;
 import net.neoforged.bus.api.Event;
 
 /**

@@ -9,7 +9,7 @@ import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.network.RegistryFriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.stats.StatFormatter;
 import net.minecraft.world.entity.Entity;
@@ -126,7 +126,7 @@ public class Register {
     }
 
     @ExpectPlatform
-    public static Supplier<ResourceLocation> stat(ResourceLocation location, StatFormatter formatter) {
+    public static Supplier<Identifier> stat(Identifier location, StatFormatter formatter) {
         throw new AssertionError();
     }
 }

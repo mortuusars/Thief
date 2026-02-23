@@ -6,7 +6,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.gossip.GossipType;
-import net.minecraft.world.entity.npc.Villager;
+import net.minecraft.world.entity.npc.villager.Villager;
 import net.minecraft.world.entity.raid.Raid;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
@@ -23,7 +23,7 @@ public abstract class RaidMixin {
     @Shadow public abstract BlockPos getCenter();
 
     @SuppressWarnings("LocalMayUseName") // No. It may not.
-    @Inject(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/level/ServerPlayer;awardStat(Lnet/minecraft/resources/ResourceLocation;)V"))
+    @Inject(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/level/ServerPlayer;awardStat(Lnet/minecraft/resources/Identifier;)V"))
     private void onTick(CallbackInfo ci, @Local ServerLevel level, @Local LivingEntity entity) {
         List<Villager> villagers = level.getEntitiesOfClass(Villager.class, new AABB(getCenter()).inflate(128));
         for (Villager villager : villagers) {

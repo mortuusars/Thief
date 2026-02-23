@@ -1,7 +1,7 @@
 package io.github.mortuusars.thief.neoforge.api.event;
 
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.npc.Villager;
+import net.minecraft.world.entity.npc.villager.Villager;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.Event;
 

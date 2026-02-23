@@ -7,7 +7,7 @@ import io.github.mortuusars.thief.advancement.trigger.GuardAttacksCriminalTrigge
 import io.github.mortuusars.thief.advancement.trigger.VillagerGiftTrigger;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.stats.StatFormatter;
 import net.minecraft.tags.TagKey;
@@ -32,22 +32,22 @@ public class Thief {
     /**
      * Creates resource location in the mod namespace with the given path.
      */
-    public static ResourceLocation resource(String path) {
-        return ResourceLocation.fromNamespaceAndPath(ID, path);
+    public static Identifier resource(String path) {
+        return Identifier.fromNamespaceAndPath(ID, path);
     }
 
     public static class Stats {
-        public static final Map<ResourceLocation, StatFormatter> STATS = new HashMap<>();
+        public static final Map<Identifier, StatFormatter> STATS = new HashMap<>();
 
-        public static final ResourceLocation CAUGHT_COMMITING_LIGHT_CRIMES =
+        public static final Identifier CAUGHT_COMMITING_LIGHT_CRIMES =
               register(resource("caught_commiting_light_crimes"), StatFormatter.DEFAULT);
-        public static final ResourceLocation CAUGHT_COMMITING_MEDIUM_CRIMES =
+        public static final Identifier CAUGHT_COMMITING_MEDIUM_CRIMES =
               register(resource("caught_commiting_medium_crimes"), StatFormatter.DEFAULT);
-        public static final ResourceLocation CAUGHT_COMMITING_HEAVY_CRIMES =
+        public static final Identifier CAUGHT_COMMITING_HEAVY_CRIMES =
               register(resource("caught_commiting_heavy_crimes"), StatFormatter.DEFAULT);
 
         @SuppressWarnings("SameParameterValue")
-        private static ResourceLocation register(ResourceLocation location, StatFormatter formatter) {
+        private static Identifier register(Identifier location, StatFormatter formatter) {
             STATS.put(location, formatter);
             return location;
         }
