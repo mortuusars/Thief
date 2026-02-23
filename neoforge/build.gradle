@@ -43,7 +43,7 @@ dependencies {
 //    modRuntimeOnly("maven.modrinth:carry-on:79dpvD0M") { transitive = false }
 
     modRuntimeOnly("mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}") { transitive = false }
-    modRuntimeOnly("curse.maven:jade-324717:${jade_neoforge_id}") { transitive = false }
+//    modRuntimeOnly("curse.maven:jade-324717:${jade_neoforge_version}") { transitive = false }
 //    modRuntimeOnly("curse.maven:embeddium-908741:6118392") { transitive = false }
 
     // modImplementation("maven.modrinth:lithostitched:${lithostitched_neoforge_version}")

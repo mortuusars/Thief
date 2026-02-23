@@ -3,6 +3,7 @@ package io.github.mortuusars.thief.mixin.raid_win_reputation;
 import com.llamalad7.mixinextras.sugar.Local;
 import io.github.mortuusars.thief.Config;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.gossip.GossipType;
 import net.minecraft.world.entity.npc.Villager;
@@ -19,12 +20,12 @@ import java.util.List;
 
 @Mixin(Raid.class)
 public abstract class RaidMixin {
-    @Shadow public abstract Level getLevel();
     @Shadow public abstract BlockPos getCenter();
 
+    @SuppressWarnings("LocalMayUseName") // No. It may not.
     @Inject(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/level/ServerPlayer;awardStat(Lnet/minecraft/resources/ResourceLocation;)V"))
-    private void onTick(CallbackInfo ci, @Local LivingEntity entity) {
-        List<Villager> villagers = getLevel().getEntitiesOfClass(Villager.class, new AABB(getCenter()).inflate(128));
+    private void onTick(CallbackInfo ci, @Local ServerLevel level, @Local LivingEntity entity) {
+        List<Villager> villagers = level.getEntitiesOfClass(Villager.class, new AABB(getCenter()).inflate(128));
         for (Villager villager : villagers) {
             int major = Config.Server.HERO_MAJOR_POSITIVE_INCREASE.get();
             if (major > 0) {

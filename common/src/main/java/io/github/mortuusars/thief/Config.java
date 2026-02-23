@@ -189,17 +189,11 @@ public class Config {
     public static class Client {
         public static final ModConfigSpec SPEC;
 
-        public static final ModConfigSpec.BooleanValue POTENTIAL_CRIME_TOOLTIP_ENABLED;
         public static final ModConfigSpec.BooleanValue VILLAGER_REPUTATION_TOOLTIP_ENABLED;
         public static final ModConfigSpec.BooleanValue VILLAGER_REPUTATION_TOOLTIP_REQUIRES_GIFT;
 
         static {
             ModConfigSpec.Builder builder = new ModConfigSpec.Builder();
-
-            POTENTIAL_CRIME_TOOLTIP_ENABLED = builder
-                  .comment(" Tooltip with warning will be shown when looking at a protected block or entity.",
-                        " Default: true")
-                  .define("show_potential_crime_tooltip", true);
 
             VILLAGER_REPUTATION_TOOLTIP_ENABLED = builder
                     .comment(" Reputation tooltip will be shown when looking at a Villager.",

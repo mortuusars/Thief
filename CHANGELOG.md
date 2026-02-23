@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.2.3 - 1.21.5 - 2026-02-23
+- Port to 1.21.5.
+
 ## 1.2.3.1 - 2026-02-21
 - Added ja_jp localization
 - [Fabric] Fixed launch dependencies 

@@ -1,6 +1,6 @@
 package io.github.mortuusars.thief.fabric;
 
-import fuzs.forgeconfigapiport.fabric.api.neoforge.v4.client.ConfigScreenFactoryRegistry;
+import fuzs.forgeconfigapiport.fabric.api.v5.client.ConfigScreenFactoryRegistry;
 import io.github.mortuusars.thief.Thief;
 import io.github.mortuusars.thief.ThiefClient;
 import io.github.mortuusars.thief.event.ClientEvents;
