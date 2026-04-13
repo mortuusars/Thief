@@ -15,7 +15,7 @@ import java.util.Iterator;
 public class LithostitchedCompat {
     public static StructureStart getStructureWithPieceAt(ServerLevel level, BlockPos pos, TagKey<Structure> structureTag) {
         Registry<Structure> registry = level.registryAccess().lookupOrThrow(Registries.STRUCTURE);
-        Iterator<StructureStart> structures = level.structureManager().startsForStructure(new ChunkPos(pos),
+        Iterator<StructureStart> structures = level.structureManager().startsForStructure(ChunkPos.containing(pos),
                 structure -> {
                     if (structure instanceof DelegatingStructure delegatingStructure) {
                         structure = delegatingStructure.delegate();

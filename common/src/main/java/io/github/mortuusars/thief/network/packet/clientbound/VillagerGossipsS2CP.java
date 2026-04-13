@@ -14,7 +14,7 @@ import org.jetbrains.annotations.NotNull;
 
 public record VillagerGossipsS2CP(int villagerId, int majorNegative, int minorNegative, int minorPositive,
                                   int majorPositive, int trading) implements Packet {
-    public static final Identifier ID = Thief.resource("villager_gossips");
+    public static final Identifier ID = Thief.identifier("villager_gossips");
     public static final Type<VillagerGossipsS2CP> TYPE = new Type<>(ID);
 
     public static final StreamCodec<FriendlyByteBuf, VillagerGossipsS2CP> STREAM_CODEC = StreamCodec.composite(

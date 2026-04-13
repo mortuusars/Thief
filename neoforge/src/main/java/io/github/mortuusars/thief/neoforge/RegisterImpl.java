@@ -72,7 +72,7 @@ public class RegisterImpl {
               .clientTrackingRange(clientTrackingRange)
               .setShouldReceiveVelocityUpdates(velocityUpdates)
               .updateInterval(updateInterval)
-              .build(ResourceKey.create(Registries.ENTITY_TYPE, Thief.resource(id))));
+              .build(ResourceKey.create(Registries.ENTITY_TYPE, Thief.identifier(id))));
     }
 
     public static <T extends SoundEvent> Supplier<T> soundEvent(String id, Supplier<T> supplier) {

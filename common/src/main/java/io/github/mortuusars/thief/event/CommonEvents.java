@@ -5,6 +5,7 @@ import io.github.mortuusars.thief.Config;
 import io.github.mortuusars.thief.PlatformHelper;
 import io.github.mortuusars.thief.Thief;
 import io.github.mortuusars.thief.command.ThiefCommand;
+import io.github.mortuusars.thief.mixin.accessor.VillagerAccessor;
 import io.github.mortuusars.thief.world.Reputation;
 import net.minecraft.commands.CommandBuildContext;
 import net.minecraft.commands.CommandSourceStack;
@@ -59,7 +60,9 @@ public class CommonEvents {
 
         if (!Reputation.fromValue(villager, player).canTrade()) {
             // Prevent trading
-            villager.setUnhappy();
+            if (villager instanceof VillagerAccessor accessor) {
+                accessor.thief$setUnhappy();
+            }
             return InteractionResult.SUCCESS;
         }
 

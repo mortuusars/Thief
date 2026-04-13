@@ -7,7 +7,7 @@ import io.github.mortuusars.thief.network.packet.serverbound.QueryVillagerReputa
 import io.github.mortuusars.thief.world.Reputation;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.util.FormattedCharSequence;
@@ -29,7 +29,7 @@ public class VillagerReputationTooltip {
     private static int lastMajorPositive;
     private static int lastTrading;
 
-    public static boolean render(GuiGraphics guiGraphics, DeltaTracker deltaTracker) {
+    public static boolean extract(GuiGraphicsExtractor guiGraphics, DeltaTracker deltaTracker) {
         if (!Config.Client.VILLAGER_REPUTATION_TOOLTIP_ENABLED.get()) {
             return false;
         }
@@ -82,7 +82,7 @@ public class VillagerReputationTooltip {
         int x = minecraft.getWindow().getGuiScaledWidth() / 2 + 8;
         int y = minecraft.getWindow().getGuiScaledHeight() / 2 - (int)(lines.size() / 2f * 9f);
         guiGraphics.setTooltipForNextFrame(minecraft.font, lines, x, y + 10);
-        guiGraphics.renderDeferredElements();
+        guiGraphics.extractDeferredElements(0, 0, 0); // Renders the tooltip
 
         return true;
     }

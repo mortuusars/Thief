@@ -41,7 +41,6 @@ public class ThiefFabric implements ModInitializer {
         });
 
         UseEntityCallback.EVENT.register((player, world, hand, entity, hitResult) -> {
-            if (hitResult != null) return InteractionResult.PASS;
             return CommonEvents.onEntityInteracted(player, hand, entity);
         });
 

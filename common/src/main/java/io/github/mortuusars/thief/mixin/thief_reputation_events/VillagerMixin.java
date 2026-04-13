@@ -1,5 +1,6 @@
 package io.github.mortuusars.thief.mixin.thief_reputation_events;
 
+import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.sugar.Share;
 import com.llamalad7.mixinextras.sugar.ref.LocalIntRef;
 import io.github.mortuusars.thief.PlatformHelper;

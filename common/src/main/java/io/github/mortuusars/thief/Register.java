@@ -79,11 +79,6 @@ public class Register {
         throw new AssertionError();
     }
 
-    @ExpectPlatform
-    public static <T extends MenuType<E>, E extends AbstractContainerMenu> Supplier<T> menuType(String id, Register.MenuTypeSupplier<E> supplier) {
-        throw new AssertionError();
-    }
-
     @FunctionalInterface
     public interface MenuTypeSupplier<T extends AbstractContainerMenu> {
         @NotNull T create(int windowId, Inventory playerInv, RegistryFriendlyByteBuf extraData);

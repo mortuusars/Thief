@@ -2,7 +2,7 @@ package io.github.mortuusars.thief.neoforge.event;
 
 import io.github.mortuusars.thief.Thief;
 import io.github.mortuusars.thief.ThiefClient;
-import io.github.mortuusars.thief.event.ClientEvents;
+import io.github.mortuusars.thief.client.VillagerReputationTooltip;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -18,6 +18,6 @@ public class NeoForgeClientEvents {
 
     @SubscribeEvent
     public static void onRenderGuiPost(RenderGuiEvent.Post event) {
-        ClientEvents.renderGui(event.getGuiGraphics(), event.getPartialTick());
+        VillagerReputationTooltip.extract(event.getGuiGraphics(), event.getPartialTick());
     }
 }

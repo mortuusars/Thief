@@ -1,6 +1,5 @@
 package io.github.mortuusars.thief;
 
-import com.google.common.base.Preconditions;
 import com.mojang.logging.LogUtils;
 import io.github.mortuusars.thief.advancement.trigger.CrimeCommitedTrigger;
 import io.github.mortuusars.thief.advancement.trigger.GuardAttacksCriminalTrigger;
@@ -8,7 +7,6 @@ import io.github.mortuusars.thief.advancement.trigger.VillagerGiftTrigger;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.Identifier;
-import net.minecraft.sounds.SoundEvent;
 import net.minecraft.stats.StatFormatter;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
@@ -32,7 +30,7 @@ public class Thief {
     /**
      * Creates resource location in the mod namespace with the given path.
      */
-    public static Identifier resource(String path) {
+    public static Identifier identifier(String path) {
         return Identifier.fromNamespaceAndPath(ID, path);
     }
 
@@ -40,11 +38,11 @@ public class Thief {
         public static final Map<Identifier, StatFormatter> STATS = new HashMap<>();
 
         public static final Identifier CAUGHT_COMMITING_LIGHT_CRIMES =
-              register(resource("caught_commiting_light_crimes"), StatFormatter.DEFAULT);
+              register(identifier("caught_commiting_light_crimes"), StatFormatter.DEFAULT);
         public static final Identifier CAUGHT_COMMITING_MEDIUM_CRIMES =
-              register(resource("caught_commiting_medium_crimes"), StatFormatter.DEFAULT);
+              register(identifier("caught_commiting_medium_crimes"), StatFormatter.DEFAULT);
         public static final Identifier CAUGHT_COMMITING_HEAVY_CRIMES =
-              register(resource("caught_commiting_heavy_crimes"), StatFormatter.DEFAULT);
+              register(identifier("caught_commiting_heavy_crimes"), StatFormatter.DEFAULT);
 
         @SuppressWarnings("SameParameterValue")
         private static Identifier register(Identifier location, StatFormatter formatter) {
@@ -72,43 +70,43 @@ public class Thief {
     public static class Tags {
         public static class Items {
             public static final TagKey<Item> VILLAGER_GIFTS =
-                    TagKey.create(net.minecraft.core.registries.Registries.ITEM, resource("villager_gifts"));
+                    TagKey.create(net.minecraft.core.registries.Registries.ITEM, identifier("villager_gifts"));
         }
 
         public static class Blocks {
             public static final TagKey<Block> BREAK_PROTECTED_LIGHT =
-                    TagKey.create(net.minecraft.core.registries.Registries.BLOCK, resource("break_protected/light"));
+                    TagKey.create(net.minecraft.core.registries.Registries.BLOCK, identifier("break_protected/light"));
             public static final TagKey<Block> BREAK_PROTECTED_MEDIUM =
-                    TagKey.create(net.minecraft.core.registries.Registries.BLOCK, resource("break_protected/medium"));
+                    TagKey.create(net.minecraft.core.registries.Registries.BLOCK, identifier("break_protected/medium"));
             public static final TagKey<Block> BREAK_PROTECTED_HEAVY =
-                    TagKey.create(net.minecraft.core.registries.Registries.BLOCK, resource("break_protected/heavy"));
+                    TagKey.create(net.minecraft.core.registries.Registries.BLOCK, identifier("break_protected/heavy"));
 
             public static final TagKey<Block> INTERACT_PROTECTED_LIGHT =
-                    TagKey.create(net.minecraft.core.registries.Registries.BLOCK, resource("interact_protected/light"));
+                    TagKey.create(net.minecraft.core.registries.Registries.BLOCK, identifier("interact_protected/light"));
             public static final TagKey<Block> INTERACT_PROTECTED_MEDIUM =
-                    TagKey.create(net.minecraft.core.registries.Registries.BLOCK, resource("interact_protected/medium"));
+                    TagKey.create(net.minecraft.core.registries.Registries.BLOCK, identifier("interact_protected/medium"));
             public static final TagKey<Block> INTERACT_PROTECTED_HEAVY =
-                    TagKey.create(net.minecraft.core.registries.Registries.BLOCK, resource("interact_protected/heavy"));
+                    TagKey.create(net.minecraft.core.registries.Registries.BLOCK, identifier("interact_protected/heavy"));
         }
 
         public static class EntityTypes {
             public static final TagKey<EntityType<?>> KILLING_PROTECTED_LIGHT =
-                    TagKey.create(net.minecraft.core.registries.Registries.ENTITY_TYPE, resource("killing_protected/light"));
+                    TagKey.create(net.minecraft.core.registries.Registries.ENTITY_TYPE, identifier("killing_protected/light"));
             public static final TagKey<EntityType<?>> KILLING_PROTECTED_MEDIUM =
-                    TagKey.create(net.minecraft.core.registries.Registries.ENTITY_TYPE, resource("killing_protected/medium"));
+                    TagKey.create(net.minecraft.core.registries.Registries.ENTITY_TYPE, identifier("killing_protected/medium"));
             public static final TagKey<EntityType<?>> KILLING_PROTECTED_HEAVY =
-                    TagKey.create(net.minecraft.core.registries.Registries.ENTITY_TYPE, resource("killing_protected/heavy"));
+                    TagKey.create(net.minecraft.core.registries.Registries.ENTITY_TYPE, identifier("killing_protected/heavy"));
 
             public static final TagKey<EntityType<?>> WITNESSES =
-                    TagKey.create(net.minecraft.core.registries.Registries.ENTITY_TYPE, resource("witnesses"));
+                    TagKey.create(net.minecraft.core.registries.Registries.ENTITY_TYPE, identifier("witnesses"));
 
             public static final TagKey<EntityType<?>> GUARDS =
-                    TagKey.create(net.minecraft.core.registries.Registries.ENTITY_TYPE, resource("guards"));
+                    TagKey.create(net.minecraft.core.registries.Registries.ENTITY_TYPE, identifier("guards"));
         }
 
         public static class Structures {
             public static final TagKey<Structure> PROTECTED =
-                    TagKey.create(net.minecraft.core.registries.Registries.STRUCTURE, resource("protected"));
+                    TagKey.create(net.minecraft.core.registries.Registries.STRUCTURE, identifier("protected"));
         }
     }
 }

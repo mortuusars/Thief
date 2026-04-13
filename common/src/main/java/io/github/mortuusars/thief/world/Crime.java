@@ -126,7 +126,7 @@ public enum Crime implements ReputationEventType, StringRepresentable {
 
         if (criminal instanceof ServerPlayer player) {
             if (Config.Server.CRIME_SHOW_MESSAGE.get()) {
-                player.displayClientMessage(Component.translatable("gui.thief.crime_commited." + getName()), true);
+                player.sendOverlayMessage(Component.translatable("gui.thief.crime_commited." + getName()));
             }
             player.awardStat(getStat());
 
@@ -169,9 +169,9 @@ public enum Crime implements ReputationEventType, StringRepresentable {
     public static PotentialCrime fromKilling(Player player, LivingEntity target) {
         if (!Config.Server.CRIME_FOR_KILLING_PROTECTED_ENTITIES.get()) return PotentialCrime.NONE;
         // Reverse order to select heaviest offence if added to multiple tags:
-        if (target.getType().is(Thief.Tags.EntityTypes.KILLING_PROTECTED_HEAVY)) return PotentialCrime.HEAVY;
-        if (target.getType().is(Thief.Tags.EntityTypes.KILLING_PROTECTED_MEDIUM)) return PotentialCrime.MEDIUM;
-        if (target.getType().is(Thief.Tags.EntityTypes.KILLING_PROTECTED_LIGHT)) return PotentialCrime.LIGHT;
+        if (target.is(Thief.Tags.EntityTypes.KILLING_PROTECTED_HEAVY)) return PotentialCrime.HEAVY;
+        if (target.is(Thief.Tags.EntityTypes.KILLING_PROTECTED_MEDIUM)) return PotentialCrime.MEDIUM;
+        if (target.is(Thief.Tags.EntityTypes.KILLING_PROTECTED_LIGHT)) return PotentialCrime.LIGHT;
         return PotentialCrime.NONE;
     }
 

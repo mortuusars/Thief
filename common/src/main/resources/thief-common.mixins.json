@@ -12,7 +12,8 @@
     "fix_bulk_trade_reputation.VillagerMixin",
     "guard_attacks_advancement.DefendVillageTargetGoalMixin",
     "raid_win_reputation.RaidMixin",
-    "thief_reputation_events.VillagerMixin"
+    "thief_reputation_events.VillagerMixin",
+    "accessor.VillagerAccessor"
   ],
   "injectors": {
     "defaultRequire": 1

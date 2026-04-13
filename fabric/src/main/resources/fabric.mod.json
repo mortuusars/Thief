@@ -23,13 +23,13 @@
     ]
   },
   "mixins": [
-    "${mod_id}-fabric.mixins.json",
-    "${mod_id}-common.mixins.json"
+    "${mod_id}-common.mixins.json",
+    "${mod_id}-fabric.mixins.json"
   ],
   "depends": {
     "minecraft": "${fabric_supported_minecraft_versions}",
-    "fabric": "*",
     "fabric-api": "*",
-    "forgeconfigapiport": ">=${forge_config_api_port_version}"
+    "fabricloader": ">=0.16.0",
+    "forgeconfigapiport": ">=${required_forge_config_api_port_version}"
   }
 }

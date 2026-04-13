@@ -1,6 +1,7 @@
 package io.github.mortuusars.thief.api.witness;
 
 import io.github.mortuusars.thief.Thief;
+import io.github.mortuusars.thief.mixin.accessor.VillagerAccessor;
 import io.github.mortuusars.thief.world.Crime;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
@@ -24,14 +25,16 @@ public class WitnessReaction {
     static {
         register((level, crime, witness, criminal) -> {
             if (!(witness instanceof Villager villager)) return false;
-            villager.setUnhappy();
+            if (villager instanceof VillagerAccessor accessor) {
+                accessor.thief$setUnhappy();
+            }
             level.onReputationEvent(crime, criminal, villager);
             level.broadcastEntityEvent(villager, EntityEvent.VILLAGER_ANGRY);
             return true;
         });
 
         register((level, crime, witness, criminal) -> {
-            if (witness.getType().is(Thief.Tags.EntityTypes.GUARDS)
+            if (witness.is(Thief.Tags.EntityTypes.GUARDS)
                     && witness instanceof NeutralMob neutralMob
                     && crime.shouldGuardsAttack(level, criminal)
                     && witness.canAttack(criminal)

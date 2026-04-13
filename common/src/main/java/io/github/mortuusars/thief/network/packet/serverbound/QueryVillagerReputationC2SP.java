@@ -20,7 +20,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public record QueryVillagerReputationC2SP(int villagerId, boolean withGossips) implements Packet {
-    public static final Identifier ID = Thief.resource("query_villager_reputation");
+    public static final Identifier ID = Thief.identifier("query_villager_reputation");
     public static final CustomPacketPayload.Type<QueryVillagerReputationC2SP> TYPE = new CustomPacketPayload.Type<>(ID);
 
     public static final StreamCodec<FriendlyByteBuf, QueryVillagerReputationC2SP> STREAM_CODEC = StreamCodec.composite(

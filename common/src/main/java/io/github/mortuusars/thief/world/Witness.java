@@ -44,7 +44,7 @@ public class Witness {
     }
 
     public static boolean isWitness(LivingEntity criminal, LivingEntity entity, double visibility) {
-        if (!entity.getType().is(Thief.Tags.EntityTypes.WITNESSES)) return false;
+        if (!entity.is(Thief.Tags.EntityTypes.WITNESSES)) return false;
         float distance = entity.distanceTo(criminal);
         if (distance <= Config.Server.WITNESS_ALWAYS_NOTICE_DISTANCE.get() / 2.0) return true; // Too close. Always hears or sees the crime.
         if (entity.isSleeping()) return false; // Cannot hear the crime.
