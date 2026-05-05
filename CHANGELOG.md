@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.2.3 - 2026-05-05
+- [Fabric] Fixed picking the block with CarryOn not being considered as crime.
+
 ## 1.2.2.1 - 2026-02-21
 - Added ja_jp localization
 
