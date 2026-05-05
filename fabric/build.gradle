@@ -54,6 +54,8 @@ dependencies {
     modCompileOnlyApi("curse.maven:jade-324717:${jade_fabric_id}")
     modRuntimeOnly("curse.maven:jade-324717:${jade_fabric_id}") { transitive = false }
 
+    modRuntimeOnly("maven.modrinth:carry-on:Mkla4B3q")
+
     modCompileOnlyApi("mezz.jei:jei-${minecraft_version}-fabric-api:${jei_version}")
     modRuntimeOnly("mezz.jei:jei-${minecraft_version}-fabric:${jei_version}")
 
