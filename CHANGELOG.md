@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.2.3.1 - 2026-05-05
+- [Fabric] Use fabric block breaking event to be more compatible with other mods. 
+
 ## 1.2.3 - 26.1.1 - 2026-04-13
 - Port to 26.1
 
