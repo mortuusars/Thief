@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.2.4 - 2026-06-12
+- [NeoForge] Support for 26.2 NeoForge.
+
 ## 1.2.3.1 - 2026-05-05
 - [Fabric] Use fabric block breaking event to be more compatible with other mods. 
 

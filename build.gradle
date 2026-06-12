@@ -122,7 +122,6 @@ subprojects {
 
     loom {
         silentMojangMappingsLicense()
-        accessWidenerPath.set(project(":common").loom.accessWidenerPath)
 
         runs {
             client {

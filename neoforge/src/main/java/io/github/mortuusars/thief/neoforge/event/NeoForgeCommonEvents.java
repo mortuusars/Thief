@@ -3,7 +3,6 @@ package io.github.mortuusars.thief.neoforge.event;
 import io.github.mortuusars.thief.Thief;
 import io.github.mortuusars.thief.event.CommonEvents;
 import io.github.mortuusars.thief.event.ServerEvents;
-import io.github.mortuusars.thief.neoforge.RegisterImpl;
 import io.github.mortuusars.thief.network.neoforge.PacketsImpl;
 import io.github.mortuusars.thief.network.packet.C2SPackets;
 import io.github.mortuusars.thief.network.packet.CommonPackets;
@@ -23,7 +22,7 @@ import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
-import net.neoforged.neoforge.event.level.BlockEvent;
+import net.neoforged.neoforge.event.level.block.BreakBlockEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
@@ -63,7 +62,7 @@ public class NeoForgeCommonEvents {
     }
 
     @SubscribeEvent
-    public static void onBlockDestroyed(BlockEvent.BreakEvent event) {
+    public static void onBlockDestroyed(BreakBlockEvent event) {
         if (event.getPlayer() instanceof ServerPlayer serverPlayer) {
             ServerEvents.onBlockDestroyedByPlayer(serverPlayer, event.getPos(), event.getState());
         }
