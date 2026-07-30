@@ -34,11 +34,11 @@ public class VillagerReputationTooltip {
             return false;
         }
         Minecraft minecraft = Minecraft.getInstance();
-        if (minecraft.options.hideGui
+        if (minecraft.gui.hud.isHidden()
                 || minecraft.level == null
                 || minecraft.player == null
                 || minecraft.player.isSpectator()
-                || minecraft.screen != null
+                || minecraft.gui.screen() != null
                 || !(minecraft.hitResult instanceof EntityHitResult entityHitResult)
                 || !(entityHitResult.getEntity() instanceof Villager villager)) {
             return false;

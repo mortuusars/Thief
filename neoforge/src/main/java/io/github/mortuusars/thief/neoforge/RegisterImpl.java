@@ -3,7 +3,7 @@ package io.github.mortuusars.thief.neoforge;
 import com.mojang.brigadier.arguments.ArgumentType;
 import io.github.mortuusars.thief.Register;
 import io.github.mortuusars.thief.Thief;
-import net.minecraft.advancements.CriterionTrigger;
+import net.minecraft.advancements.triggers.CriterionTrigger;
 import net.minecraft.commands.synchronization.ArgumentTypeInfo;
 import net.minecraft.commands.synchronization.ArgumentTypeInfos;
 import net.minecraft.core.component.DataComponentType;
