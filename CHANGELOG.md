@@ -1,5 +1,8 @@
 # Changelog
 
+## UNRELEASED
+- Looting an Item Frame is now a crime.
+
 ## 1.2.4 - 2026-06-12
 - [NeoForge] Support for 26.2 NeoForge.
 
