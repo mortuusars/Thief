@@ -35,4 +35,9 @@ public class ServerEvents {
         Crime.fromKilling(player, target).getCrime().ifPresent(crime ->
               crime.commit(player.level(), player, target.blockPosition()));
     }
+
+    public static void onEntityPickedUp(ServerPlayer player, LivingEntity target) {
+        Crime.fromPickingUp(player, target).getCrime().ifPresent(crime ->
+              crime.commit(player.serverLevel(), player, target.blockPosition()));
+    }
 }

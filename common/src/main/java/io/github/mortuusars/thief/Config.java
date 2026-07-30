@@ -16,6 +16,7 @@ public class Config {
         public static final ModConfigSpec.BooleanValue CRIME_FOR_BREAKING_PROTECTED_BLOCKS;
         public static final ModConfigSpec.BooleanValue CRIME_FOR_INTERACTING_WITH_PROTECTED_BLOCKS;
         public static final ModConfigSpec.BooleanValue CRIME_FOR_KILLING_PROTECTED_ENTITIES;
+        public static final ModConfigSpec.BooleanValue CRIME_FOR_PICKING_UP_PROTECTED_ENTITIES;
         public static final ModConfigSpec.EnumValue<PotentialCrime> CRIME_FOR_KICKING_VILLAGER_OUT_OF_BED;
         public static final ModConfigSpec.EnumValue<PotentialCrime> CRIME_FOR_SLEEPING_IN_VILLAGERS_BED;
         public static final ModConfigSpec.EnumValue<PotentialCrime> CRIME_FOR_LOOTING_ITEM_FRAME;
@@ -69,6 +70,10 @@ public class Config {
                         .comment(" Killing protected entities (#thief:killing_protected/<level>) in protected structure (#thief:protected) is considered a crime.",
                                 " Default: true")
                         .define("killing_protected_entities", true);
+                CRIME_FOR_PICKING_UP_PROTECTED_ENTITIES = builder
+                      .comment(" Picking up (with CarryOn mod) protected entities (#thief:pickup_protected/<level>) in protected structure (#thief:protected) is considered a crime.",
+                            " Default: true")
+                      .define("picking_up_protected_entities", true);
                 CRIME_FOR_KICKING_VILLAGER_OUT_OF_BED = builder
                         .comment(" Crime severity for kicking a villager out of bed.",
                                 " Default: LIGHT")

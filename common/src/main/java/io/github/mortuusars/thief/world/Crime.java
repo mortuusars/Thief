@@ -175,6 +175,14 @@ public enum Crime implements ReputationEventType, StringRepresentable {
         return PotentialCrime.NONE;
     }
 
+    public static PotentialCrime fromPickingUp(ServerPlayer player, LivingEntity target) {
+        // Reverse order to select heaviest offense if added to multiple tags:
+        if (target.getType().is(Thief.Tags.EntityTypes.PICKUP_PROTECTED_HEAVY)) return PotentialCrime.HEAVY;
+        if (target.getType().is(Thief.Tags.EntityTypes.PICKUP_PROTECTED_MEDIUM)) return PotentialCrime.MEDIUM;
+        if (target.getType().is(Thief.Tags.EntityTypes.PICKUP_PROTECTED_LIGHT)) return PotentialCrime.LIGHT;
+        return PotentialCrime.NONE;
+    }
+
     // --
 
     public record Outcome(boolean punished, List<LivingEntity> witnesses) {

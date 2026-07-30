@@ -8,6 +8,7 @@
   "mixins": [
     "bed_crimes.BedBlockMixin",
     "bed_crimes.PlayerMixin",
+    "carryon_compat.PickupHandlerMixin",
     "dont_show_traders_to_criminals.ShowTradesToPlayerMixin",
     "fix_bulk_trade_reputation.VillagerMixin",
     "guard_attacks_advancement.DefendVillageTargetGoalMixin",
