@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.2.5 - 26.2 - 2026-07-30
+- Port to 26.2.
+
 ## 1.2.5 - 2026-07-30
 - Looting an Item Frame is now a crime.
 
