@@ -18,6 +18,7 @@ public class Config {
         public static final ModConfigSpec.BooleanValue CRIME_FOR_KILLING_PROTECTED_ENTITIES;
         public static final ModConfigSpec.EnumValue<PotentialCrime> CRIME_FOR_KICKING_VILLAGER_OUT_OF_BED;
         public static final ModConfigSpec.EnumValue<PotentialCrime> CRIME_FOR_SLEEPING_IN_VILLAGERS_BED;
+        public static final ModConfigSpec.EnumValue<PotentialCrime> CRIME_FOR_LOOTING_ITEM_FRAME;
         public static final ModConfigSpec.BooleanValue CRIME_ONLY_IN_PROTECTED_STRUCTURE;
 
         // Witness
@@ -74,6 +75,10 @@ public class Config {
                         .comment(" Crime severity for sleeping in a bed that belongs to a villager.",
                                 " Default: MEDIUM")
                         .defineEnum("sleeping_in_villagers_bed", PotentialCrime.MEDIUM);
+                CRIME_FOR_LOOTING_ITEM_FRAME = builder
+                      .comment(" Crime severity for looting an item frame.",
+                            " Default: LIGHT")
+                      .defineEnum("looting_item_frame", PotentialCrime.LIGHT);
                 CRIME_ONLY_IN_PROTECTED_STRUCTURE = builder
                         .comment(" Check for crimes only in #thief:protected structures. If disabled, whole world is 'protected'.",
                                 " Default: true.")
