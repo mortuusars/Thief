@@ -45,6 +45,7 @@
   "thief.configuration.hero_of_the_village": "Hero of the Village",
   "thief.configuration.interacting_with_protected_blocks": "Interacting With Protected Blocks Is Crime",
   "thief.configuration.killing_protected_entities": "Killing Protected Entities Is Crime",
+  "thief.configuration.picking_up_protected_entities": "Picking Up Protected Entities Is Crime",
   "thief.configuration.kicking_villager_out_of_bed": "Kicking Villager Out of Bed Severity",
   "thief.configuration.looting_item_frame": "Looting Item Frame Severity",
   "thief.configuration.light_major_change": "Light: Major Negative",

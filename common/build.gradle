@@ -29,6 +29,8 @@ dependencies {
     modApi "fuzs.forgeconfigapiport:forgeconfigapiport-common-neoforgeapi:${forge_config_api_port_version}"
     modCompileOnlyApi "mezz.jei:jei-${minecraft_version}-common-api:${jei_version}"
 
+    modCompileOnly("maven.modrinth:carry-on:79dpvD0M") { transitive = false }
+
     modCompileOnly("maven.modrinth:lithostitched:${lithostitched_fabric_version}")
 
     testImplementation(platform("org.junit:junit-bom:${project.property("jupiterVersion")}"))

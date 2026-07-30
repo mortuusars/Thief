@@ -2,6 +2,7 @@
 
 ## UNRELEASED
 - Looting an Item Frame is now a crime.
+- Picking up entities with CarryOn mod is now a crime.
 
 ## 1.2.3 - 2026-05-05
 - [Fabric] Fixed picking the block with CarryOn not being considered as crime.

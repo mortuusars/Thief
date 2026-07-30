@@ -1,0 +1,6 @@
+{
+  "values": [
+    "minecraft:villager",
+    { "id": "guardvillagers:guard", "required": false }
+  ]
+}

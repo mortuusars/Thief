@@ -34,8 +34,13 @@ public class ServerEvents {
 
     public static void onEntityKilled(ServerPlayer player, LivingEntity target, DamageSource damageSource) {
         if (!Config.Server.CRIME_FOR_KILLING_PROTECTED_ENTITIES.get()) return;
-        Crime.fromKilling(player, target).getCrime().ifPresent(crime -> {
-            crime.commit(player.serverLevel(), player, target.blockPosition());
-        });
+        Crime.fromKilling(player, target).getCrime().ifPresent(crime ->
+              crime.commit(player.serverLevel(), player, target.blockPosition()));
+    }
+
+    public static void onEntityPickedUp(ServerPlayer player, LivingEntity target) {
+        if (!Config.Server.CRIME_FOR_PICKING_UP_PROTECTED_ENTITIES.get()) return;
+        Crime.fromPickingUp(player, target).getCrime().ifPresent(crime ->
+              crime.commit(player.serverLevel(), player, target.blockPosition()));
     }
 }
