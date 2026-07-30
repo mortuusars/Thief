@@ -38,6 +38,6 @@ public class ServerEvents {
 
     public static void onEntityPickedUp(ServerPlayer player, LivingEntity target) {
         Crime.fromPickingUp(player, target).getCrime().ifPresent(crime ->
-              crime.commit(player.serverLevel(), player, target.blockPosition()));
+              crime.commit(player.level(), player, target.blockPosition()));
     }
 }

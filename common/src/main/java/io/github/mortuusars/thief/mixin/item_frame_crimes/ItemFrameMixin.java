@@ -9,7 +9,6 @@ import net.minecraft.world.entity.decoration.HangingEntity;
 import net.minecraft.world.entity.decoration.ItemFrame;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -28,10 +27,10 @@ public abstract class ItemFrameMixin extends HangingEntity {
         super(type, level);
     }
 
-    @Inject(method = "dropItem(Lnet/minecraft/world/entity/Entity;Z)V", at = @At("HEAD"))
-    private void onDropItem(@Nullable Entity entity, boolean dropSelf, CallbackInfo ci) {
+    @Inject(method = "dropItem(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/Entity;Z)V", at = @At("HEAD"))
+    private void onDropItem(ServerLevel level, Entity causedBy, boolean withFrame, CallbackInfo ci) {
         ItemStack item = getItem();
-        if (!fixed && !item.isEmpty() && entity instanceof LivingEntity criminal && entity.level() instanceof ServerLevel serverLevel) {
+        if (!fixed && !item.isEmpty() && causedBy instanceof LivingEntity criminal && causedBy.level() instanceof ServerLevel serverLevel) {
             Config.Server.CRIME_FOR_LOOTING_ITEM_FRAME.get().getCrime().ifPresent(crime -> {
                 crime.commit(serverLevel, criminal, blockPosition());
             });

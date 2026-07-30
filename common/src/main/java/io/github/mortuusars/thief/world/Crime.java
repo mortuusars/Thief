@@ -150,7 +150,7 @@ public enum Crime implements ReputationEventType, StringRepresentable {
 
     public static PotentialCrime fromBlockStateBreaking(Player player, BlockPos pos, BlockState state) {
         if (!Config.Server.CRIME_FOR_BREAKING_PROTECTED_BLOCKS.get()) return PotentialCrime.NONE;
-        // Reverse order to select heaviest offence if added to multiple tags:
+        // Reverse order to select heaviest offense if added to multiple tags:
         if (state.is(Thief.Tags.Blocks.BREAK_PROTECTED_HEAVY)) return PotentialCrime.HEAVY;
         if (state.is(Thief.Tags.Blocks.BREAK_PROTECTED_MEDIUM)) return PotentialCrime.MEDIUM;
         if (state.is(Thief.Tags.Blocks.BREAK_PROTECTED_LIGHT)) return PotentialCrime.LIGHT;
@@ -159,7 +159,7 @@ public enum Crime implements ReputationEventType, StringRepresentable {
 
     public static PotentialCrime fromBlockStateInteracting(Player player, BlockPos pos, BlockState state) {
         if (!Config.Server.CRIME_FOR_INTERACTING_WITH_PROTECTED_BLOCKS.get()) return PotentialCrime.NONE;
-        // Reverse order to select heaviest offence if added to multiple tags:
+        // Reverse order to select heaviest offense if added to multiple tags:
         if (state.is(Thief.Tags.Blocks.INTERACT_PROTECTED_HEAVY)) return PotentialCrime.HEAVY;
         if (state.is(Thief.Tags.Blocks.INTERACT_PROTECTED_MEDIUM)) return PotentialCrime.MEDIUM;
         if (state.is(Thief.Tags.Blocks.INTERACT_PROTECTED_LIGHT)) return PotentialCrime.LIGHT;
@@ -168,7 +168,7 @@ public enum Crime implements ReputationEventType, StringRepresentable {
 
     public static PotentialCrime fromKilling(Player player, LivingEntity target) {
         if (!Config.Server.CRIME_FOR_KILLING_PROTECTED_ENTITIES.get()) return PotentialCrime.NONE;
-        // Reverse order to select heaviest offence if added to multiple tags:
+        // Reverse order to select heaviest offense if added to multiple tags:
         if (target.is(Thief.Tags.EntityTypes.KILLING_PROTECTED_HEAVY)) return PotentialCrime.HEAVY;
         if (target.is(Thief.Tags.EntityTypes.KILLING_PROTECTED_MEDIUM)) return PotentialCrime.MEDIUM;
         if (target.is(Thief.Tags.EntityTypes.KILLING_PROTECTED_LIGHT)) return PotentialCrime.LIGHT;
@@ -176,10 +176,11 @@ public enum Crime implements ReputationEventType, StringRepresentable {
     }
 
     public static PotentialCrime fromPickingUp(ServerPlayer player, LivingEntity target) {
+        if (!Config.Server.CRIME_FOR_PICKING_UP_PROTECTED_ENTITIES.get()) return PotentialCrime.NONE;
         // Reverse order to select heaviest offense if added to multiple tags:
-        if (target.getType().is(Thief.Tags.EntityTypes.PICKUP_PROTECTED_HEAVY)) return PotentialCrime.HEAVY;
-        if (target.getType().is(Thief.Tags.EntityTypes.PICKUP_PROTECTED_MEDIUM)) return PotentialCrime.MEDIUM;
-        if (target.getType().is(Thief.Tags.EntityTypes.PICKUP_PROTECTED_LIGHT)) return PotentialCrime.LIGHT;
+        if (target.is(Thief.Tags.EntityTypes.PICKUP_PROTECTED_HEAVY)) return PotentialCrime.HEAVY;
+        if (target.is(Thief.Tags.EntityTypes.PICKUP_PROTECTED_MEDIUM)) return PotentialCrime.MEDIUM;
+        if (target.is(Thief.Tags.EntityTypes.PICKUP_PROTECTED_LIGHT)) return PotentialCrime.LIGHT;
         return PotentialCrime.NONE;
     }
 

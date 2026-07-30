@@ -1,8 +1,7 @@
 # Changelog
 
-## UNRELEASED
+## 1.2.5 - 2026-07-30
 - Looting an Item Frame is now a crime.
-- Picking up entities with CarryOn mod is now a crime.
 
 ## 1.2.4 - 2026-06-12
 - [NeoForge] Support for 26.2 NeoForge.

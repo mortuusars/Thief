@@ -98,11 +98,11 @@ public class Thief {
                     TagKey.create(net.minecraft.core.registries.Registries.ENTITY_TYPE, identifier("killing_protected/heavy"));
 
             public static final TagKey<EntityType<?>> PICKUP_PROTECTED_LIGHT =
-                  TagKey.create(net.minecraft.core.registries.Registries.ENTITY_TYPE, resource("pickup_protected/light"));
+                  TagKey.create(net.minecraft.core.registries.Registries.ENTITY_TYPE, identifier("pickup_protected/light"));
             public static final TagKey<EntityType<?>> PICKUP_PROTECTED_MEDIUM =
-                  TagKey.create(net.minecraft.core.registries.Registries.ENTITY_TYPE, resource("pickup_protected/medium"));
+                  TagKey.create(net.minecraft.core.registries.Registries.ENTITY_TYPE, identifier("pickup_protected/medium"));
             public static final TagKey<EntityType<?>> PICKUP_PROTECTED_HEAVY =
-                  TagKey.create(net.minecraft.core.registries.Registries.ENTITY_TYPE, resource("pickup_protected/heavy"));
+                  TagKey.create(net.minecraft.core.registries.Registries.ENTITY_TYPE, identifier("pickup_protected/heavy"));
 
             public static final TagKey<EntityType<?>> WITNESSES =
                     TagKey.create(net.minecraft.core.registries.Registries.ENTITY_TYPE, identifier("witnesses"));
