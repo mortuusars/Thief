@@ -4,6 +4,10 @@
     {
       "required": false,
       "id": "#ctov:village"
+    },
+    {
+      "required": false,
+      "id": "#nova_structures:taverns"
     }
   ]
 }

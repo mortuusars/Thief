@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.2.6 - 2026-09-21
+- Added Taverns from `Dungeons and Taverns` mod to protected structures tag.
+
 ## 1.2.5 - 26.2 - 2026-07-30
 - Port to 26.2.
 
