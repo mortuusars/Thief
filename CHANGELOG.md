@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.2.5 - 2026-09-21
+- Added Taverns from `Dungeons and Taverns` mod to protected structures tag.
+
 ## 1.2.4 - 2026-07-30
 - Looting an Item Frame is now a crime.
 - Picking up entities with CarryOn mod is now a crime.
