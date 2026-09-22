@@ -5,7 +5,6 @@ import io.github.mortuusars.thief.Config;
 import io.github.mortuusars.thief.PlatformHelper;
 import io.github.mortuusars.thief.Thief;
 import io.github.mortuusars.thief.command.ThiefCommand;
-import io.github.mortuusars.thief.world.Crime;
 import io.github.mortuusars.thief.world.Reputation;
 import io.github.mortuusars.thief.world.Witness;
 import io.github.mortuusars.thief.world.stealth.Stealth;
@@ -18,7 +17,6 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -87,15 +85,15 @@ public class CommonEvents {
     public static void onPlayerTick(Player player) {
         if (ThiefCommand.showNoticeDistanceAndWitnesses
                 && player instanceof ServerPlayer serverPlayer
-                && player.level().getGameTime() % 3 == 0) {
+                && player.level().getGameTime() % 2 == 0) {
 
             List<LivingEntity> witnesses = Witness.getWitnesses(player);
             for (LivingEntity witness : witnesses) {
-                witness.addEffect(new MobEffectInstance(MobEffects.GLOWING, 4));
+                witness.addEffect(new MobEffectInstance(MobEffects.GLOWING, 3));
             }
 
             double radius = Config.Server.WITNESS_MAX_DISTANCE.get() * Stealth.getVisibility(serverPlayer);
-            int particles = 64; // number of particles in the ring
+            int particles = 64;
 
             for (int i = 0; i < particles; i++) {
                 double angle = 2 * Math.PI * i / particles;
@@ -103,7 +101,8 @@ public class CommonEvents {
                 double z = player.getZ() + radius * Math.sin(angle);
                 double y = player.getY() + 1;
 
-                serverPlayer.serverLevel().sendParticles(serverPlayer, ParticleTypes.EXPLOSION, true, x, y, z, 1, 0, 0, 0, 0);
+                serverPlayer.serverLevel().sendParticles(serverPlayer, ParticleTypes.EXPLOSION,
+                      true, x, y, z, 1, 0, 0, 0, 0);
             }
         }
     }

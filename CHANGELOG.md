@@ -1,6 +1,7 @@
 # Changelog
 
-## 1.2.6 - 2026-09-22
+## 1.2.7 - 2026-09-22
+- Player-made Iron Golems no longer counted as witnesses
 - Updated icon
 - [NeoForge] Fixed icon not displaying properly
 
