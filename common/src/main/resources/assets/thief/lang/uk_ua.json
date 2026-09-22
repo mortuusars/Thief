@@ -30,6 +30,7 @@
   "stat.thief.caught_at_heavy_thefts_in_village": "Кількість зафіксованих випадків тяжких крадіжок у селищі",
   "stat.thief.caught_at_light_thefts_in_village": "Кількість зафіксованих випадків незначних крадіжок у селищі",
   "stat.thief.caught_at_medium_thefts_in_village": "Кількість зафіксованих випадків крадіжок середньої тіжкості у селищі",
+  "tag.item.thief.villager_gifts": "Подарунки Селянину",
   "thief.configuration.always_notice_distance": "Відстань Помічання У Будь-якому Випадку",
   "thief.configuration.breaking_protected_blocks": "Замання Захищених Блоків - Злочин",
   "thief.configuration.crime": "Злочин",

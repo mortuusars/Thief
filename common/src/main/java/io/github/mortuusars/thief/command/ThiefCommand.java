@@ -15,7 +15,6 @@ import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.server.permissions.Permission;
 import net.minecraft.server.permissions.Permissions;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -115,10 +114,10 @@ public class ThiefCommand {
     }
 
     public static void onPlayerTick(ServerPlayer player) {
-        if (showNoticeDistanceAndWitnesses && player.level().getGameTime() % 3 == 0) {
+        if (showNoticeDistanceAndWitnesses && player.level().getGameTime() % 2 == 0) {
             List<LivingEntity> witnesses = Witness.getWitnesses(player);
             for (LivingEntity witness : witnesses) {
-                witness.addEffect(new MobEffectInstance(MobEffects.GLOWING, 4));
+                witness.addEffect(new MobEffectInstance(MobEffects.GLOWING, 3));
             }
 
             double radius = Config.Server.WITNESS_MAX_DISTANCE.get() * Stealth.getVisibility(player);
@@ -130,8 +129,8 @@ public class ThiefCommand {
                 double z = player.getZ() + radius * Math.sin(angle);
                 double y = player.getY() + 1;
 
-                player.level().sendParticles(player, ParticleTypes.EXPLOSION, true, true,
-                      x, y, z, 1, 0, 0, 0, 0);
+                player.level().sendParticles(player, ParticleTypes.EXPLOSION,
+                      true, true, x, y, z, 1, 0, 0, 0, 0);
             }
         }
     }
