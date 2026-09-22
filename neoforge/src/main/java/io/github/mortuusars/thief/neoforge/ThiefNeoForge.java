@@ -36,7 +36,6 @@ public class ThiefNeoForge {
         RegisterImpl.CRITERION_TRIGGERS.register(modEventBus);
         RegisterImpl.SOUND_EVENTS.register(modEventBus);
         RegisterImpl.COMMAND_ARGUMENT_TYPES.register(modEventBus);
-        RegisterImpl.WORLD_GEN_FEATURES.register(modEventBus);
         RegisterImpl.DATA_COMPONENT_TYPES.register(modEventBus);
         RegisterImpl.PARTICLE_TYPES.register(modEventBus);
         RegisterImpl.CUSTOM_STATS.register(modEventBus);

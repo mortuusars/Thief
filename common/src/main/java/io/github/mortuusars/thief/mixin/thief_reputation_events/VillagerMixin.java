@@ -1,6 +1,5 @@
 package io.github.mortuusars.thief.mixin.thief_reputation_events;
 
-import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.sugar.Share;
 import com.llamalad7.mixinextras.sugar.ref.LocalIntRef;
 import io.github.mortuusars.thief.PlatformHelper;
@@ -33,19 +32,19 @@ public abstract class VillagerMixin extends AbstractVillager {
     }
 
     @Inject(method = "onReputationEventFrom", at = @At("HEAD"))
-    private void onReputationEventPre(ReputationEventType type, Entity target, CallbackInfo ci,
+    private void onReputationEventPre(ReputationEventType type, Entity source, CallbackInfo ci,
                                       @Share("reputationBefore") LocalIntRef reputationBefore) {
-        reputationBefore.set(getGossips().getReputation(target.getUUID(), gossip -> true));
+        reputationBefore.set(getGossips().getReputation(source.getUUID(), gossip -> true));
 
         if (type instanceof Crime crime) {
             int major = crime.getMajorNegativeChange();
             if (major > 0) {
-                gossips.add(target.getUUID(), GossipType.MAJOR_NEGATIVE, major);
+                gossips.add(source.getUUID(), GossipType.MAJOR_NEGATIVE, major);
             }
 
             int minor = crime.getMinorNegativeChange();
             if (minor > 0) {
-                gossips.add(target.getUUID(), GossipType.MINOR_NEGATIVE, minor);
+                gossips.add(source.getUUID(), GossipType.MINOR_NEGATIVE, minor);
             }
         }
     }

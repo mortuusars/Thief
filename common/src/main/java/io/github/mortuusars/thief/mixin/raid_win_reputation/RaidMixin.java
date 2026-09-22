@@ -8,7 +8,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.gossip.GossipType;
 import net.minecraft.world.entity.npc.villager.Villager;
 import net.minecraft.world.entity.raid.Raid;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -24,7 +23,7 @@ public abstract class RaidMixin {
 
     @SuppressWarnings("LocalMayUseName") // No. It may not.
     @Inject(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/level/ServerPlayer;awardStat(Lnet/minecraft/resources/Identifier;)V"))
-    private void onTick(CallbackInfo ci, @Local ServerLevel level, @Local LivingEntity entity) {
+    private void onTick(CallbackInfo ci, @Local(argsOnly = true) ServerLevel level, @Local LivingEntity entity) {
         List<Villager> villagers = level.getEntitiesOfClass(Villager.class, new AABB(getCenter()).inflate(128));
         for (Villager villager : villagers) {
             int major = Config.Server.HERO_MAJOR_POSITIVE_INCREASE.get();
